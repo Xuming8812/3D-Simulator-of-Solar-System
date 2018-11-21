@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+   Mydata.xml
+   starInfo
+
+   Created by Xingchen Ming on 10/30/18.
+   Copyright (c) 2018 Xingchen Ming. All rights reserved
+-->
+
+<star_information>
+    Here is basic information of solar system.
+<Object>
+    <name>Sun</name>
+    <type>star</type>
+    <speedRevolution>0</speedRevolution>
+    <speedRotation>0</speedRotation>
+    <radius>48.78</radius>
+    <distance>650</distance>
+    <parent>-</parent>
+    <color>1 0 0 1</color>
+</Object>
+<Object>
+    <name>Mercury</name>
+     <type>planet</type>
+    <speedRevolution>87</speedRevolution>
+    <speedRotation>3</speedRotation>
+    <radius>7.32</radius>
+    <distance>62.06</distance>
+    <parent>Sun</parent>
+    <color>1 0 0 1</color>
+</Object>
+<Object>
+    <name>Venus</name>
+    <type>planet</type>
+    <speedRevolution>225</speedRevolution>
+    <speedRotation>1</speedRotation>
+    <radius>18.15</radius>
+    <distance>115.56</distance>
+    <parent>Sun</parent>
+    <color>1 0 0 1</color>
+</Object>
+<Object>
+    <name>Earth</name>
+    <type>planet</type>
+    <speedRevolution>365</speedRevolution>
+    <speedRotation>1</speedRotation>
+    <radius>19.13</radius>
+    <distance>168</distance>
+    <parent>Sun</parent>
+    <color>1 0 0 1</color>
+</Object>
+<Object>
+    <name>Mars</name>
+    <type>planet</type>
+    <speedRevolution>687</speedRevolution>
+    <speedRotation>1</speedRotation>
+    <radius>10.19</radius>
+    <distance>228</distance>
+    <parent>Sun</parent>
+    <color>1 0 0 1</color>
+</Object>
+<Object>
+    <name>Jupiter</name>
+    <type>planet</type>
+    <speedRevolution>1298</speedRevolution>
+    <speedRotation>1</speedRotation>
+    <radius>42.90</radius>
+    <distance>333.40</distance>
+    <parent>Sun</parent>
+    <color>1 0 0 1</color>
+</Object>
+<Object>
+    <name>Saturn</name>
+    <type>planet</type>
+    <speedRevolution>3225.6</speedRevolution>
+    <speedRotation>1</speedRotation>
+    <radius>36.16</radius>
+    <distance>428.10</distance>
+    <parent>Sun</parent>
+    <color>1 0 0 1</color>
+</Object>
+<Object>
+    <name>Uranus</name>
+    <type>planet</type>
+    <speedRevolution>3066.4</speedRevolution>
+    <speedRotation>1</speedRotation>
+    <radius>25.56</radius>
+    <distance>848</distance>
+    <parent>Sun</parent>
+    <color>1 0 0 1</color>
+</Object>
+<Object>
+    <name>Neptune</name>
+    <type>planet</type>
+    <speedRevolution>6014.8</speedRevolution>
+    <speedRotation>1</speedRotation>
+    <radius>24.78</radius>
+    <distance>949.10</distance>
+    <parent>Sun</parent>
+    <color>1 0 0 1</color>
+</Object>
+<Object>
+    <name>Moon</name>
+    <type>satellite</type>
+    <speedRevolution>30.0</speedRevolution>
+    <speedRotation>1</speedRotation>
+    <radius>6.15</radius>
+    <distance>26.01</distance>
+    <parent>Earth</parent>
+    <color>1 0 0 1</color>
+</Object>
+</star_information>
+
+
