@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/earth_daymap.jpg</file>
+        <file>images/jupiter.jpg</file>
+        <file>images/mars.jpg</file>
+        <file>images/mercury.jpg</file>
+        <file>images/neptune.jpg</file>
+        <file>images/saturn_ring_alpha.png</file>
+        <file>images/saturn.jpg</file>
+        <file>images/sun.jpg</file>
+        <file>images/uranus.jpg</file>
+        <file>images/venus_atmosphere.jpg</file>
+        <file>images/venus_surface.jpg</file>
+        <file>Parameters.txt</file>
+        <file>icon/pause.png</file>
+        <file>icon/play.png</file>
+        <file>images/stars.jpg</file>
+    </qresource>
+</RCC>

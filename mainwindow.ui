@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>987</width>
-    <height>545</height>
+    <width>999</width>
+    <height>623</height>
    </rect>
   </property>
   <property name="sizeIncrement">
@@ -36,22 +36,6 @@
     <property name="horizontalSpacing">
      <number>-1</number>
     </property>
-    <item row="0" column="0">
-     <widget class="RenderingWidget" name="openGLWidget">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="minimumSize">
-       <size>
-        <width>800</width>
-        <height>400</height>
-       </size>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="1">
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <property name="spacing">
@@ -61,7 +45,7 @@
        <enum>QLayout::SetFixedSize</enum>
       </property>
       <property name="leftMargin">
-       <number>10</number>
+       <number>1</number>
       </property>
       <property name="topMargin">
        <number>13</number>
@@ -87,7 +71,7 @@
          </size>
         </property>
         <property name="text">
-         <string>Start</string>
+         <string/>
         </property>
        </widget>
       </item>
@@ -173,9 +157,12 @@
          <widget class="QComboBox" name="month">
           <property name="maximumSize">
            <size>
-            <width>50</width>
+            <width>58</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="whatsThis">
+           <string extracomment="Month"/>
           </property>
           <property name="editable">
            <bool>true</bool>
@@ -261,15 +248,18 @@
          <widget class="QComboBox" name="day">
           <property name="maximumSize">
            <size>
-            <width>50</width>
+            <width>58</width>
             <height>16777215</height>
            </size>
           </property>
           <property name="editable">
            <bool>true</bool>
           </property>
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
           <property name="maxCount">
-           <number>2147483640</number>
+           <number>31</number>
           </property>
           <item>
            <property name="text">
@@ -289,6 +279,11 @@
           <item>
            <property name="text">
             <string>4</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>5</string>
            </property>
           </item>
           <item>
@@ -348,7 +343,77 @@
           </item>
           <item>
            <property name="text">
-            <string>New Item</string>
+            <string>17</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>18</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>19</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>20</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>21</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>22</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>23</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>24</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>25</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>26</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>27</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>28</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>29</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>30</string>
+           </property>
+          </item>
+          <item>
+           <property name="text">
+            <string>31</string>
            </property>
           </item>
          </widget>
@@ -431,7 +496,7 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>200</height>
+          <height>160</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -462,22 +527,167 @@
        </widget>
       </item>
       <item>
+       <widget class="QGroupBox" name="groupBox">
+        <property name="styleSheet">
+         <string notr="true">QGroupBox {
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #E0E0E0, stop: 1 #FFFFFF);
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 1ex; /* leave space at the top for the title */
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left; /* position at the top center */
+    padding: 0 3px;
+}</string>
+        </property>
+        <property name="title">
+         <string>Data</string>
+        </property>
+        <property name="flat">
+         <bool>false</bool>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+        <layout class="QFormLayout" name="formLayout_3">
+         <item row="1" column="0">
+          <widget class="QLabel" name="label">
+           <property name="minimumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Radius</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLabel" name="dataRadius">
+           <property name="text">
+            <string>123</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="label_3">
+           <property name="minimumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Mass  </string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLabel" name="dataMass">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="label_5">
+           <property name="minimumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Rotation</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="label_6">
+           <property name="minimumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Revolution</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLabel" name="dataRotation">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLabel" name="dataRevolution">
+           <property name="text">
+            <string>TextLabel</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_9">
+           <property name="minimumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Name</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLabel" name="dataName">
+           <property name="text">
+            <string>Sun</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
        <spacer name="verticalSpacer">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
         <property name="sizeType">
-         <enum>QSizePolicy::Expanding</enum>
+         <enum>QSizePolicy::Preferred</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>360</height>
+          <height>350</height>
          </size>
         </property>
        </spacer>
       </item>
      </layout>
+    </item>
+    <item row="0" column="0">
+     <widget class="RenderingWidget" name="openGLWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>800</width>
+        <height>400</height>
+       </size>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
@@ -486,7 +696,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>987</width>
+     <width>999</width>
      <height>22</height>
     </rect>
    </property>
@@ -497,14 +707,6 @@
     <addaction name="actionData"/>
    </widget>
    <addaction name="menuAbout"/>
-  </widget>
-  <widget class="QStatusBar" name="statusBar">
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
   </widget>
   <action name="actionData">
    <property name="text">

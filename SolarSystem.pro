@@ -3,6 +3,7 @@
 # Project created by QtCreator 2018-11-20T13:38:53
 #
 #-------------------------------------------------
+
 QT       += core gui opengl
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -14,7 +15,7 @@ TEMPLATE = app
 # any feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
-DEFINES += QT_DEPRECATED_WARNINGS
+DEFINES += QT_DEPRECATED_WARNINGS GL_SILENCE_DEPRECATION
 
 # You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -26,15 +27,22 @@ CONFIG += c++11
 SOURCES += \
         src/main.cpp \
         src/mainwindow.cpp \
-        src/renderingwidget.cpp
+        src/renderingwidget.cpp \
+        src/AstronmicalObject.cpp \
+        src/SolarSystem.cpp \
+    src/paramform.cpp
 
 HEADERS += \
         src/mainwindow.h \
-        src/renderingwidget.h
+        src/renderingwidget.h \
+        src/AstronmicalObject.h \
+        src/SolarSystem.h \
+    src/paramform.h
 
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    src/paramform.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -43,3 +51,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 mac: LIBS += -framework GLUT
 else:unix|win32: LIBS += -lGLUT
+
+RESOURCES += \
+    qsrc.qrc
