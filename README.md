@@ -10,3 +10,6 @@ update at 21:08 11/20/2018
 3.A toy example function is provided to test those two classes. The program reads in a txt file storing the parameters for objects in the solar system and show the whole system in a window.
 
 4.However, this whole part is based on glut. To run this function, one should install the glut library. Since the glut is included by Xcode on Mac OS, one can use Xcode to build this program.
+
+update at 12:24 12/5/2018
+1. Use multi-thread method to update each object`s parameter parallelly
