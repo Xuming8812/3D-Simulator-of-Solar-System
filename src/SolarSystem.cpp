@@ -3,10 +3,17 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <thread>
+#include <chrono>
+#include <algorithm>
+
+
 
 #define TIMEPAST 1
 
 using namespace std;
+
+namespace chrono = std::chrono;
 
 /**
  * @name: SolarSystem
@@ -266,6 +273,16 @@ void SolarSystem::keyboard(unsigned char key, int x, int y)
 }
 
 /**
+ * @name: drawObject
+ * @description: draw function for thread use
+ * @return: void
+ */
+void drawObject(AstronmicalObject* item)
+{
+	item->draw();
+}
+
+/**
  * @name: display
  * @description: show the solar system
  * @return: void
@@ -286,13 +303,30 @@ void SolarSystem::display()
 	glEnable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
 
+	std::vector<thread> threads;
+
+
 	for (auto item : objects)
 	{
+		threads.push_back(thread(drawObject,item));
+		
 		item->draw();
 	}
 
+	for_each(threads.begin(), threads.end(), mem_fn(&thread::join));
+
 
 	glutSwapBuffers();
+}
+
+/**
+ * @name: updateObject
+ * @description: update function for thread use
+ * @return: void
+ */
+void updateObject(AstronmicalObject* item)
+{
+	item->update(TIMEPAST);
 }
 
 /**
@@ -302,10 +336,13 @@ void SolarSystem::display()
  */
 void SolarSystem::update()
 {
+	std::vector<thread> threads;
+
 	for (auto item : objects)
 	{
-		item->update(TIMEPAST);
+		threads.push_back(thread(updateObject, item));
+		//item->update(TIMEPAST);
 	}
-
+	for_each(threads.begin(), threads.end(), mem_fn(&thread::join));
 	this->display();
 }
