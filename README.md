@@ -42,5 +42,3 @@ SolarSystem
 3. Click on **Parameter** button to set the parameter of a selected celestial body and see what will happen.
 4. Click on **Highlight** to highlight the trajectory of the selected celestial body and hide the others'.
 5. Adjust time to see the status of different time.
-6. Use the slider or **+/-** buttons to zoom in/out.
-
