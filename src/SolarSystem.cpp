@@ -79,7 +79,7 @@ void SolarSystem::readParameters()
 {
 
     ifstream fin;
-    fin.open("/Users/LM/Desktop/TeamProject/SolarSystem/Parameters.txt");
+    fin.open("/Users/LM/Desktop/TeamProject/SolarSystem/GPU-A/Parameters.txt");
 
 
 	if (!fin)
