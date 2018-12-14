@@ -1,3 +1,6 @@
+
+#pragma once
+
 #include "AstronmicalObject.h"
 #include <cmath>
 #include <vector>
@@ -8,6 +11,7 @@
 #define STACKS 50
 
 #define NUM_ELEMENT 1000
+
 
 /**
  * @name: AstronmicalObject
@@ -32,6 +36,7 @@ AstronmicalObject::AstronmicalObject(std::string label, GLfloat r, GLfloat m, GL
 	this->speedRotation = sRotate;
 
     this->isVisible = true;
+
 	
 	//actually the speed is an angular velocity in degree
 	if (sRevolute > 0)
@@ -46,6 +51,7 @@ AstronmicalObject::AstronmicalObject(std::string label, GLfloat r, GLfloat m, GL
 	this->parent = par;
 }
 
+
 /**
  * @brief AstronmicalObject::~AstronmicalObject
  */
@@ -55,6 +61,7 @@ AstronmicalObject::~AstronmicalObject(){}
  * @name: drawObject
  * @description: Draw the astronmical object based on the graphic parameters
  * @return: void
+
  */
 void AstronmicalObject::drawObject()
 {
@@ -68,6 +75,7 @@ void AstronmicalObject::drawObject()
 		if (parent != nullptr && parent->distance > 0)
 		{
 			glRotatef(parent->angleRevolution, 0, 0, 1);
+
             glTranslatef(parent->distance, 0.0, 0.0);
 		}
 
@@ -93,24 +101,28 @@ void AstronmicalObject::drawObject()
         gluQuadricTexture(mySphere, GL_TRUE);
 //		glutSolidSphere(radius, SLICES, STACKS);
 
+
 	}
 
 	glPopMatrix();
 }
+
 /**
  * @name: update
  * @description: update the position of the object
  * @param time: the timespan
  * @return: void
+
  */
 void AstronmicalObject::update(int time)
 {
 	
 	//update the angle of rotation and revolution
+
     angleRevolution += time * speedRevolution / 3.0;
     angleRotation += time * speedRotation / 3.0;
-
 }
+
 
 
 /**
@@ -126,10 +138,8 @@ void AstronmicalObject::update(int time)
  * @return: void
  */
 Planet::Planet(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRevolute, GLfloat sRotate, AstronmicalObject* par, GLfloat rgbColor[4])
-    :AstronmicalObject(label, r, m, d, sRevolute, sRotate, par)
-{
-	setColor(rgbColor);
-}
+    :AstronmicalObject(label, r, m, d, sRevolute, sRotate, par){};
+
 
 /**
  * @name: drawPlanet
@@ -189,6 +199,7 @@ Star::~Star(){}
 void Star::addLightSource()
 {
 	// for test
+
     GLfloat position0[] = { 2.0, 0.0, 0.0, 1.0 };
     GLfloat ambient[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
@@ -223,5 +234,6 @@ void Star::addLightSource()
 //    glLightfv(GL_LIGHT4, GL_AMBIENT, ambient);
 //    glLightfv(GL_LIGHT4, GL_DIFFUSE, diffuse);
 //    glLightfv(GL_LIGHT4, GL_SPECULAR, specular);
+
 
 }

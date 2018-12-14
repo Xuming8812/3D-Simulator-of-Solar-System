@@ -1,3 +1,4 @@
+
 Num = 10
 [Object1]
 name = "Sun"
@@ -98,4 +99,34 @@ radius = 0.4
 mass = 1
 distance = 1.5
 parent = "Earth"
+radius = 6.15
+distance = 26.01
+parent = "Earth"
+color = 0.4 0.4 0.4 1
+[Object11]
+name = "Moon1"
+type = "Planet"
+speedRevolution = 30
+speedRotation = 3
+radius = 6.15
+distance = 99.01
+parent = "Mars"
+color = 0.4 0.4 0.4 1
+[Object12]
+name = "Moon2"
+type = "Planet"
+speedRevolution = 300
+speedRotation = 3
+radius = 6.15
+distance = 69.01
+parent = "Moon"
+color = 0.4 0.4 0.4 1
+[Object13]
+name = "Moon3"
+type = "Planet"
+speedRevolution = 130
+speedRotation = 3
+radius = 6.15
+distance = 99.01
+parent = "Moon2"
 color = 0.4 0.4 0.4 1
