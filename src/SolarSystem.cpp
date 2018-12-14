@@ -4,6 +4,8 @@
 #include <fstream>
 #include <sstream>
 
+
+
 #define TIMEPAST 1
 
 using namespace std;
@@ -21,9 +23,8 @@ SolarSystem::SolarSystem()
 	{
 		if (item.type == STAR)
 		{
-            AstronmicalObject* current = new Star(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, nullptr,item.color);
-			
-			objects.push_back(current);
+            AstronmicalObject* current = new Star(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, nullptr,item.color);			
+			      objects.push_back(current);
 		
 		}
 
@@ -39,9 +40,11 @@ SolarSystem::SolarSystem()
 				}
 			}
 
+
             AstronmicalObject* current = new Planet(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, objects[index],item.color);
 			objects.push_back(current);
 		}
+
 	}
 
 	eyeX = 0;
@@ -74,8 +77,10 @@ SolarSystem::~SolarSystem()
  */
 void SolarSystem::readParameters()
 {
+
     ifstream fin;
     fin.open("/Users/gengyoung/ENGN2912B/SolarSystem/Parameters.txt");
+
 
 	if (!fin)
 	{
@@ -113,6 +118,7 @@ void SolarSystem::readParameters()
         //get mass
         getline(fin, line);
         current.mass = getFloatParameter(line);
+
 		//get distance
 		getline(fin, line);
 		current.distance = getFloatParameter(line);
@@ -122,11 +128,13 @@ void SolarSystem::readParameters()
 		//get color
 		getline(fin, line);
 		
+
         GLfloat* temp= getArrayParameter(line);
         for (int i = 0; i < 4; i++)
         {
             current.color[i] = temp[i];
         }
+
 
 		parameters.push_back(current);
 	}
@@ -264,6 +272,7 @@ void SolarSystem::keyboard(unsigned char key, int x, int y)
 }
 
 
+
 /**
  * @name: display
  * @description: show the solar system
@@ -285,26 +294,31 @@ void SolarSystem::display()
 	glEnable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
 
+
     for (auto item : objects)
     {
         item->draw();
     }
 
 
+
 	glutSwapBuffers();
 }
 
 /**
+
  * @name: update
  * @description: update the solar system
  * @return: void
  */
 void SolarSystem::update()
 {
+
     for (auto item : objects)
 	{
 		item->update(TIMEPAST);
 	}
+
 
 	this->display();
 }
