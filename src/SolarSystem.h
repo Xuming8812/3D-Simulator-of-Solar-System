@@ -1,6 +1,12 @@
 #pragma once
 
-#include <GL/glut.h>
+#ifdef __APPLE__
+    #include <GLUT/glut.h>
+#else
+    #include <GL/glut.h>
+#endif
+
+
 #include "AstronmicalObject.h"
 #include <map>
 
@@ -11,6 +17,9 @@ public:
 	SolarSystem();
 	//destructor
 	~SolarSystem();
+
+
+
 
 	//display the whole solar system
 	void display();
@@ -43,6 +52,12 @@ public:
 		upZ = z;
 	}
 
+
+    std::vector<AstronmicalObject*> getObjects(){
+        return objects;
+    }
+
+
 private:
 
 	//enum for type of an astronmical object
@@ -56,6 +71,9 @@ private:
 		GLfloat speedRevolution;
 		GLfloat speedRotation;
 		GLfloat radius;
+
+    GLfloat mass;
+
 		GLfloat distance;
 		std::string parentName;
 		GLfloat color[4];

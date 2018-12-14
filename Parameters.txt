@@ -1,20 +1,23 @@
-Num = 13
+
+Num = 10
 [Object1]
 name = "Sun"
 type = "Star"
 speedRevolution = 0
 speedRotation = 3
-radius = 1.74
+radius = 2
+mass = 10
 distance = 0
 parent = ""
-color = 1 0 0 1
+color = 1 0 0 0.5
 [Object2]
 name = "Mercury"
 type = "Planet"
 speedRevolution = 87
 speedRotation = 3
-radius = 7.32
-distance = 62.06
+radius = 1.35
+mass = 9
+distance = 5.1
 parent = "Sun"
 color = 0.2 0.2 0.5 1
 [Object3]
@@ -22,17 +25,19 @@ name = "Venus"
 type = "Planet"
 speedRevolution = 225
 speedRotation = 3
-radius = 18.15
-distance = 115.56
+radius = 1.62
+mass = 8
+distance = 7.6
 parent = "Sun"
 color = 1 0.7 0 1
 [Object4]
 name = "Earth"
 type = "Planet"
 speedRevolution = 365
-speedRotation = 3
-radius = 19.13
-distance = 168
+speedRotation = 1
+radius = 1
+mass = 7
+distance = 10
 parent = "Sun"
 color = 0 1 0 1
 [Object5]
@@ -40,8 +45,9 @@ name = "Mars"
 type = "Planet"
 speedRevolution = 687
 speedRotation = 3
-radius = 10.19
-distance = 228
+radius = 1.5
+mass = 6
+distance = 12
 parent = "Sun"
 color = 1 0.5 0.5 1
 [Object6]
@@ -49,8 +55,9 @@ name = "Jupiter"
 type = "Planet"
 speedRevolution = 1298.4
 speedRotation = 3
-radius = 42.90
-distance = 333.4
+radius = 2.0
+mass = 5
+distance = 14
 parent = "Sun"
 color = 1 1 0.5 1
 [Object7]
@@ -58,8 +65,9 @@ name = "Saturn"
 type = "Planet"
 speedRevolution = 3225.6
 speedRotation = 3
-radius = 36.16
-distance = 428.1
+radius = 1.6
+mass = 4
+distance = 18
 parent = "Sun"
 color = 0.5 1 0.5 1
 [Object8]
@@ -67,8 +75,9 @@ name = "Uranus"
 type = "Planet"
 speedRevolution = 3066.4
 speedRotation = 3
-radius = 25.56
-distance = 848
+radius = 2.0
+mass = 3
+distance = 13
 parent = "Sun"
 color = 0.4 0.4 0.4 1
 [Object9]
@@ -76,8 +85,9 @@ name = "Neptune"
 type = "Planet"
 speedRevolution = 6014.8
 speedRotation = 3
-radius = 24.78
-distance = 949.1
+radius = 2.0
+mass = 2
+distance = 16
 parent = "Sun"
 color = 0.5 0.5 1 1
 [Object10]
@@ -85,6 +95,10 @@ name = "Moon"
 type = "Planet"
 speedRevolution = 30
 speedRotation = 3
+radius = 0.4
+mass = 1
+distance = 1.5
+parent = "Earth"
 radius = 6.15
 distance = 26.01
 parent = "Earth"

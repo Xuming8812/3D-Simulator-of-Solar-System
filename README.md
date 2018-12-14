@@ -1,15 +1,46 @@
 # GPU-A
 This is the repository for final project of group GPU-A.
 
-update at 21:08 11/20/2018
+## Design Philosophy
+Our work is to develop a cross-platform 3D solar system model which simulates how the solar system operates, such as the trajectory of the planets. The work will employ Qt to implement GUI, C++ AMP for GPU acceleration, and multithreading computation will also be used to increase calculation speed. The
+main objectives of the implementation are as follows. 
 
-1.Upload the first version of implementation of AstronmicalObject and SoloarSystem.
+* Zoom in/out with mouse scrolling or sliding bar.
+* Adjust time speed (i.e. fast forward/rewind) with sliding bar.
+* Show motion data of a selected planet.
+* Highlight a selected planet and hide the others.
+* Enable customized parameters of a selected planet to simulate what will happen to the solar system.
+* Drag a selected planet smoothly along the trajectory and updates the status of the others simultaneously.
+* Click on a selected astronomical object to see the detailed information and a realistic image.
 
-2.Those two class are based on "glut", and some fundimental functions including drawing a sphere and updating the postion were implemented.
 
-3.A toy example function is provided to test those two classes. The program reads in a txt file storing the parameters for objects in the solar system and show the whole system in a window.
+## Build Instruction
+1. Clone the repository
+```
+git clone git@github.com:ENGN2912B-2018/GPU-A.git
+```
+2. Load module qt/5.10.1 and freeglut/3.0.0 on CCV
+```
+moudle load qt/5.10.1
+moudle freeglut/3.0.0
+```
+3. Generate MakeFile and Compile
+```
+mkdir build
+cd build
+qmake ../SolarSystem.pro
+make
+```
+4. Run the executable
+```
+SolarSystem
+```
 
-4.However, this whole part is based on glut. To run this function, one should install the glut library. Since the glut is included by Xcode on Mac OS, one can use Xcode to build this program.
+## Usage Documentation
+1. Click on **Start** button to start the simulation.
+2. Select any celestial body and click on **Motion Data** to check the motion inforamtion of it.
+3. Click on **Parameter** button to set the parameter of a selected celestial body and see what will happen.
+4. Click on **Highlight** to highlight the trajectory of the selected celestial body and hide the others'.
+5. Adjust time to see the status of different time.
+6. Use the slider or **+/-** buttons to zoom in/out.
 
-update at 12:24 12/5/2018
-1. Use multi-thread method to update each object`s parameter parallelly

@@ -3,17 +3,12 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <thread>
-#include <chrono>
-#include <algorithm>
 
 
 
 #define TIMEPAST 1
 
 using namespace std;
-
-namespace chrono = std::chrono;
 
 /**
  * @name: SolarSystem
@@ -28,9 +23,8 @@ SolarSystem::SolarSystem()
 	{
 		if (item.type == STAR)
 		{
-			Star* current = new Star(item.name, item.radius, item.distance, item.speedRevolution, item.speedRotation, nullptr,item.color);
-			
-			objects.push_back(current);
+            AstronmicalObject* current = new Star(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, nullptr,item.color);			
+			      objects.push_back(current);
 		
 		}
 
@@ -45,13 +39,12 @@ SolarSystem::SolarSystem()
 					break;
 				}
 			}
-			
-			
-			Planet* current = new Planet(item.name, item.radius, item.distance, item.speedRevolution, item.speedRotation, objects[index],item.color);
+
+
+            AstronmicalObject* current = new Planet(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, objects[index],item.color);
 			objects.push_back(current);
 		}
 
-		
 	}
 
 	eyeX = 0;
@@ -61,8 +54,6 @@ SolarSystem::SolarSystem()
 	centerX = centerY = centerZ = 0;
 	upX = upY = 0;
 	upZ = 1;
-	
-	
 }
 
 /**
@@ -86,8 +77,10 @@ SolarSystem::~SolarSystem()
  */
 void SolarSystem::readParameters()
 {
-	ifstream fin;
-	fin.open("D:\\Parameters.txt");
+
+    ifstream fin;
+    fin.open("/Users/gengyoung/ENGN2912B/SolarSystem/Parameters.txt");
+
 
 	if (!fin)
 	{
@@ -122,6 +115,10 @@ void SolarSystem::readParameters()
 		//get radius
 		getline(fin, line);
 		current.radius = getFloatParameter(line);
+        //get mass
+        getline(fin, line);
+        current.mass = getFloatParameter(line);
+
 		//get distance
 		getline(fin, line);
 		current.distance = getFloatParameter(line);
@@ -131,11 +128,13 @@ void SolarSystem::readParameters()
 		//get color
 		getline(fin, line);
 		
-		GLfloat* temp= getArrayParameter(line);
-		for (int i = 0; i < 4; i++)
-		{
-			current.color[i] = temp[i];
-		}
+
+        GLfloat* temp= getArrayParameter(line);
+        for (int i = 0; i < 4; i++)
+        {
+            current.color[i] = temp[i];
+        }
+
 
 		parameters.push_back(current);
 	}
@@ -272,15 +271,7 @@ void SolarSystem::keyboard(unsigned char key, int x, int y)
 
 }
 
-/**
- * @name: drawObject
- * @description: draw function for thread use
- * @return: void
- */
-void drawObject(AstronmicalObject* item)
-{
-	item->draw();
-}
+
 
 /**
  * @name: display
@@ -303,46 +294,31 @@ void SolarSystem::display()
 	glEnable(GL_LIGHTING);
 	glEnable(GL_DEPTH_TEST);
 
-	std::vector<thread> threads;
 
+    for (auto item : objects)
+    {
+        item->draw();
+    }
 
-	for (auto item : objects)
-	{
-		threads.push_back(thread(drawObject,item));
-		
-		item->draw();
-	}
-
-	for_each(threads.begin(), threads.end(), mem_fn(&thread::join));
 
 
 	glutSwapBuffers();
 }
 
 /**
- * @name: updateObject
- * @description: update function for thread use
- * @return: void
- */
-void updateObject(AstronmicalObject* item)
-{
-	item->update(TIMEPAST);
-}
 
-/**
  * @name: update
  * @description: update the solar system
  * @return: void
  */
 void SolarSystem::update()
 {
-	std::vector<thread> threads;
 
-	for (auto item : objects)
+    for (auto item : objects)
 	{
-		threads.push_back(thread(updateObject, item));
-		//item->update(TIMEPAST);
+		item->update(TIMEPAST);
 	}
-	for_each(threads.begin(), threads.end(), mem_fn(&thread::join));
+
+
 	this->display();
 }

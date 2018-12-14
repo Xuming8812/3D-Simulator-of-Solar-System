@@ -1,6 +1,13 @@
 #pragma once
 
-#include<GL/glut.h>
+
+#ifdef __APPLE__
+    #include <GLUT/glut.h>
+#else
+    #include <GL/glut.h>
+#endif
+
+
 #include<string>
 #include<vector>
 
@@ -9,10 +16,12 @@ class AstronmicalObject
 {
 public:
 	//constructor
-	AstronmicalObject(std::string label, GLfloat r, GLfloat d, GLfloat sRevolute, GLfloat sRotate,  AstronmicalObject* par);
+
+    AstronmicalObject(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRevolute, GLfloat sRotate,  AstronmicalObject* par);
 
 	//destructor
-	//~AstronmicalObject();
+    ~AstronmicalObject();
+
 
 
 	//access data member function for name of the astronmical object
@@ -25,6 +34,13 @@ public:
 	{
 		return radius;
 	}
+
+    //access data member function for mass of the astronmical object
+    GLfloat getMass() const
+    {
+        return mass;
+    }
+
 	//access data member function for rotation speed of the astronmical object
 	GLfloat getSpeedRotation() const
 	{
@@ -40,6 +56,14 @@ public:
 	{
 		return distance;
 	}
+
+    //access data member function for angleRevolution of the astronmical object to its parent object
+    GLfloat getAngleRevolution() const
+    {
+        return angleRevolution;
+    }
+
+
 	//access data member function for color of the astronmical object
 	GLfloat* getColor() const
 	{
@@ -68,6 +92,18 @@ public:
 			radius = input;
 		}
 	}
+
+
+    //access data member function for mass of the astronmical object
+    void setMass(GLfloat input)
+    {
+        if (input > 0)
+        {
+            mass = input;
+        }
+    }
+
+
 	//access data member function for distance of the astronmical object to its parent object
 	void setDistance(GLfloat input)
 	{
@@ -102,13 +138,31 @@ public:
 
 	//color of the object
 	GLfloat color[4];
+
+
+    bool visiblity(){
+        return isVisible;
+    }
+
+    void setVisibility(bool v){
+        isVisible = v;
+    }
 	
 private:
+
+    GLUquadricObj *mySphere;
+
+
 	//name of the object, used in data visualization
 	std::string name;
 
 	//radius of the object
 	GLfloat radius;
+
+
+    //mass of the object
+    GLfloat mass;
+
 
 	//rotation speed and revolution speed
 	GLfloat speedRotation, speedRevolution;
@@ -129,7 +183,10 @@ private:
 
 	//TODO:  declare a class/structure to store the real orbit function
 	//OrbitData orbit();
-	
+
+
+    // whether to display the body or not
+    bool isVisible;
 
 
 };
@@ -138,8 +195,10 @@ private:
 class Planet : public AstronmicalObject
 {
 public:
-	Planet(std::string label, GLfloat r, GLfloat d, GLfloat sRotate, GLfloat sRevolute, AstronmicalObject* par, GLfloat rgbColor[4]);
-	//~Planet();
+
+    Planet(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRotate, GLfloat sRevolute, AstronmicalObject* par, GLfloat rgbColor[4]);
+    ~Planet();
+
 
 	//helper function to draw a planet
 	void drawPlanet();
@@ -202,8 +261,10 @@ private:
 class Star : public Planet
 {
 public:
-	Star(std::string label, GLfloat r, GLfloat d, GLfloat sRotate, GLfloat sRevolute, AstronmicalObject* par, GLfloat rgbColor[4]);
-	//~Star();
+
+    Star(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRotate, GLfloat sRevolute, AstronmicalObject* par, GLfloat rgbColor[4]);
+    ~Star();
+
 
 	//helper function to add a light source to the star
 	void addLightSource();
@@ -211,7 +272,9 @@ public:
 	//overload of draw function of the base class
 	virtual void draw()
 	{
-		addLightSource();
+
+        addLightSource();
+
 		drawPlanet();
 		drawObject();	
 	}
