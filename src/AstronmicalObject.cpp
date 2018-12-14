@@ -1,5 +1,4 @@
 
-#pragma once
 
 #include "AstronmicalObject.h"
 #include <cmath>
@@ -41,7 +40,7 @@ AstronmicalObject::AstronmicalObject(std::string label, GLfloat r, GLfloat m, GL
 	//actually the speed is an angular velocity in degree
 	if (sRevolute > 0)
 	{
-		this->speedRevolution = 360.0 / sRevolute;
+        this->speedRevolution = 360.0f / sRevolute;
 	}
 	else
 	{
@@ -55,7 +54,8 @@ AstronmicalObject::AstronmicalObject(std::string label, GLfloat r, GLfloat m, GL
 /**
  * @brief AstronmicalObject::~AstronmicalObject
  */
-AstronmicalObject::~AstronmicalObject(){}
+//AstronmicalObject::~AstronmicalObject(){}
+
 
 /**
  * @name: drawObject
@@ -119,8 +119,8 @@ void AstronmicalObject::update(int time)
 	
 	//update the angle of rotation and revolution
 
-    angleRevolution += time * speedRevolution / 3.0;
-    angleRotation += time * speedRotation / 3.0;
+    angleRevolution += time * speedRevolution / 3.0f;
+    angleRotation += time * speedRotation / 3.0f;
 }
 
 
@@ -213,10 +213,10 @@ void Star::addLightSource()
     GLfloat position1[] = { 0.0,2.0, .0, 1.0 };
     GLfloat position2[] = { -2.0, 0.0, .0, 1.0 };
     GLfloat position3[] = { 0.0, -2.0, .0, 1.0 };
-    GLfloat position4[] = { 0.0, 3.0, .0, 1.0 };
-    GLfloat position5[] = { 0.0, 3.0, .0, 1.0 };
-    GLfloat position6[] = { 0.0, 3.0, .0, 1.0 };
-    GLfloat position7[] = { 0.0, 3.0, .0, 1.0 };
+    //GLfloat position4[] = { 0.0, 3.0, .0, 1.0 };
+    //GLfloat position5[] = { 0.0, 3.0, .0, 1.0 };
+    //GLfloat position6[] = { 0.0, 3.0, .0, 1.0 };
+    //GLfloat position7[] = { 0.0, 3.0, .0, 1.0 };
     glLightfv(GL_LIGHT1, GL_POSITION, position1);
     glLightfv(GL_LIGHT1, GL_AMBIENT, ambient);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuse);

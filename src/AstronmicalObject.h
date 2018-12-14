@@ -20,7 +20,7 @@ public:
     AstronmicalObject(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRevolute, GLfloat sRotate,  AstronmicalObject* par);
 
 	//destructor
-    ~AstronmicalObject();
+    //~AstronmicalObject();
 
 
 
@@ -67,7 +67,7 @@ public:
 	//access data member function for color of the astronmical object
 	GLfloat* getColor() const
 	{
-		GLfloat result[4];
+        GLfloat* result = new GLfloat[4];
 
 		for (int i{ 0 }; i < 4; i++)
 		{
