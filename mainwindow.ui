@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Solar System</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
@@ -39,30 +39,36 @@
     <item row="0" column="1">
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <property name="spacing">
-       <number>8</number>
+       <number>6</number>
       </property>
       <property name="sizeConstraint">
        <enum>QLayout::SetFixedSize</enum>
       </property>
       <property name="leftMargin">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
-       <number>13</number>
+       <number>12</number>
       </property>
       <property name="rightMargin">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
        <number>1</number>
       </property>
-      <item>
+      <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
        <widget class="QPushButton" name="startButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>162</width>
+          <height>0</height>
+         </size>
         </property>
         <property name="maximumSize">
          <size>
@@ -75,39 +81,19 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="dataButton">
-        <property name="maximumSize">
-         <size>
-          <width>162</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Motion Data</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="paramButton">
-        <property name="maximumSize">
-         <size>
-          <width>162</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Parameter</string>
-        </property>
-       </widget>
-      </item>
-      <item>
+      <item alignment="Qt::AlignHCenter|Qt::AlignTop">
        <widget class="QPushButton" name="highlightButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>162</width>
+          <height>0</height>
+         </size>
         </property>
         <property name="maximumSize">
          <size>
@@ -122,7 +108,13 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="dateHBox">
-        <item>
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="sizeConstraint">
+         <enum>QLayout::SetMinimumSize</enum>
+        </property>
+        <item alignment="Qt::AlignHCenter">
          <widget class="QLineEdit" name="year">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -145,6 +137,9 @@
           <property name="mouseTracking">
            <bool>true</bool>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::ClickFocus</enum>
+          </property>
           <property name="text">
            <string>2018</string>
           </property>
@@ -153,13 +148,22 @@
           </property>
          </widget>
         </item>
-        <item>
+        <item alignment="Qt::AlignHCenter">
          <widget class="QComboBox" name="month">
           <property name="maximumSize">
            <size>
-            <width>58</width>
+            <width>55</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::ClickFocus</enum>
+          </property>
+          <property name="toolTip">
+           <string extracomment="Month"/>
+          </property>
+          <property name="toolTipDuration">
+           <number>-1</number>
           </property>
           <property name="whatsThis">
            <string extracomment="Month"/>
@@ -244,13 +248,16 @@
           </item>
          </widget>
         </item>
-        <item>
+        <item alignment="Qt::AlignHCenter">
          <widget class="QComboBox" name="day">
           <property name="maximumSize">
            <size>
-            <width>58</width>
+            <width>55</width>
             <height>16777215</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::ClickFocus</enum>
           </property>
           <property name="editable">
            <bool>true</bool>
@@ -422,7 +429,13 @@
       </item>
       <item>
        <layout class="QHBoxLayout" name="timeHBox">
-        <item alignment="Qt::AlignTop">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="sizeConstraint">
+         <enum>QLayout::SetMinimumSize</enum>
+        </property>
+        <item alignment="Qt::AlignHCenter|Qt::AlignTop">
          <widget class="QSpinBox" name="hour">
           <property name="maximumSize">
            <size>
@@ -444,7 +457,7 @@
           </property>
          </widget>
         </item>
-        <item alignment="Qt::AlignTop">
+        <item alignment="Qt::AlignHCenter|Qt::AlignTop">
          <widget class="QSpinBox" name="minute">
           <property name="maximumSize">
            <size>
@@ -460,7 +473,7 @@
           </property>
          </widget>
         </item>
-        <item alignment="Qt::AlignTop">
+        <item alignment="Qt::AlignHCenter|Qt::AlignTop">
          <widget class="QSpinBox" name="second">
           <property name="maximumSize">
            <size>
@@ -479,55 +492,104 @@
        </layout>
       </item>
       <item alignment="Qt::AlignHCenter|Qt::AlignTop">
-       <widget class="QPushButton" name="zoomInButton">
+       <widget class="QGroupBox" name="groupBox_2">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="text">
-         <string>+</string>
+        <property name="maximumSize">
+         <size>
+          <width>166</width>
+          <height>83</height>
+         </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QGroupBox {
+    background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #E0E0E0, stop: 1 #FFFFFF);
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-top: 1ex; /* leave space at the top for the title */
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left; /* position at the top center */
+    padding: 0 3px;
+}</string>
+        </property>
+        <property name="title">
+         <string>Time Speed</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QLabel" name="timeSpeedLabel">
+           <property name="font">
+            <font>
+             <pointsize>16</pointsize>
+             <italic>false</italic>
+            </font>
+           </property>
+           <property name="text">
+            <string>+1 day / sec</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="timeSpeedSlider">
+           <property name="minimumSize">
+            <size>
+             <width>140</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>140</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="minimum">
+            <number>-78</number>
+           </property>
+           <property name="maximum">
+            <number>78</number>
+           </property>
+           <property name="value">
+            <number>0</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
-      <item alignment="Qt::AlignHCenter">
-       <widget class="QSlider" name="zoomSlider">
+      <item alignment="Qt::AlignHCenter|Qt::AlignTop">
+       <widget class="QGroupBox" name="groupBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
-          <width>0</width>
-          <height>160</height>
+          <width>158</width>
+          <height>148</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
-          <height>240</height>
+          <width>158</width>
+          <height>148</height>
          </size>
         </property>
-        <property name="maximum">
-         <number>150</number>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-      </item>
-      <item alignment="Qt::AlignHCenter|Qt::AlignBottom">
-       <widget class="QPushButton" name="zoomOutButton">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="text">
-         <string>-</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QGroupBox" name="groupBox">
         <property name="styleSheet">
          <string notr="true">QGroupBox {
     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
@@ -549,12 +611,27 @@ QGroupBox::title {
          <bool>false</bool>
         </property>
         <property name="checkable">
-         <bool>false</bool>
+         <bool>true</bool>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
         <layout class="QFormLayout" name="formLayout_3">
          <item row="1" column="0">
           <widget class="QLabel" name="label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
             <size>
              <width>65</width>
              <height>16</height>
@@ -565,16 +642,21 @@ QGroupBox::title {
            </property>
           </widget>
          </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="dataRadius">
-           <property name="text">
-            <string>123</string>
-           </property>
-          </widget>
-         </item>
          <item row="2" column="0">
           <widget class="QLabel" name="label_3">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
             <size>
              <width>65</width>
              <height>16</height>
@@ -585,16 +667,21 @@ QGroupBox::title {
            </property>
           </widget>
          </item>
-         <item row="2" column="1">
-          <widget class="QLabel" name="dataMass">
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
-          </widget>
-         </item>
          <item row="3" column="0">
           <widget class="QLabel" name="label_5">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
             <size>
              <width>65</width>
              <height>16</height>
@@ -607,7 +694,19 @@ QGroupBox::title {
          </item>
          <item row="4" column="0">
           <widget class="QLabel" name="label_6">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
             <size>
              <width>65</width>
              <height>16</height>
@@ -618,23 +717,21 @@ QGroupBox::title {
            </property>
           </widget>
          </item>
-         <item row="3" column="1">
-          <widget class="QLabel" name="dataRotation">
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QLabel" name="dataRevolution">
-           <property name="text">
-            <string>TextLabel</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_9">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
             <size>
              <width>65</width>
              <height>16</height>
@@ -647,8 +744,168 @@ QGroupBox::title {
          </item>
          <item row="0" column="1">
           <widget class="QLabel" name="dataName">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>59</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>67</width>
+             <height>16</height>
+            </size>
+           </property>
            <property name="text">
             <string>Sun</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="textInteractionFlags">
+            <set>Qt::NoTextInteraction</set>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QPushButton" name="confirmButton">
+           <property name="text">
+            <string>Confirm</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QPushButton" name="resetButton">
+           <property name="text">
+            <string>Reset</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="radiusEdit">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>67</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="QLineEdit" name="massEdit">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>67</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="QLineEdit" name="rotationEdit">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>67</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="QLineEdit" name="revolutionEdit">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>67</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+             <weight>50</weight>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>
@@ -661,7 +918,7 @@ QGroupBox::title {
          <enum>Qt::Vertical</enum>
         </property>
         <property name="sizeType">
-         <enum>QSizePolicy::Preferred</enum>
+         <enum>QSizePolicy::Expanding</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
@@ -676,7 +933,7 @@ QGroupBox::title {
     <item row="0" column="0">
      <widget class="RenderingWidget" name="openGLWidget">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>

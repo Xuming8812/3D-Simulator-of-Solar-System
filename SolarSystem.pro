@@ -29,20 +29,17 @@ SOURCES += \
         src/mainwindow.cpp \
         src/renderingwidget.cpp \
         src/AstronmicalObject.cpp \
-        src/SolarSystem.cpp \
-    src/paramform.cpp
+        src/SolarSystem.cpp
 
 HEADERS += \
         src/mainwindow.h \
         src/renderingwidget.h \
         src/AstronmicalObject.h \
-        src/SolarSystem.h \
-    src/paramform.h
+        src/SolarSystem.h
 
 
 FORMS += \
-        mainwindow.ui \
-    src/paramform.ui
+        mainwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -52,5 +49,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 mac: LIBS += -framework GLUT
 else:unix|win32: LIBS += -lGLUT
 
+INCLUDEPATH += /usr/local/Cellar/glm/0.9.9.3/include/
 RESOURCES += \
     qsrc.qrc

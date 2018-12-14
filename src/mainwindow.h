@@ -5,7 +5,6 @@
 #include <QDate>
 #include <QTime>
 #include <QTimer>
-#include "paramform.h"
 namespace Ui {
 class MainWindow;
 }
@@ -26,9 +25,9 @@ private slots:
 
     void updateData();
 
-    void on_zoomInButton_clicked();
+//    void on_zoomInButton_clicked();
 
-    void on_zoomOutButton_clicked();
+//    void on_zoomOutButton_clicked();
 
     void on_startButton_clicked();
 
@@ -44,11 +43,18 @@ private slots:
 
     void on_day_currentTextChanged(const QString &arg1);
 
-    void on_paramButton_clicked();
+    void on_timeSpeedSlider_sliderMoved(int position);
+
+    void on_highlightButton_clicked();
+
+    void on_timeSpeedSlider_valueChanged(int value);
+
+    void on_confirmButton_clicked();
+
+    void on_resetButton_clicked();
 
 private:
     Ui::MainWindow *ui;
-    ParamForm *paramForm;
     QTimer *timer;
     bool isPlay;
 

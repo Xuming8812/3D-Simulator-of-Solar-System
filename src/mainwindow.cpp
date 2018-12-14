@@ -9,11 +9,11 @@ MainWindow::MainWindow(QWidget *parent) :
     updateData();
     isPlay = false;
     timer = new QTimer(this);
-    QIcon icon(":icon/play.png");
+    QIcon icon(":icon/pause.png");
     ui->startButton->setIcon(icon);
     InitDataTime();
     connect(timer,SIGNAL(timeout()),this,SLOT(updateDateTime()));
-
+    connect(ui->openGLWidget,SIGNAL(currentObjectChanged()),this,SLOT(updateData()));
     timer->start(1000);
 }
 
@@ -65,36 +65,26 @@ void MainWindow::updateDateTime(){
 
 void MainWindow::updateData(){
     ui->dataName->setText(QString::fromStdString(ui->openGLWidget->getCurrentObject()->getName()));
-    ui->dataRadius->setText(QString::number(ui->openGLWidget->getCurrentObject()->getRadius()));
-    ui->dataRevolution->setText(QString::number(ui->openGLWidget->getCurrentObject()->getSpeedRevolution()));
-    ui->dataRotation->setText(QString::number(ui->openGLWidget->getCurrentObject()->getSpeedRotation()));
-}
+    ui->radiusEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getRadius()));
+    ui->massEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getMass()));
+    ui->revolutionEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getSpeedRevolution()));
+    ui->rotationEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getSpeedRotation()));
 
-void MainWindow::on_zoomInButton_clicked()
-{
-    int curVal = ui->zoomSlider->value();
-    if (curVal < 150)
-        ui->zoomSlider->setValue(curVal+5);
-}
-
-void MainWindow::on_zoomOutButton_clicked()
-{
-    int curVal = ui->zoomSlider->value();
-    if (curVal > 0)
-        ui->zoomSlider->setValue(curVal-5);
 }
 
 void MainWindow::on_startButton_clicked()
 {
-    if (!isPlay){
-        isPlay = true;
+    if (!ui->openGLWidget->is_play){
+        ui->openGLWidget->is_play = true;
         QIcon icon(":icon/pause.png");
         ui->startButton->setIcon(icon);
+        ui->openGLWidget->timer.start(16);
     }
     else {
-        isPlay = false;
+        ui->openGLWidget->is_play = false;
         QIcon icon(":icon/play.png");
         ui->startButton->setIcon(icon);
+        ui->openGLWidget->timer.stop();
     }
 }
 
@@ -144,8 +134,83 @@ void MainWindow::on_day_currentTextChanged(const QString &arg1)
     dateTime->setDate(QDate(year,month,day));
 }
 
-void MainWindow::on_paramButton_clicked()
+
+
+void MainWindow::on_timeSpeedSlider_sliderMoved(int position)
 {
-    paramForm = new ParamForm(this,ui->openGLWidget->getSolarSystem()->getObjects()[1]);
-    paramForm->show();
+    if (position == 0)
+        ui->timeSpeedLabel->setText("Stop");
+    else if (position > -24 && position < 24 )
+        ui->timeSpeedLabel->setText(QString::number(position) + " hour / sec");
+    else if (position >= 24 && position < 54)
+        ui->timeSpeedLabel->setText(QString::number(position - 23) + " day / sec");
+    else if (position > -54 && position <= -24)
+        ui->timeSpeedLabel->setText(QString::number(position + 23) + " day / sec");
+    else if (position >= 54 && position < 78)
+        ui->timeSpeedLabel->setText(QString::number((position - 54)/2.0) + " month / sec");
+    else if (position > -78 && position <= -54)
+        ui->timeSpeedLabel->setText(QString::number((position + 54)/2.0) + " month / sec");
+    else if (position == 78)
+        ui->timeSpeedLabel->setText(" +1 year / sec");
+    else
+        ui->timeSpeedLabel->setText(" -1 year / sec");
+}
+
+void MainWindow::on_timeSpeedSlider_valueChanged(int value)
+{
+    if (value == 0)
+        ui->timeSpeedLabel->setText("Stop");
+    else if (value > -24 && value < 24 )
+        ui->timeSpeedLabel->setText(QString::number(value) + " hour / sec");
+    else if (value >= 24 && value < 54)
+        ui->timeSpeedLabel->setText(QString::number(value - 23) + " day / sec");
+    else if (value > -54 && value <= -24)
+        ui->timeSpeedLabel->setText(QString::number(value + 23) + " day / sec");
+    else if (value >= 54 && value < 78)
+        ui->timeSpeedLabel->setText(QString::number((value - 54)/2.0) + " month / sec");
+    else if (value > -78 && value <= -54)
+        ui->timeSpeedLabel->setText(QString::number((value + 54)/2.0) + " month / sec");
+    else if (value == 78)
+        ui->timeSpeedLabel->setText(" +1 year / sec");
+    else
+        ui->timeSpeedLabel->setText(" -1 year / sec");
+}
+
+void MainWindow::on_highlightButton_clicked()
+{
+    ui->openGLWidget->is_highlighting = !ui->openGLWidget->is_highlighting;
+    if (ui->openGLWidget->is_highlighting){
+        for (auto it : ui->openGLWidget->getSolarSystem()->getObjects()){
+            if (it->getName() == ui->openGLWidget->getCurrentObject()->getName())
+                continue;
+            it->setVisibility(false);
+//            it->draw();
+        }
+    }
+    else{
+        for (auto it : ui->openGLWidget->getSolarSystem()->getObjects()){
+            it->setVisibility(true);
+//            it->draw();
+        }
+    }
+}
+
+
+
+void MainWindow::on_confirmButton_clicked()
+{
+//    qDebug() << ui->dataRadius->text().toFloat
+
+//    qDebug() << ui->radiusEdit->text();
+    ui->openGLWidget->getCurrentObject()->setRadius(ui->radiusEdit->text().toFloat());
+    ui->openGLWidget->getCurrentObject()->setMass(ui->massEdit->text().toFloat());
+}
+
+void MainWindow::on_resetButton_clicked()
+{
+    int i = 0;
+    for (auto it : ui->openGLWidget->objects_copy){
+        ui->openGLWidget->getSolarSystem()->getObjects()[i]->setRadius(it->getRadius());
+        i++;
+    }
 }

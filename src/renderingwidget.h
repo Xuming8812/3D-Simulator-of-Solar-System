@@ -9,12 +9,18 @@
 #include <QGLWidget>
 #include <qgl.h>
 #include <QTimer>
+#include <thread>
 #include <QDebug>
 #include <QtOpenGL>
 #include <vector>
 #include <QMouseEvent>
+#include <glm/glm.hpp>
+#include <glm/vec3.hpp>
+#include <glm/mat4x4.hpp>
+#include <glm/gtx/transform.hpp>
 #include "SolarSystem.h"
 #include "AstronmicalObject.h"
+
 
 class RenderingWidget : public QGLWidget
 {
@@ -31,16 +37,19 @@ public:
     void mousePressEvent(QMouseEvent *e);
     void mouseMoveEvent(QMouseEvent *e);
     void mouseReleaseEvent(QMouseEvent *e);
-    void drawStar();
+    void mouseDoubleClickEvent(QMouseEvent* e);
+
     void drawSky();
-    void drawSky(GLfloat x,GLfloat y,GLfloat z,GLfloat width,GLfloat height,GLfloat len);
+//    void outline();
+
     SolarSystem* getSolarSystem();
     AstronmicalObject* getCurrentObject();
 
 private:
-    QTimer timer;
+
     GLfloat rTri, rQuad;
-    GLUquadricObj *mySphere;
+    GLUquadricObj *shadow;
+    GLUquadricObj *skySphere;
     GLdouble eye_distance;
     GLdouble eyeX, eyeY,eyeZ;
     GLdouble eye_goal[3];
@@ -49,10 +58,25 @@ private:
     QPoint lastPos, curPos;
     GLfloat hAngle, vAngle;
 
+    GLfloat positions[10][2];
+
     SolarSystem *solarSystem;
     AstronmicalObject *currentObject;
 
     bool is_adjust_view;
+    bool is_fullscreen;
+
+signals:
+    void currentObjectChanged();
+
+public:
+    QTimer timer;
+    bool is_highlighting;
+    bool is_play;
+    std::vector<AstronmicalObject*> objects_copy;
+
+private slots:
+    void updatePosition();
 
 };
 

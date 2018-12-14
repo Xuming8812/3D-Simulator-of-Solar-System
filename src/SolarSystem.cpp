@@ -21,7 +21,7 @@ SolarSystem::SolarSystem()
 	{
 		if (item.type == STAR)
 		{
-            AstronmicalObject* current = new Star(item.name, item.radius, item.distance, item.speedRevolution, item.speedRotation, nullptr,item.color);
+            AstronmicalObject* current = new Star(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, nullptr,item.color);
 			
 			objects.push_back(current);
 		
@@ -39,7 +39,7 @@ SolarSystem::SolarSystem()
 				}
 			}
 
-            AstronmicalObject* current = new Planet(item.name, item.radius, item.distance, item.speedRevolution, item.speedRotation, objects[index],item.color);
+            AstronmicalObject* current = new Planet(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, objects[index],item.color);
 			objects.push_back(current);
 		}
 	}
@@ -110,6 +110,9 @@ void SolarSystem::readParameters()
 		//get radius
 		getline(fin, line);
 		current.radius = getFloatParameter(line);
+        //get mass
+        getline(fin, line);
+        current.mass = getFloatParameter(line);
 		//get distance
 		getline(fin, line);
 		current.distance = getFloatParameter(line);
@@ -119,11 +122,11 @@ void SolarSystem::readParameters()
 		//get color
 		getline(fin, line);
 		
-		GLfloat* temp= getArrayParameter(line);
-		for (int i = 0; i < 4; i++)
-		{
-			current.color[i] = temp[i];
-		}
+        GLfloat* temp= getArrayParameter(line);
+        for (int i = 0; i < 4; i++)
+        {
+            current.color[i] = temp[i];
+        }
 
 		parameters.push_back(current);
 	}
@@ -259,6 +262,7 @@ void SolarSystem::keyboard(unsigned char key, int x, int y)
 {
 
 }
+
 
 /**
  * @name: display

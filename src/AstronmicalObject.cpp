@@ -20,15 +20,18 @@
  * @param par: pointer to parent object
  * @return: void
  */
-AstronmicalObject::AstronmicalObject(std::string label, GLfloat r, GLfloat d, 
+AstronmicalObject::AstronmicalObject(std::string label, GLfloat r, GLfloat m, GLfloat d,
 	GLfloat sRevolute, GLfloat sRotate, AstronmicalObject* par) 
 {
     this->mySphere = gluNewQuadric();
 	this->name = label;
 	this->radius = r;
+    this->mass = m;
 	this->distance = d;
 
 	this->speedRotation = sRotate;
+
+    this->isVisible = true;
 	
 	//actually the speed is an angular velocity in degree
 	if (sRevolute > 0)
@@ -65,7 +68,7 @@ void AstronmicalObject::drawObject()
 		if (parent != nullptr && parent->distance > 0)
 		{
 			glRotatef(parent->angleRevolution, 0, 0, 1);
-            glTranslatef(parent->distance, parent->distance, 0.0);
+            glTranslatef(parent->distance, 0.0, 0.0);
 		}
 
 		//draw orbit of this object
@@ -79,8 +82,9 @@ void AstronmicalObject::drawObject()
 //		glEnd();
 
 		//draw this object
+
         glRotatef(angleRevolution, 0, 0, 1);
-        glTranslatef(distance, distance, 0.0);
+        glTranslatef(distance, 0.0, 0.0);
 		glRotatef(angleRotation, 0, 0, 1);
 
 //		glColor3f(color[0], color[1], color[2]);
@@ -103,8 +107,8 @@ void AstronmicalObject::update(int time)
 {
 	
 	//update the angle of rotation and revolution
-	angleRevolution += time * speedRevolution;
-	angleRotation += time * speedRotation;
+    angleRevolution += time * speedRevolution / 3.0;
+    angleRotation += time * speedRotation / 3.0;
 
 }
 
@@ -121,8 +125,8 @@ void AstronmicalObject::update(int time)
  * @param rgbColor: color of the planet
  * @return: void
  */
-Planet::Planet(std::string label, GLfloat r, GLfloat d, GLfloat sRevolute, GLfloat sRotate, AstronmicalObject* par, GLfloat rgbColor[4])
-	:AstronmicalObject(label, r, d, sRevolute, sRotate, par)
+Planet::Planet(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRevolute, GLfloat sRotate, AstronmicalObject* par, GLfloat rgbColor[4])
+    :AstronmicalObject(label, r, m, d, sRevolute, sRotate, par)
 {
 	setColor(rgbColor);
 }
@@ -141,25 +145,18 @@ Planet::~Planet(){}
 void Planet::drawPlanet()
 {
 	// for test
-	GLfloat ambient[4]{ 0.0, 0.0, 0.5, 1.0 };
-	GLfloat diffuse[4]{ 0.0, 0.0, 0.5, 1.0 };
-	GLfloat specular[4]{ 0.0, 0.0, 1.0, 1.0 };
-	GLfloat emission[4]{color[0],color[1],color[2],color[3]};
+    GLfloat ambient[4]{ 0.5, 0.5, 0.5, 1.0 };
+    GLfloat diffuse[4]{ 0.5, 0.5, 0.5, 1.0 };
+    GLfloat specular[4]{ 1.0, 1.0, 1.0, 1.0 };
+    GLfloat emission[4]{color[0],color[1],color[2],color[3]};
 
-
-
-	GLfloat shineness = 90.0;
+    GLfloat shineness = 90;
 
     glMaterialfv(GL_BACK, GL_AMBIENT, ambient);
     glMaterialfv(GL_BACK, GL_DIFFUSE, diffuse);
     glMaterialfv(GL_BACK, GL_SPECULAR, specular);
     glMaterialf(GL_BACK, GL_SHININESS, shineness);
-
-//    glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
-//    glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
-//    glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
-//    glMaterialfv(GL_FRONT, GL_EMISSION, emission);
-//    glMaterialf(GL_FRONT, GL_SHININESS, shineness);
+    glMaterialfv(GL_BACK, GL_EMISSION, emission);
 }
 
 /**
@@ -174,8 +171,8 @@ void Planet::drawPlanet()
  * @param rgbColor: color of the planet
  * @return: void
  */
-Star::Star(std::string label, GLfloat r, GLfloat d, GLfloat sRevolute, GLfloat sRotate, AstronmicalObject* par, GLfloat rgbColor[4])
-	:Planet(label, r, d, sRevolute, sRotate, par, rgbColor)
+Star::Star(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRevolute, GLfloat sRotate, AstronmicalObject* par, GLfloat rgbColor[4])
+    :Planet(label, r, m, d, sRevolute, sRotate, par, rgbColor)
 {
 }
 
@@ -192,13 +189,39 @@ Star::~Star(){}
 void Star::addLightSource()
 {
 	// for test
-	GLfloat position[] = { 0.0, 0.0, 0.0, 1.0 };
-	GLfloat ambient[] = { 0.0, 0.0, 0.0, 1.0 };
-	GLfloat diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat position0[] = { 2.0, 0.0, 0.0, 1.0 };
+    GLfloat ambient[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
 	GLfloat specular[] = { 1.0, 1.0, 1.0, 1.0 };
 
-	glLightfv(GL_LIGHT0, GL_POSITION, position);
+    glLightfv(GL_LIGHT0, GL_POSITION, position0);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+
+    GLfloat position1[] = { 0.0,2.0, .0, 1.0 };
+    GLfloat position2[] = { -2.0, 0.0, .0, 1.0 };
+    GLfloat position3[] = { 0.0, -2.0, .0, 1.0 };
+    GLfloat position4[] = { 0.0, 3.0, .0, 1.0 };
+    GLfloat position5[] = { 0.0, 3.0, .0, 1.0 };
+    GLfloat position6[] = { 0.0, 3.0, .0, 1.0 };
+    GLfloat position7[] = { 0.0, 3.0, .0, 1.0 };
+    glLightfv(GL_LIGHT1, GL_POSITION, position1);
+    glLightfv(GL_LIGHT1, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, specular);
+
+    glLightfv(GL_LIGHT2, GL_POSITION, position2);
+    glLightfv(GL_LIGHT2, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT2, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT2, GL_SPECULAR, specular);
+    glLightfv(GL_LIGHT3, GL_POSITION, position3);
+    glLightfv(GL_LIGHT3, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT3, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT3, GL_SPECULAR, specular);
+//    glLightfv(GL_LIGHT4, GL_POSITION, position4);
+//    glLightfv(GL_LIGHT4, GL_AMBIENT, ambient);
+//    glLightfv(GL_LIGHT4, GL_DIFFUSE, diffuse);
+//    glLightfv(GL_LIGHT4, GL_SPECULAR, specular);
+
 }

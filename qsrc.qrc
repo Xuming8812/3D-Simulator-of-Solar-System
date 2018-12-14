@@ -15,5 +15,6 @@
         <file>icon/pause.png</file>
         <file>icon/play.png</file>
         <file>images/stars.jpg</file>
+        <file>images/moon.jpg</file>
     </qresource>
 </RCC>
