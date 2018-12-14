@@ -19,9 +19,12 @@ main objectives of the implementation are as follows.
 ```
 git clone git@github.com:ENGN2912B-2018/GPU-A.git
 ```
-2. Load module qt/5.10.1 on CCV
+2. Load module qt/5.10.1 and freeglut/3.0.0 on CCV
 ```
 moudle load qt/5.10.1
+```
+```
+freeglut/3.0.0
 ```
 3. Generate MakeFile and Compile
 ```
