@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include "AstronmicalObject.h"
 #include <cmath>
 #include <vector>
@@ -221,9 +220,4 @@ void Star::addLightSource()
     glLightfv(GL_LIGHT3, GL_AMBIENT, ambient);
     glLightfv(GL_LIGHT3, GL_DIFFUSE, diffuse);
     glLightfv(GL_LIGHT3, GL_SPECULAR, specular);
-//    glLightfv(GL_LIGHT4, GL_POSITION, position4);
-//    glLightfv(GL_LIGHT4, GL_AMBIENT, ambient);
-//    glLightfv(GL_LIGHT4, GL_DIFFUSE, diffuse);
-//    glLightfv(GL_LIGHT4, GL_SPECULAR, specular);
-
 }
