@@ -213,13 +213,6 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
         lastPos = e->pos();
     }
 
-<<<<<<< HEAD
-
-    GLdouble winX, winY, winZ; //variables to hold screen x,y,z coordinates
-    GLdouble worldX, worldY, worldZ; //variables to hold world x,y,z coordinates
-
-    if (!is_matrix_set){
-=======
     // mouse position in screen coordinates
     GLfloat winX, winY, winZ;
     // mouse position in world coordinates
@@ -227,7 +220,6 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
 
     // store the matrice for unprojection
     if (!is_matrix_set) {
->>>>>>> fcb9d0d7e0724e6f9ba726d83717412752d71ea4
         is_matrix_set = true;
         glGetDoublev( GL_MODELVIEW_MATRIX, modelview); //get the modelview info
         glGetDoublev( GL_PROJECTION_MATRIX, projection); //get the projection matrix info
@@ -235,12 +227,9 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
         viewport[2] /= 2;
         viewport[3] /= 2;
     }
-<<<<<<< HEAD
 
     winX = lastPos.x();
     winY = viewport[3] - lastPos.y();
-=======
->>>>>>> fcb9d0d7e0724e6f9ba726d83717412752d71ea4
     winZ = 0;
 
     // get the world coordinates from the screen coordinates
@@ -260,7 +249,6 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
             emit currentObjectChanged();
             break;
         }
-
     }
 }
 
@@ -333,8 +321,3 @@ void RenderingWidget::updatePosition(){
         it->update(1);
     }
 }
-<<<<<<< HEAD
-=======
-
-
->>>>>>> fcb9d0d7e0724e6f9ba726d83717412752d71ea4
