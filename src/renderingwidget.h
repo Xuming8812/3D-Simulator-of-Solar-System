@@ -39,6 +39,8 @@ public:
 
     void drawShadow(GLfloat radius, GLfloat x, GLfloat y);
 
+    void dragObject();
+
 
     SolarSystem* getSolarSystem();
     AstronmicalObject* getCurrentObject();
