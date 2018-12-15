@@ -3,6 +3,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <QString>
+#include <QApplication>
 
 
 
@@ -23,14 +25,14 @@ SolarSystem::SolarSystem()
 	{
 		if (item.type == STAR)
 		{
-            AstronmicalObject* current = new Star(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, nullptr,item.color);			
+            AstronmicalObject* current = new Star(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, nullptr);
 			      objects.push_back(current);
 		
 		}
 
 		if (item.type == PLANET)
 		{
-			int index;
+            unsigned index;
 
 			for (index = 0; index < objects.size(); index++)
 			{
@@ -41,7 +43,7 @@ SolarSystem::SolarSystem()
 			}
 
 
-            AstronmicalObject* current = new Planet(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, objects[index],item.color);
+            AstronmicalObject* current = new Planet(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, objects[index]);
 			objects.push_back(current);
 		}
 
@@ -79,7 +81,13 @@ void SolarSystem::readParameters()
 {
 
     ifstream fin;
-    fin.open("/Users/gengyoung/ENGN2912B/SolarSystem/Parameters.txt");
+
+    QString appPath = QCoreApplication::applicationDirPath();
+    unsigned endInd = static_cast<unsigned>(appPath.indexOf("build"));
+    string curDir = appPath.toStdString().substr(0,endInd) + "GPU-A/Parameters.txt";
+    fin.open(curDir);
+
+    //fin.open("/Users/LM/Desktop/TeamProject/SolarSystem/GPU-A/Parameters.txt");
 
 
 	if (!fin)
@@ -157,8 +165,8 @@ string SolarSystem::getStringParameter(string input)
 
 	char quote = '\"';
 
-	int start = input.find_first_of(quote);
-	int end = input.find_last_of(quote);
+    unsigned start = static_cast<unsigned>(input.find_first_of(quote));
+    unsigned end = static_cast<unsigned>(input.find_last_of(quote));
 
 	if (start>=end)
 	{
@@ -183,9 +191,9 @@ GLfloat* SolarSystem::getArrayParameter(string input)
 		return nullptr;
 	}
 
-	int start = input.find_first_of('=');
+    unsigned start = static_cast<unsigned>(input.find_first_of('='));
 
-	GLfloat result[4];
+    GLfloat* result = new GLfloat[4];
 
 	stringstream ss;
 
@@ -213,7 +221,7 @@ SolarSystem::OBJECTTYPE SolarSystem::getTypeParameter(string input)
 		return PLANET;
 	}
 
-	int position = input.find_first_of("type = ");
+    unsigned position = static_cast<unsigned>(input.find_first_of("type = "));
 
 	if (position != 0)
 	{
@@ -249,7 +257,7 @@ GLfloat SolarSystem::getFloatParameter(string input)
 		return 0.0;
 	}
 
-	int start = input.find_first_of('=');
+    unsigned start = static_cast<unsigned>(input.find_first_of('='));
 
 	float temp = stof(input.substr(start + 2));
 
@@ -268,7 +276,29 @@ GLfloat SolarSystem::getFloatParameter(string input)
  */
 void SolarSystem::keyboard(unsigned char key, int x, int y)
 {
-
+    int offset = 20;
+    int reset_Z = 700,reset_Y = -700;
+    int temp = x;
+    temp = y;
+    switch(key)
+    {
+        case 'w':eyeY+=offset;break;
+        case 'x':eyeY-=offset;break;
+        case 's':eyeZ+=offset;break;
+        case 'S':eyeZ-=offset;break;
+        case 'a':eyeX+=offset;break;
+        case 'd':eyeX-=offset;break;
+        case 'r':
+            eyeX = 0;
+            eyeY = reset_Y;
+            eyeZ = reset_Z;
+            centerX=centerY = centerZ = 0;
+            upX = upY = 0;
+            upZ = 1;
+            break;
+    default:
+        break;
+    }
 }
 
 
@@ -284,7 +314,7 @@ void SolarSystem::display()
 	glClearColor(.7f, .7f, .7f, .1f);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluPerspective(75.0f, 1.0f, 1.0f, 40000000);
+    gluPerspective(75.0, 1.0, 1.0, 40000000);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 

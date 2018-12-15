@@ -20,7 +20,7 @@ public:
     AstronmicalObject(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRevolute, GLfloat sRotate,  AstronmicalObject* par);
 
 	//destructor
-    ~AstronmicalObject();
+    //~AstronmicalObject(){}
 
 
 
@@ -67,7 +67,7 @@ public:
 	//access data member function for color of the astronmical object
 	GLfloat* getColor() const
 	{
-		GLfloat result[4];
+        GLfloat* result = new GLfloat[4];
 
 		for (int i{ 0 }; i < 4; i++)
 		{
@@ -196,8 +196,9 @@ class Planet : public AstronmicalObject
 {
 public:
 
-    Planet(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRotate, GLfloat sRevolute, AstronmicalObject* par, GLfloat rgbColor[4]);
-    ~Planet();
+    Planet(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRotate, GLfloat sRevolute, AstronmicalObject* par);
+    //~Planet(){}
+
 
 
 	//helper function to draw a planet
@@ -262,7 +263,7 @@ class Star : public Planet
 {
 public:
 
-    Star(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRotate, GLfloat sRevolute, AstronmicalObject* par, GLfloat rgbColor[4]);
+    Star(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRotate, GLfloat sRevolute, AstronmicalObject* par);
     ~Star();
 
 
