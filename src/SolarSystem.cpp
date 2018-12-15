@@ -3,6 +3,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <QString>
+#include <QApplication>
 
 
 
@@ -23,7 +25,7 @@ SolarSystem::SolarSystem()
 	{
 		if (item.type == STAR)
 		{
-            AstronmicalObject* current = new Star(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, nullptr,item.color);			
+            AstronmicalObject* current = new Star(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, nullptr);
 			      objects.push_back(current);
 		
 		}
@@ -41,7 +43,7 @@ SolarSystem::SolarSystem()
 			}
 
 
-            AstronmicalObject* current = new Planet(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, objects[index],item.color);
+            AstronmicalObject* current = new Planet(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, objects[index]);
 			objects.push_back(current);
 		}
 
@@ -79,7 +81,13 @@ void SolarSystem::readParameters()
 {
 
     ifstream fin;
-    fin.open("/Users/LM/Desktop/TeamProject/SolarSystem/GPU-A/Parameters.txt");
+
+    QString appPath = QCoreApplication::applicationDirPath();
+    unsigned endInd = static_cast<unsigned>(appPath.indexOf("build"));
+    string curDir = appPath.toStdString().substr(0,endInd) + "GPU-A/Parameters.txt";
+    fin.open(curDir);
+
+    //fin.open("/Users/LM/Desktop/TeamProject/SolarSystem/GPU-A/Parameters.txt");
 
 
 	if (!fin)

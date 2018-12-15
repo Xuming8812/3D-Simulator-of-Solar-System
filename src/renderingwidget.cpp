@@ -101,7 +101,7 @@ void RenderingWidget::paintGL(){
         i++;
     }
     glEnable(GL_DEPTH_TEST);
-    rTri += 0.1;
+    rTri += 0.1f;
 
 }
 
@@ -137,7 +137,7 @@ void RenderingWidget::drawSky(){
     glRotatef(rTri,1.0,1.0,1.0);
 
     // Create sphere
-    gluSphere(skySphere, sky_radious, 30, 30);
+    gluSphere(skySphere, static_cast<double>(sky_radious), 30, 30);
     gluQuadricOrientation(skySphere, GLU_INSIDE);
 
 
@@ -200,7 +200,7 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
     GLint viewport[4]; //var to hold the viewport info
     GLdouble modelview[16]; //var to hold the modelview info
     GLdouble projection[16]; //var to hold the projection matrix info
-    GLfloat winX, winY, winZ; //variables to hold screen x,y,z coordinates
+    GLdouble winX, winY, winZ; //variables to hold screen x,y,z coordinates
     GLdouble worldX, worldY, worldZ; //variables to hold world x,y,z coordinates
 
     glGetDoublev( GL_MODELVIEW_MATRIX, modelview); //get the modelview info
@@ -209,7 +209,7 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
     viewport[2] /= 2;
     viewport[3] /= 2;
     winX = lastPos.x();
-    winY = (float)viewport[3] - lastPos.y();
+    winY = viewport[3] - lastPos.y();
     winZ = 0;
 
     //get the world coordinates from the screen coordinates
@@ -220,11 +220,11 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
     int i = 0;
     for (auto it : solarSystem->getObjects()){
         GLfloat dist = it->getDistance();
-        GLfloat theta = it->getAngleRevolution() / 180 * PI;
-        GLfloat radius = it->getRadius();
+        GLfloat theta = it->getAngleRevolution() / 180.0f * static_cast<float>(PI);
+        GLdouble radius = static_cast<double>(it->getRadius());
         GLfloat x = dist * cos(theta);
         GLfloat y = dist * sin(theta);
-        if (qPow(x-worldX,2) + qPow(y-worldY,2) <= radius * radius){
+        if (qPow(static_cast<double>(x)-worldX,2) + qPow(static_cast<double>(y)-worldY,2) <= radius * radius){
             currentObject = it;
             emit currentObjectChanged();
             break;
@@ -242,20 +242,20 @@ void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
 
     if (is_adjust_view){
         curPos = e->pos();
-        float dH = atan((curPos.x() - lastPos.x()) / (5 * eye_distance));
-        float dV = atan((curPos.y() - lastPos.y()) / (5 * eye_distance));
+        float dH = static_cast<float>(atan((curPos.x() - lastPos.x()) / (5 * eye_distance)));
+        float dV = static_cast<float>(atan((curPos.y() - lastPos.y()) / (5 * eye_distance)));
 
         hAngle -= dH;
-        if (vAngle + dV > PI / 2)
-            vAngle = PI / 2;
-        else if (vAngle + dV < -PI / 2)
-            vAngle = -PI / 2;
+        if (vAngle + dV > static_cast<float>(PI)/ 2)
+            vAngle = static_cast<float>(PI) / 2;
+        else if (vAngle + dV < -static_cast<float>(PI) / 2)
+            vAngle = -static_cast<float>(PI) / 2;
         else
             vAngle += dV;
 
-        eyeX = cos(vAngle) * sin(hAngle);
-        eyeY = sin(vAngle);
-        eyeZ = cos(vAngle) * cos(hAngle);
+        eyeX = cos(static_cast<double>(vAngle)) * sin(static_cast<double>(hAngle));
+        eyeY = sin(static_cast<double>(vAngle));
+        eyeZ = cos(static_cast<double>(vAngle)) * cos(static_cast<double>(hAngle));
         lastPos = curPos;
     }
 }
@@ -266,6 +266,7 @@ void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
  * @param e
  */
 void RenderingWidget::mouseReleaseEvent(QMouseEvent *e){
+
     is_adjust_view = false;
 }
 

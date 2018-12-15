@@ -4,7 +4,7 @@
 #include <cmath>
 #include <vector>
 
-#define PI 3.1415926
+
 
 #define SLICES 50
 #define STACKS 50
@@ -66,6 +66,8 @@ AstronmicalObject::AstronmicalObject(std::string label, GLfloat r, GLfloat m, GL
 void AstronmicalObject::drawObject()
 {
 	//enable opengl function to draw line
+
+    double PI=3.1415926;
 	glEnable(GL_LINE_SMOOTH);
 	glEnable(GL_BLEND);
 
@@ -76,27 +78,72 @@ void AstronmicalObject::drawObject()
 		{
 			glRotatef(parent->angleRevolution, 0, 0, 1);
 
-            glTranslatef(parent->distance, 0.0, 0.0);
+            float dis = parent->distance;
+            double angle = static_cast<double>(parent->angleRevolution);
+            int num = static_cast<int>(angle/360);
+            angle-=num*360;
+            angle = angle*PI/180;
+
+            dis = 1.5*dis*dis/sqrt((1.5*dis*sin(angle))*(1.5f*dis*sin(angle))+(dis*cos(angle))*(dis*cos(angle)));
+
+            glTranslatef(dis, 0.0, 0.0);
 		}
 
 		//draw orbit of this object
-//		glBegin(GL_LINES);
+        glBegin(GL_LINES);
 
-//		for (int i{ 0 }; i < NUM_ELEMENT; i++)
-//		{
-//			glVertex2f(distance * cos(2 * PI*i / NUM_ELEMENT), distance*sin(2 * PI*i / NUM_ELEMENT));
-//		}
+        //for planets the orbit is ellipse
+        if(parent != nullptr && parent->distance > 0)
+        {
+            for (int i{ 0 }; i < NUM_ELEMENT; i++)
+            {
+                glVertex2f(distance * static_cast<float>(cos(2.0 * PI*i / NUM_ELEMENT)), distance*static_cast<float>(sin(2.0 * PI*i / NUM_ELEMENT)));
+            }
+        }
+        else {
+            for (int i{ 0 }; i < NUM_ELEMENT; i++)
+            {
+                glVertex2f(distance *1.5f* static_cast<float>(cos(2.0 * PI*i / NUM_ELEMENT)), distance*static_cast<float>(sin(2.0 * PI*i / NUM_ELEMENT)));
+            }
+        }
 
-//		glEnd();
+
+
+        glEnd();
 
 		//draw this object
+        if(parent != nullptr && parent->distance > 0)
+        {
+            glRotatef(angleRevolution, 0, 0, 1);
+            glTranslatef(distance, 0.0, 0.0);
+            glRotatef(angleRotation, 0, 0, 1);
+        }
+        else if(parent == nullptr)
+        {
+            glRotatef(angleRevolution, 0, 0, 1);
+            glTranslatef(distance, 0.0, 0.0);
+            glRotatef(angleRotation, 0, 0, 1);
+        }
+        else {
+            glRotatef(angleRevolution, 0, 0, 1);
+            float dis = distance;
+            double angle = static_cast<double>(angleRevolution);
 
-        glRotatef(angleRevolution, 0, 0, 1);
-        glTranslatef(distance, 0.0, 0.0);
-		glRotatef(angleRotation, 0, 0, 1);
+            int num = static_cast<int>(angle/360);
+            angle-=num*360;
+            angle = angle*PI/180;
+
+            dis = 1.5*dis*dis/sqrt((1.5*dis*sin(angle))*(1.5*dis*sin(angle))+(dis*cos(angle))*(dis*cos(angle)));
+            glTranslatef(dis, 0.0, 0.0);
+            glRotatef(angleRotation, 0, 0, 1);
+
+        }
+
+
+
 
 //		glColor3f(color[0], color[1], color[2]);
-        gluSphere(mySphere, radius, SLICES, STACKS);
+        gluSphere(mySphere, static_cast<double>(radius), SLICES, STACKS);
         gluQuadricNormals(mySphere, GL_SMOOTH);
         gluQuadricTexture(mySphere, GL_TRUE);
 //		glutSolidSphere(radius, SLICES, STACKS);
@@ -137,7 +184,7 @@ void AstronmicalObject::update(int time)
  * @param rgbColor: color of the planet
  * @return: void
  */
-Planet::Planet(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRevolute, GLfloat sRotate, AstronmicalObject* par, GLfloat rgbColor[4])
+Planet::Planet(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRevolute, GLfloat sRotate, AstronmicalObject* par)
     :AstronmicalObject(label, r, m, d, sRevolute, sRotate, par){};
 
 
@@ -150,7 +197,7 @@ Planet::Planet(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRevo
 /**
  * @brief Planet::~Planet
  */
-Planet::~Planet(){}
+//Planet::~Planet(){}
 
 void Planet::drawPlanet()
 {
@@ -181,8 +228,8 @@ void Planet::drawPlanet()
  * @param rgbColor: color of the planet
  * @return: void
  */
-Star::Star(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRevolute, GLfloat sRotate, AstronmicalObject* par, GLfloat rgbColor[4])
-    :Planet(label, r, m, d, sRevolute, sRotate, par, rgbColor)
+Star::Star(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRevolute, GLfloat sRotate, AstronmicalObject* par)
+    :Planet(label, r, m, d, sRevolute, sRotate, par)
 {
 }
 
