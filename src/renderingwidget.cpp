@@ -15,6 +15,7 @@ RenderingWidget::RenderingWidget(QWidget *parent):QGLWidget(parent)
     is_adjust_view = false;
     is_fullscreen = false;
     is_highlighting = false;
+    is_matrix_set = false;
     is_play = true;
     hAngle = 0.0;
     vAngle = 0.0;
@@ -102,7 +103,6 @@ void RenderingWidget::paintGL(){
     }
     glEnable(GL_DEPTH_TEST);
     rTri += 0.1f;
-
 }
 
 /**
@@ -197,17 +197,19 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
         lastPos = e->pos();
     }
 
-    GLint viewport[4]; //var to hold the viewport info
-    GLdouble modelview[16]; //var to hold the modelview info
-    GLdouble projection[16]; //var to hold the projection matrix info
+
     GLdouble winX, winY, winZ; //variables to hold screen x,y,z coordinates
     GLdouble worldX, worldY, worldZ; //variables to hold world x,y,z coordinates
 
-    glGetDoublev( GL_MODELVIEW_MATRIX, modelview); //get the modelview info
-    glGetDoublev( GL_PROJECTION_MATRIX, projection); //get the projection matrix info
-    glGetIntegerv( GL_VIEWPORT, viewport); //get the viewport info
-    viewport[2] /= 2;
-    viewport[3] /= 2;
+    if (!is_matrix_set){
+        is_matrix_set = true;
+        glGetDoublev( GL_MODELVIEW_MATRIX, modelview); //get the modelview info
+        glGetDoublev( GL_PROJECTION_MATRIX, projection); //get the projection matrix info
+        glGetIntegerv( GL_VIEWPORT, viewport); //get the viewport info
+        viewport[2] /= 2;
+        viewport[3] /= 2;
+    }
+
     winX = lastPos.x();
     winY = viewport[3] - lastPos.y();
     winZ = 0;
@@ -223,7 +225,7 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
         GLfloat theta = it->getAngleRevolution() / 180.0f * static_cast<float>(PI);
         GLdouble radius = static_cast<double>(it->getRadius());
         GLfloat x = dist * cos(theta);
-        GLfloat y = dist * sin(theta);
+        GLfloat y = dist * sin(theta) * cos(vAngle);
         if (qPow(static_cast<double>(x)-worldX,2) + qPow(static_cast<double>(y)-worldY,2) <= radius * radius){
             currentObject = it;
             emit currentObjectChanged();
@@ -302,20 +304,3 @@ void RenderingWidget::updatePosition(){
         it->update(1);
     }
 }
-
-/*
-void RenderingWidget::outline(){
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glColor4f(1.0,1.0,1.0,0.2);
-    glLoadIdentity();
-    gluLookAt(0,0,10,0,0,0,0,1,0);
-    glRotatef(rTri,0,0,1);
-    glTranslatef(xTrans,yTrans,-10);
-    glRotatef(rTri,1,1,1);
-    glBindTexture(GL_TEXTURE_2D,texture[0]);
-    gluSphere(shadow,2.2,30,30);
-}
-*/
-
-

@@ -107,8 +107,6 @@ void AstronmicalObject::drawObject()
             }
         }
 
-
-
         glEnd();
 
 		//draw this object
@@ -136,19 +134,11 @@ void AstronmicalObject::drawObject()
             dis = 1.5*dis*dis/sqrt((1.5*dis*sin(angle))*(1.5*dis*sin(angle))+(dis*cos(angle))*(dis*cos(angle)));
             glTranslatef(dis, 0.0, 0.0);
             glRotatef(angleRotation, 0, 0, 1);
-
         }
 
-
-
-
-//		glColor3f(color[0], color[1], color[2]);
         gluSphere(mySphere, static_cast<double>(radius), SLICES, STACKS);
         gluQuadricNormals(mySphere, GL_SMOOTH);
         gluQuadricTexture(mySphere, GL_TRUE);
-//		glutSolidSphere(radius, SLICES, STACKS);
-
-
 	}
 
 	glPopMatrix();
