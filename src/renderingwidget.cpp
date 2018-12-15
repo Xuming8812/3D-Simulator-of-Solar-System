@@ -1,5 +1,6 @@
 #include "renderingwidget.h"
 #define PI 3.1415926
+#define FREQ 100
 #include <string>
 /**
  * @brief RenderingWidget::RenderingWidget
@@ -21,6 +22,7 @@ RenderingWidget::RenderingWidget(QWidget *parent):QGLWidget(parent)
     is_highlighting = false;
     is_matrix_set = false;
     is_play = true;
+    timeSpeed = 1.0;
     hAngle = 0.0;
     vAngle = 0.0;
 
@@ -31,7 +33,7 @@ RenderingWidget::RenderingWidget(QWidget *parent):QGLWidget(parent)
     eyeZ = 1.0;
     connect(&timer, SIGNAL(timeout()), this, SLOT(updateGL()));
     connect(&timer, SIGNAL(timeout()), this, SLOT(updatePosition()));
-    timer.start(16);
+    timer.start(1000/FREQ);
 
     rTri = 0;                 // Revolution angle
     rQuad = 0;                // Rotate angle
@@ -246,7 +248,7 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
             dist = 1.3*dist*dist/sqrt((1.3*dist*sin(theta))*(1.3*dist*sin(theta))+(dist*cos(theta))*(dist*cos(theta)));
         GLfloat x = dist * cos(theta);
         GLfloat y = dist * sin(theta) * cos(vAngle);
-        if (qPow(static_cast<double>(x)-worldX,2) + qPow(static_cast<double>(y)-worldY,2) <= radius * radius){
+        if (qPow(static_cast<double>(x)-worldX,2) + qPow(static_cast<double>(y)-worldY,2) <= (radius+0.2) * (radius+0.2)){
             currentObject = it;
             emit currentObjectChanged();
             break;
@@ -320,6 +322,6 @@ AstronmicalObject* RenderingWidget::getCurrentObject(){
 
 void RenderingWidget::updatePosition(){
     for (auto it : solarSystem->getObjects()){
-        it->update(1);
+        it->update(timeSpeed/24);
     }
 }

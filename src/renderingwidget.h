@@ -73,6 +73,7 @@ public:
     QTimer timer;
     bool is_highlighting;
     bool is_play;
+    float timeSpeed;
     std::vector<AstronmicalObject> objects_copy;
 
 private slots:
