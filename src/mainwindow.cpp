@@ -15,6 +15,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timer,SIGNAL(timeout()),this,SLOT(updateDateTime()));
     connect(ui->openGLWidget,SIGNAL(currentObjectChanged()),this,SLOT(updateData()));
     timer->start(1000);
+    ui->radiusLabel->setToolTip("unit: mile");
+    ui->massLabel->setToolTip("unit: kg");
+    ui->rotLabel->setToolTip("unit: mile");
+    ui->revLabel->setToolTip("unit: mile");
 }
 
 MainWindow::~MainWindow()
@@ -67,8 +71,11 @@ void MainWindow::updateData(){
     ui->dataName->setText(QString::fromStdString(ui->openGLWidget->getCurrentObject()->getName()));
     ui->radiusEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getRadius()));
     ui->massEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getMass()));
-    ui->revolutionEdit->setText(QString::number(360.0/ui->openGLWidget->getCurrentObject()->getSpeedRevolution()));
-    ui->rotationEdit->setText(QString::number(360.0/ui->openGLWidget->getCurrentObject()->getSpeedRotation()));
+    ui->rotationEdit->setText(QString::number(3.6/ui->openGLWidget->getCurrentObject()->getSpeedRotation()));
+    if (ui->openGLWidget->getCurrentObject()->getName() == "Sun")
+        ui->revolutionEdit->setText("0");
+    else
+        ui->revolutionEdit->setText(QString::number(3.6/ui->openGLWidget->getCurrentObject()->getSpeedRevolution()));
 
 }
 
@@ -212,18 +219,14 @@ void MainWindow::on_highlightButton_clicked()
             if (it->getName() == ui->openGLWidget->getCurrentObject()->getName())
                 continue;
             it->setVisibility(false);
-//            it->draw();
         }
     }
     else{
         for (auto it : ui->openGLWidget->getSolarSystem()->getObjects()){
             it->setVisibility(true);
-//            it->draw();
         }
     }
 }
-
-
 
 void MainWindow::on_confirmButton_clicked()
 {
@@ -245,12 +248,12 @@ void MainWindow::on_confirmButton_clicked()
         error_1();
     }
 
-    if (rx.indexIn(tx_mass) != -1){
-        ui->openGLWidget->getCurrentObject()->setMass(ui->massEdit->text().toFloat());
-    }
-    else{
-        error_1();
-    }
+//    if (rx.indexIn(tx_mass) != -1){
+//        ui->openGLWidget->getCurrentObject()->setMass(ui->massEdit->text().toFloat());
+//    }
+//    else{
+//        error_1();
+//    }
 }
 
 void MainWindow::on_resetButton_clicked()
