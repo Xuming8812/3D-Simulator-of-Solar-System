@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #include "AstronmicalObject.h"
 #include <cmath>
 #include <vector>

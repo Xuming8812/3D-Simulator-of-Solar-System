@@ -6,6 +6,7 @@
     #include <GL/glut.h>
 #endif
 
+
 #include "AstronmicalObject.h"
 #include <map>
 
@@ -16,6 +17,8 @@ public:
 	SolarSystem();
 	//destructor
 	~SolarSystem();
+
+
 
 
 	//display the whole solar system
@@ -49,9 +52,11 @@ public:
 		upZ = z;
 	}
 
+
     std::vector<AstronmicalObject*> getObjects(){
         return objects;
     }
+
 
 private:
 
@@ -66,7 +71,9 @@ private:
 		GLfloat speedRevolution;
 		GLfloat speedRotation;
 		GLfloat radius;
-        GLfloat mass;
+
+    GLfloat mass;
+
 		GLfloat distance;
 		std::string parentName;
 		GLfloat color[4];

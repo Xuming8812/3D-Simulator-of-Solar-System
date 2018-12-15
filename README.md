@@ -19,9 +19,10 @@ main objectives of the implementation are as follows.
 ```
 git clone git@github.com:ENGN2912B-2018/GPU-A.git
 ```
-2. Load module qt/5.10.1 on CCV
+2. Load module qt/5.10.1 and freeglut/3.0.0 on CCV
 ```
 moudle load qt/5.10.1
+moudle freeglut/3.0.0
 ```
 3. Generate MakeFile and Compile
 ```
@@ -41,4 +42,3 @@ SolarSystem
 3. Click on **Parameter** button to set the parameter of a selected celestial body and see what will happen.
 4. Click on **Highlight** to highlight the trajectory of the selected celestial body and hide the others'.
 5. Adjust time to see the status of different time.
-6. Use the slider or **+/-** buttons to zoom in/out.
