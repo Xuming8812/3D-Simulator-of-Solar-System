@@ -5,6 +5,7 @@
 #include <sstream>
 #include <QString>
 #include <QApplication>
+#include <thread>
 
 #define TIMEPAST 1
 
@@ -301,16 +302,31 @@ void SolarSystem::display()
 }
 
 /**
+ * @name: updateObject
+ * @description: update the objects in the solar system
+ * @return: void
+ */
+void updateObject(AstronmicalObject* item)
+{
+    item->update(TIMEPAST);
+}
+
+/**
  * @name: update
  * @description: update the solar system
  * @return: void
  */
 void SolarSystem::update()
 {
+    vector<thread> threads;
     for (auto item : objects)
 	{
-		item->update(TIMEPAST);
+        threads.push_back(thread(updateObject,item));
+
+        //item->update(TIMEPAST);
 	}
+
+    for_each(threads.begin(),threads.end(),mem_fn(&thread::join));
 
 	this->display();
 }
