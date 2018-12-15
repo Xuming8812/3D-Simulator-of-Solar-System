@@ -73,7 +73,7 @@ public:
     QTimer timer;
     bool is_highlighting;
     bool is_play;
-    std::vector<AstronmicalObject*> objects_copy;
+    std::vector<AstronmicalObject> objects_copy;
 
 private slots:
     void updatePosition();

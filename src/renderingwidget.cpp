@@ -1,6 +1,6 @@
 #include "renderingwidget.h"
 #define PI 3.1415926
-
+#include <string>
 /**
  * @brief RenderingWidget::RenderingWidget
  * @param parent
@@ -8,8 +8,12 @@
 RenderingWidget::RenderingWidget(QWidget *parent):QGLWidget(parent)
 {
     solarSystem = new SolarSystem();
-//    objects_copy = solarSystem->getObjects();
-    std::copy(solarSystem->getObjects().begin(), solarSystem->getObjects().end(), back_inserter(objects_copy));
+
+    // Make a copy of obejects in solarsystem
+    for (auto it : solarSystem->getObjects()){
+        AstronmicalObject cur = *it;
+        objects_copy.push_back(cur);
+    }
     // Set the default currentObject to be Sun for showing motion data
     currentObject = solarSystem->getObjects()[0];
     is_adjust_view = false;
@@ -43,7 +47,7 @@ RenderingWidget::~RenderingWidget(){
  */
 void RenderingWidget::initializeGL(){
 
-    // Load the texture of sun
+    // Load the textures of the objects
     loadGLTextures(":images/stars.jpg",0);
     loadGLTextures(":images/sun.jpg",1);
     loadGLTextures(":images/mercury.jpg",2);
@@ -57,6 +61,7 @@ void RenderingWidget::initializeGL(){
     loadGLTextures(":images/moon.jpg",10);
     loadGLTextures(":images/moon.jpg",11);
 
+    // Initialize the sphere for sky
     skySphere = gluNewQuadric();
     gluQuadricNormals(skySphere, GL_SMOOTH);
     gluQuadricTexture(skySphere, GL_TRUE);
@@ -69,6 +74,7 @@ void RenderingWidget::initializeGL(){
     glDepthFunc(GL_LEQUAL);                                     // Type of depth test
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);          // Perspective correction
 
+    // Enable lighting
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHT1);
@@ -86,13 +92,18 @@ void RenderingWidget::paintGL(){
     glLoadIdentity();
     glColor4f(1,1,1,0.5);
 
+    // Compute the position of camera
     GLdouble eye_posX = eye_distance * eyeX;
     GLdouble eye_posY = eye_distance * eyeY;
     GLdouble eye_posZ = eye_distance * eyeZ;
 
+    // Set the position of camera
     gluLookAt(eye_posX,eye_posY,eye_posZ,0,0,0,0,1,0);
+
+    // Dray the sky background
     drawSky();
 
+    // Draw the objects with textures
     int i = 1;
     for (auto it : solarSystem->getObjects()){
         if (it->visiblity()){
@@ -102,7 +113,10 @@ void RenderingWidget::paintGL(){
         i++;
     }
     glEnable(GL_DEPTH_TEST);
-    rTri += 0.1f;
+
+    // Rotate the sky background
+    rTri += 0.1;
+
 }
 
 /**
@@ -165,8 +179,9 @@ void RenderingWidget::loadGLTextures(QString filename, int id){
     }
 
     tex = QGLWidget::convertToGLFormat(buf);
-    glGenTextures(1, &texture[id]);                     // Create texture
 
+    // Create texture
+    glGenTextures(1, &texture[id]);
     glBindTexture(GL_TEXTURE_2D,texture[id]);
     glTexImage2D(GL_TEXTURE_2D, 0, 3, tex.width(), tex.height(), 0, GL_RGBA, GL_UNSIGNED_BYTE, tex.bits());
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
@@ -181,6 +196,7 @@ void RenderingWidget::loadGLTextures(QString filename, int id){
  */
 void RenderingWidget::wheelEvent(QWheelEvent *e)
 {
+    // Change the position of camera based on mouse wheel
     eye_distance += e->delta() * 0.01;
     eye_distance = eye_distance < 0 ? 0 : eye_distance;
     eye_distance = eye_distance >=60 ? 60 : eye_distance;
@@ -197,11 +213,21 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
         lastPos = e->pos();
     }
 
+<<<<<<< HEAD
 
     GLdouble winX, winY, winZ; //variables to hold screen x,y,z coordinates
     GLdouble worldX, worldY, worldZ; //variables to hold world x,y,z coordinates
 
     if (!is_matrix_set){
+=======
+    // mouse position in screen coordinates
+    GLfloat winX, winY, winZ;
+    // mouse position in world coordinates
+    GLdouble worldX, worldY, worldZ;
+
+    // store the matrice for unprojection
+    if (!is_matrix_set) {
+>>>>>>> fcb9d0d7e0724e6f9ba726d83717412752d71ea4
         is_matrix_set = true;
         glGetDoublev( GL_MODELVIEW_MATRIX, modelview); //get the modelview info
         glGetDoublev( GL_PROJECTION_MATRIX, projection); //get the projection matrix info
@@ -209,17 +235,20 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
         viewport[2] /= 2;
         viewport[3] /= 2;
     }
+<<<<<<< HEAD
 
     winX = lastPos.x();
     winY = viewport[3] - lastPos.y();
+=======
+>>>>>>> fcb9d0d7e0724e6f9ba726d83717412752d71ea4
     winZ = 0;
 
-    //get the world coordinates from the screen coordinates
+    // get the world coordinates from the screen coordinates
     gluUnProject( winX, winY, winZ, modelview, projection, viewport, &worldX, &worldY, &worldZ);
     worldX *= 10 * eye_distance;
     worldY *= 10 * eye_distance;
 
-    int i = 0;
+
     for (auto it : solarSystem->getObjects()){
         GLfloat dist = it->getDistance();
         GLfloat theta = it->getAngleRevolution() / 180.0f * static_cast<float>(PI);
@@ -231,7 +260,7 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
             emit currentObjectChanged();
             break;
         }
-        i++;
+
     }
 }
 
@@ -304,3 +333,8 @@ void RenderingWidget::updatePosition(){
         it->update(1);
     }
 }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> fcb9d0d7e0724e6f9ba726d83717412752d71ea4

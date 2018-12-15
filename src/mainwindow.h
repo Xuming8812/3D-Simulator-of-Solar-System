@@ -53,6 +53,14 @@ private slots:
 
     void on_resetButton_clicked();
 
+    void on_radiusEdit_returnPressed();
+
+    void on_massEdit_returnPressed();
+
+    void on_rotationEdit_returnPressed();
+
+    void on_revolutionEdit_returnPressed();
+
 private:
     Ui::MainWindow *ui;
     QTimer *timer;
