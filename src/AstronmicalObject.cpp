@@ -117,7 +117,7 @@ void AstronmicalObject::drawObject()
         }
         else if(parent == nullptr)
         {
-            GLfloat c = sqrt(pow(ratio,2) + pow(1,2));
+            GLfloat c = sqrt(pow(ratio,2) - pow(1,2));
             glRotatef(angleRevolution, 0, 0, 1);
             glTranslatef(-c, 0.0, 0.0);
             glRotatef(angleRotation, 0, 0, 1);
