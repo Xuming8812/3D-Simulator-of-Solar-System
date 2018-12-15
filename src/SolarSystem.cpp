@@ -3,6 +3,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <QString>
+#include <QApplication>
 
 #define TIMEPAST 1
 
@@ -75,7 +77,11 @@ SolarSystem::~SolarSystem()
 void SolarSystem::readParameters()
 {
     ifstream fin;
-    fin.open("/Users/gengyoung/ENGN2912B/SolarSystem/Parameters.txt");
+
+    QString appPath = QCoreApplication::applicationDirPath();
+    int endInd = appPath.indexOf("build");
+    string curDir = appPath.toStdString().substr(0,endInd) + "SolarSystem/Parameters.txt";
+    fin.open(curDir);
 
 	if (!fin)
 	{

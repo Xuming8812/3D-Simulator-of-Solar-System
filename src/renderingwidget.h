@@ -63,9 +63,13 @@ private:
     SolarSystem *solarSystem;
     AstronmicalObject *currentObject;
 
+    GLint viewport[4]; //var to hold the viewport info
+    GLdouble modelview[16]; //var to hold the modelview info
+    GLdouble projection[16]; //var to hold the projection matrix info
+
     bool is_adjust_view;
     bool is_fullscreen;
-
+    bool is_matrix_set;
 signals:
     void currentObjectChanged();
 
@@ -73,7 +77,7 @@ public:
     QTimer timer;
     bool is_highlighting;
     bool is_play;
-    std::vector<AstronmicalObject*> objects_copy;
+    std::vector<AstronmicalObject> objects_copy;
 
 private slots:
     void updatePosition();

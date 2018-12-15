@@ -131,17 +131,18 @@ Planet::Planet(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRevo
 	setColor(rgbColor);
 }
 
-/**
- * @name: drawPlanet
- * @description: Draw the planet based on the graphic parameters
- * @return: void
- */
+
 
 /**
  * @brief Planet::~Planet
  */
 Planet::~Planet(){}
 
+/**
+ * @name: drawPlanet
+ * @description: Draw the planet based on the graphic parameters
+ * @return: void
+ */
 void Planet::drawPlanet()
 {
 	// for test

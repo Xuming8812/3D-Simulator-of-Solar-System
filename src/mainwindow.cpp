@@ -210,7 +210,28 @@ void MainWindow::on_resetButton_clicked()
 {
     int i = 0;
     for (auto it : ui->openGLWidget->objects_copy){
-        ui->openGLWidget->getSolarSystem()->getObjects()[i]->setRadius(it->getRadius());
+        ui->openGLWidget->getSolarSystem()->getObjects()[i]->setRadius(it.getRadius());
         i++;
     }
+    updateData();
+}
+
+void MainWindow::on_radiusEdit_returnPressed()
+{
+    on_confirmButton_clicked();
+}
+
+void MainWindow::on_massEdit_returnPressed()
+{
+    on_confirmButton_clicked();
+}
+
+void MainWindow::on_rotationEdit_returnPressed()
+{
+    on_confirmButton_clicked();
+}
+
+void MainWindow::on_revolutionEdit_returnPressed()
+{
+    on_confirmButton_clicked();
 }
