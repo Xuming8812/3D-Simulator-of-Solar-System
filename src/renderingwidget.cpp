@@ -118,12 +118,16 @@ void RenderingWidget::paintGL(){
     glEnable(GL_DEPTH_TEST);
 
     // Rotate the sky background
-    rTri += 0.1;
+    rTri += 0.05;
 
     //enable draw shadow
     if (is_draw_shadow)
 //        drawShadow(obj_r,obj_x,obj_y);
     glEnable(GL_DEPTH_TEST);
+
+    if (is_draw_shadow == true){
+        dragObject();
+    }
 
 }
 
@@ -317,7 +321,8 @@ void RenderingWidget::mouseDoubleClickEvent(QMouseEvent *e){
     if (vAngle != 0)
         vAngle = 0;
     else
-        vAngle = PI / 2;
+        vAngle = -PI / 2;
+    hAngle = 0.0;
     eyeX = cos(static_cast<double>(vAngle)) * sin(static_cast<double>(hAngle));
     eyeY = sin(static_cast<double>(vAngle));
     eyeZ = cos(static_cast<double>(vAngle)) * cos(static_cast<double>(hAngle));
@@ -361,6 +366,7 @@ void RenderingWidget::drawShadow(GLfloat radius, GLfloat x, GLfloat y){
     glEnd();
 }
 
-void dragObject(){
-
+void RenderingWidget::dragObject(){
+     rTri += 3;
+     updateGL();
 }

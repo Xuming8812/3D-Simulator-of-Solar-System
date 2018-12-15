@@ -40,7 +40,6 @@ public:
 
     void dragObject();
 
-
     SolarSystem* getSolarSystem();
     AstronmicalObject* getCurrentObject();
 

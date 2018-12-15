@@ -322,8 +322,6 @@ void SolarSystem::update()
     for (auto item : objects)
 	{
         threads.push_back(thread(updateObject,item));
-
-        //item->update(TIMEPAST);
 	}
 
     for_each(threads.begin(),threads.end(),mem_fn(&thread::join));
