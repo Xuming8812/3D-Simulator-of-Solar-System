@@ -139,7 +139,124 @@ void AstronmicalObject::drawObject()
         gluQuadricTexture(mySphere, GL_TRUE);
 	}
 
-	glPopMatrix();
+    glPopMatrix();
+}
+/**
+ * @name: update
+ * @description: update the position of the object
+ * @param time: the timespan
+ * @return: void
+ */
+void AstronmicalObject::update(int time)
+{
+
+    //update the angle of rotation and revolution
+    angleRevolution += time * speedRevolution / 3.0;
+    angleRotation += time * speedRotation / 3.0;
+
+}
+
+
+/**
+ * @name: Planet
+ * @description: Construtor of the Planet class
+ * @param label: name of the object
+ * @param r: radius
+ * @param d: distance to parent
+ * @param sRevolute: speed of revolution
+ * @param sRotate: speed of rotation
+ * @param par: pointer to parent object
+ * @param rgbColor: color of the planet
+ * @return: void
+ */
+Planet::Planet(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRevolute, GLfloat sRotate, AstronmicalObject* par)
+    :AstronmicalObject(label, r, m, d, sRevolute, sRotate, par)
+{
+//    setColor(rgbColor);
+}
+
+/**
+ * @name: drawPlanet
+ * @description: Draw the planet based on the graphic parameters
+ * @return: void
+ */
+void Planet::drawPlanet()
+{
+    // for test
+    GLfloat ambient[4]{ 0.5, 0.5, 0.5, 1.0 };
+    GLfloat diffuse[4]{ 0.5, 0.5, 0.5, 1.0 };
+    GLfloat specular[4]{ 1.0, 1.0, 1.0, 1.0 };
+    GLfloat emission[4]{color[0],color[1],color[2],color[3]};
+
+    GLfloat shineness = 90;
+
+    glMaterialfv(GL_BACK, GL_AMBIENT, ambient);
+    glMaterialfv(GL_BACK, GL_DIFFUSE, diffuse);
+    glMaterialfv(GL_BACK, GL_SPECULAR, specular);
+    glMaterialf(GL_BACK, GL_SHININESS, shineness);
+    glMaterialfv(GL_BACK, GL_EMISSION, emission);
+}
+
+/**
+ * @name: Star
+ * @description: Construtor of the Star class
+ * @param label: name of the object
+ * @param r: radius
+ * @param d: distance to parent
+ * @param sRevolute: speed of revolution
+ * @param sRotate: speed of rotation
+ * @param par: pointer to parent object
+ * @param rgbColor: color of the planet
+ * @return: void
+ */
+Star::Star(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRevolute, GLfloat sRotate, AstronmicalObject* par)
+    :Planet(label, r, m, d, sRevolute, sRotate, par)
+{
+}
+
+/**
+ * @brief Star::~Star
+ */
+Star::~Star(){}
+
+/**
+ * @name: addLightSource
+ * @description: add a light source on the star based on the graphic parameters
+ * @return: void
+ */
+void Star::addLightSource()
+{
+    // for test
+    GLfloat position0[] = { 2.0, 0.0, 0.0, 1.0 };
+    GLfloat ambient[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat specular[] = { 1.0, 1.0, 1.0, 1.0 };
+
+    glLightfv(GL_LIGHT0, GL_POSITION, position0);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+
+    GLfloat position1[] = { 0.0,2.0, .0, 1.0 };
+    GLfloat position2[] = { -2.0, 0.0, .0, 1.0 };
+    GLfloat position3[] = { 0.0, -2.0, .0, 1.0 };
+    GLfloat position4[] = { 0.0, 3.0, .0, 1.0 };
+    GLfloat position5[] = { 0.0, 3.0, .0, 1.0 };
+    GLfloat position6[] = { 0.0, 3.0, .0, 1.0 };
+    GLfloat position7[] = { 0.0, 3.0, .0, 1.0 };
+
+    glLightfv(GL_LIGHT1, GL_POSITION, position1);
+    glLightfv(GL_LIGHT1, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT1, GL_SPECULAR, specular);
+    glLightfv(GL_LIGHT2, GL_POSITION, position2);
+    glLightfv(GL_LIGHT2, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT2, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT2, GL_SPECULAR, specular);
+    glLightfv(GL_LIGHT3, GL_POSITION, position3);
+    glLightfv(GL_LIGHT3, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT3, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT3, GL_SPECULAR, specular);
 }
 
 
