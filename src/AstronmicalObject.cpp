@@ -6,6 +6,7 @@
 
 #define SLICES 50
 #define STACKS 50
+#define ratio 1.2
 
 #define NUM_ELEMENT 1000
 
@@ -33,7 +34,6 @@ AstronmicalObject::AstronmicalObject(std::string label, GLfloat r, GLfloat m, GL
     this->speedRotation = sRotate;
 
     this->isVisible = true;
-
 	
 	//actually the speed is an angular velocity in degree
 	if (sRevolute > 0)
@@ -82,7 +82,7 @@ void AstronmicalObject::drawObject()
             angle-=num*360;
             angle = angle*PI/180;
 
-            dis = 1.3*dis*dis/sqrt((1.3*dis*sin(angle))*(1.3f*dis*sin(angle))+(dis*cos(angle))*(dis*cos(angle)));
+            dis = ratio*dis*dis/sqrt((ratio*dis*sin(angle))*(ratio*dis*sin(angle))+(dis*cos(angle))*(dis*cos(angle)));
 
             glTranslatef(dis, 0.0, 0.0);
 		}
@@ -101,7 +101,8 @@ void AstronmicalObject::drawObject()
         else {
             for (int i{ 0 }; i < NUM_ELEMENT; i++)
             {
-                glVertex2f(distance *1.3* static_cast<float>(cos(2.0 * PI*i / NUM_ELEMENT)), distance*static_cast<float>(sin(2.0 * PI*i / NUM_ELEMENT)));
+
+                glVertex2f(distance *ratio* static_cast<float>(cos(2.0 * PI*i / NUM_ELEMENT)), distance*static_cast<float>(sin(2.0 * PI*i / NUM_ELEMENT)));
             }
         }
 
@@ -116,8 +117,9 @@ void AstronmicalObject::drawObject()
         }
         else if(parent == nullptr)
         {
+            GLfloat c = sqrt(pow(ratio,2) + pow(1,2));
             glRotatef(angleRevolution, 0, 0, 1);
-            glTranslatef(distance, 0.0, 0.0);
+            glTranslatef(-c, 0.0, 0.0);
             glRotatef(angleRotation, 0, 0, 1);
         }
         else {
@@ -129,7 +131,7 @@ void AstronmicalObject::drawObject()
             angle-=num*360;
             angle = angle*PI/180;
 
-            dis = 1.3*dis*dis/sqrt((1.3*dis*sin(angle))*(1.3*dis*sin(angle))+(dis*cos(angle))*(dis*cos(angle)));
+            dis = ratio*dis*dis/sqrt((ratio*dis*sin(angle))*(ratio*dis*sin(angle))+(dis*cos(angle))*(dis*cos(angle)));
             glTranslatef(dis, 0.0, 0.0);
             glRotatef(angleRotation, 0, 0, 1);
         }

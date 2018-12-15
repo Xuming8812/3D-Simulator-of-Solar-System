@@ -61,6 +61,12 @@ private slots:
 
     void on_revolutionEdit_returnPressed();
 
+    void error_1();
+
+    void error_2(float min, float max);
+
+
+
 private:
     Ui::MainWindow *ui;
     QTimer *timer;
@@ -70,6 +76,7 @@ private:
     QDateTime *dateTime;
     int year, month, day;
     int hour, minute, second;
+
 };
 
 #endif // MAINWINDOW_H
