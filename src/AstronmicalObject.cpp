@@ -92,6 +92,7 @@ void AstronmicalObject::drawObject()
         glBegin(GL_LINES);
 
         //for planets the orbit is ellipse
+        glColor4f(1,1,0,1);
         if(parent != nullptr && parent->distance > 0)
         {
             for (int i{ 0 }; i < NUM_ELEMENT; i++)
