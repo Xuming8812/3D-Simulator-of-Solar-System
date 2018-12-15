@@ -92,6 +92,7 @@ void AstronmicalObject::drawObject()
         glBegin(GL_LINES);
 
         //for planets the orbit is ellipse
+        glColor4f(1,1,0,1);
         if(parent != nullptr && parent->distance > 0)
         {
             for (int i{ 0 }; i < NUM_ELEMENT; i++)
@@ -108,6 +109,7 @@ void AstronmicalObject::drawObject()
         }
 
         glEnd();
+
 
 		//draw this object
         if(parent != nullptr && parent->distance > 0)
@@ -243,10 +245,10 @@ void Star::addLightSource()
     GLfloat position1[] = { 0.0,2.0, .0, 1.0 };
     GLfloat position2[] = { -2.0, 0.0, .0, 1.0 };
     GLfloat position3[] = { 0.0, -2.0, .0, 1.0 };
-    GLfloat position4[] = { 0.0, 3.0, .0, 1.0 };
-    GLfloat position5[] = { 0.0, 3.0, .0, 1.0 };
-    GLfloat position6[] = { 0.0, 3.0, .0, 1.0 };
-    GLfloat position7[] = { 0.0, 3.0, .0, 1.0 };
+    //GLfloat position4[] = { 0.0, 3.0, .0, 1.0 };
+    //GLfloat position5[] = { 0.0, 3.0, .0, 1.0 };
+    //GLfloat position6[] = { 0.0, 3.0, .0, 1.0 };
+    //GLfloat position7[] = { 0.0, 3.0, .0, 1.0 };
 
     glLightfv(GL_LIGHT1, GL_POSITION, position1);
     glLightfv(GL_LIGHT1, GL_AMBIENT, ambient);

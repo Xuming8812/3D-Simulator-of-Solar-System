@@ -314,14 +314,13 @@ void RenderingWidget::mouseReleaseEvent(QMouseEvent *e){
 }
 
 void RenderingWidget::mouseDoubleClickEvent(QMouseEvent *e){
-    is_fullscreen = !is_fullscreen;
-
-    if (is_fullscreen){
-        setWindowFlags(Qt::Widget);
-        showFullScreen();
-    }
+    if (vAngle != 0)
+        vAngle = 0;
     else
-        this->showNormal();
+        vAngle = PI / 2;
+    eyeX = cos(static_cast<double>(vAngle)) * sin(static_cast<double>(hAngle));
+    eyeY = sin(static_cast<double>(vAngle));
+    eyeZ = cos(static_cast<double>(vAngle)) * cos(static_cast<double>(hAngle));
 }
 
 /**

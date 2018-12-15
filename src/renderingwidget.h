@@ -21,7 +21,6 @@
 class RenderingWidget : public QGLWidget
 {
     Q_OBJECT
-
 public:
     explicit RenderingWidget(QWidget *parent);
     ~RenderingWidget();
