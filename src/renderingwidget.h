@@ -37,6 +37,9 @@ public:
 
     void drawSky();
 
+    void drawShadow(GLfloat radius, GLfloat x, GLfloat y);
+
+
     SolarSystem* getSolarSystem();
     AstronmicalObject* getCurrentObject();
 
@@ -55,6 +58,8 @@ private:
 
     GLfloat positions[10][2];
 
+    GLfloat obj_x, obj_y, obj_r;
+
     SolarSystem *solarSystem;
     AstronmicalObject *currentObject;
 
@@ -65,6 +70,7 @@ private:
     bool is_adjust_view;
     bool is_fullscreen;
     bool is_matrix_set;
+    bool is_draw_shadow;
 
 signals:
     void currentObjectChanged();
@@ -73,6 +79,7 @@ public:
     QTimer timer;
     bool is_highlighting;
     bool is_play;
+    float timeSpeed;
     std::vector<AstronmicalObject> objects_copy;
 
 private slots:

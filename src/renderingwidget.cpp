@@ -1,5 +1,6 @@
 #include "renderingwidget.h"
 #define PI 3.1415926
+#define FREQ 100
 #include <string>
 /**
  * @brief RenderingWidget::RenderingWidget
@@ -20,7 +21,9 @@ RenderingWidget::RenderingWidget(QWidget *parent):QGLWidget(parent)
     is_fullscreen = false;
     is_highlighting = false;
     is_matrix_set = false;
+    is_draw_shadow =  false;
     is_play = true;
+    timeSpeed = 1.0;
     hAngle = 0.0;
     vAngle = 0.0;
 
@@ -31,7 +34,7 @@ RenderingWidget::RenderingWidget(QWidget *parent):QGLWidget(parent)
     eyeZ = 1.0;
     connect(&timer, SIGNAL(timeout()), this, SLOT(updateGL()));
     connect(&timer, SIGNAL(timeout()), this, SLOT(updatePosition()));
-    timer.start(16);
+    timer.start(1000/FREQ);
 
     rTri = 0;                 // Revolution angle
     rQuad = 0;                // Rotate angle
@@ -116,6 +119,11 @@ void RenderingWidget::paintGL(){
 
     // Rotate the sky background
     rTri += 0.1;
+
+    //enable draw shadow
+    if (is_draw_shadow)
+        drawShadow(obj_r,obj_x,obj_y);
+    glEnable(GL_DEPTH_TEST);
 
 }
 
@@ -243,11 +251,25 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
         GLfloat theta = it->getAngleRevolution() / 180.0f * static_cast<float>(PI);
         GLdouble radius = static_cast<double>(it->getRadius());
         if (dist != 0)
-            dist = 1.3*dist*dist/sqrt((1.3*dist*sin(theta))*(1.3*dist*sin(theta))+(dist*cos(theta))*(dist*cos(theta)));
+            dist = 1.2*dist*dist/sqrt((1.2*dist*sin(theta))*(1.2*dist*sin(theta))+(dist*cos(theta))*(dist*cos(theta)));
         GLfloat x = dist * cos(theta);
         GLfloat y = dist * sin(theta) * cos(vAngle);
-        if (qPow(static_cast<double>(x)-worldX,2) + qPow(static_cast<double>(y)-worldY,2) <= radius * radius){
+
+        if (qPow(static_cast<double>(x)-worldX,2) + qPow(static_cast<double>(y)-worldY,2) <= (radius+0.2) * (radius+0.2)){
+
             currentObject = it;
+            is_draw_shadow = true;
+            if (it->getName()  ==  "Sun"){
+                obj_x = -qSqrt(qPow(1.2,2) - qPow(1,2));
+                obj_y = y;
+                obj_r = radius;
+            }
+            else{
+                obj_x = x;
+                obj_y = y;
+                obj_r = radius;
+            }
+            updateGL();
             emit currentObjectChanged();
             break;
         }
@@ -320,6 +342,26 @@ AstronmicalObject* RenderingWidget::getCurrentObject(){
 
 void RenderingWidget::updatePosition(){
     for (auto it : solarSystem->getObjects()){
-        it->update(1);
+        it->update(timeSpeed/24);
     }
+}
+
+void RenderingWidget::drawShadow(GLfloat radius, GLfloat x, GLfloat y){
+    glPushMatrix();
+    glColor3f(1,1,1);
+    glLineWidth(5);
+//    GLdouble eye_posX = eye_distance * eyeX;
+//    GLdouble eye_posY = eye_distance * eyeY;
+//    GLdouble eye_posZ = eye_distance * eyeZ;
+//    gluLookAt(eye_posX,eye_posY,eye_posZ,0,0,0,0,1,0);
+//    glRotatef(1,eye_posX,eye_posY,eye_posZ);
+    glBegin(GL_LINE_LOOP);
+    for (int i=0; i<100; i++){
+        glVertex2f(x+radius*cos(2*PI/100*i),y+radius*sin(2*PI/100*i));
+    }
+    glEnd();
+}
+
+void dragObject(){
+
 }

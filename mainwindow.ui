@@ -532,7 +532,7 @@ QGroupBox::title {
             </font>
            </property>
            <property name="text">
-            <string>+1 day / sec</string>
+            <string>+1 hour / sec</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -559,8 +559,11 @@ QGroupBox::title {
            <property name="maximum">
             <number>78</number>
            </property>
+           <property name="singleStep">
+            <number>1</number>
+           </property>
            <property name="value">
-            <number>0</number>
+            <number>1</number>
            </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>

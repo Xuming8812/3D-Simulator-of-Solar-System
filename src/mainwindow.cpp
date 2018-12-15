@@ -140,40 +140,68 @@ void MainWindow::on_timeSpeedSlider_sliderMoved(int position)
 {
     if (position == 0)
         ui->timeSpeedLabel->setText("Stop");
-    else if (position > -24 && position < 24 )
+    else if (position > -24 && position < 24 ){
         ui->timeSpeedLabel->setText(QString::number(position) + " hour / sec");
-    else if (position >= 24 && position < 54)
+        ui->openGLWidget->timeSpeed = position;
+    }
+    else if (position >= 24 && position < 54){
         ui->timeSpeedLabel->setText(QString::number(position - 23) + " day / sec");
-    else if (position > -54 && position <= -24)
+        ui->openGLWidget->timeSpeed = (position - 23) * 24;
+    }
+    else if (position > -54 && position <= -24){
         ui->timeSpeedLabel->setText(QString::number(position + 23) + " day / sec");
-    else if (position >= 54 && position < 78)
+        ui->openGLWidget->timeSpeed = (position + 23) * 24;
+    }
+    else if (position >= 54 && position < 78){
         ui->timeSpeedLabel->setText(QString::number((position - 54)/2.0) + " month / sec");
-    else if (position > -78 && position <= -54)
+        ui->openGLWidget->timeSpeed = (position - 53) * 24 * 30;
+    }
+    else if (position > -78 && position <= -54){
         ui->timeSpeedLabel->setText(QString::number((position + 54)/2.0) + " month / sec");
-    else if (position == 78)
+        ui->openGLWidget->timeSpeed = (position + 53) * 24 * 30;
+    }
+    else if (position == 78){
         ui->timeSpeedLabel->setText(" +1 year / sec");
-    else
+        ui->openGLWidget->timeSpeed = 24 * 365;
+    }
+    else{
         ui->timeSpeedLabel->setText(" -1 year / sec");
+        ui->openGLWidget->timeSpeed = -24 * 365 ;
+    }
 }
 
 void MainWindow::on_timeSpeedSlider_valueChanged(int value)
 {
     if (value == 0)
         ui->timeSpeedLabel->setText("Stop");
-    else if (value > -24 && value < 24 )
+    else if (value > -24 && value < 24 ){
         ui->timeSpeedLabel->setText(QString::number(value) + " hour / sec");
-    else if (value >= 24 && value < 54)
+        ui->openGLWidget->timeSpeed = value;
+    }
+    else if (value >= 24 && value < 54){
         ui->timeSpeedLabel->setText(QString::number(value - 23) + " day / sec");
-    else if (value > -54 && value <= -24)
+        ui->openGLWidget->timeSpeed = (value - 23) * 24;
+    }
+    else if (value > -54 && value <= -24){
         ui->timeSpeedLabel->setText(QString::number(value + 23) + " day / sec");
-    else if (value >= 54 && value < 78)
+        ui->openGLWidget->timeSpeed = (value + 23) * 24;
+    }
+    else if (value >= 54 && value < 78){
         ui->timeSpeedLabel->setText(QString::number((value - 54)/2.0) + " month / sec");
-    else if (value > -78 && value <= -54)
+        ui->openGLWidget->timeSpeed = (value - 53) * 24 * 30;
+    }
+    else if (value > -78 && value <= -54){
         ui->timeSpeedLabel->setText(QString::number((value + 54)/2.0) + " month / sec");
-    else if (value == 78)
+        ui->openGLWidget->timeSpeed = (value + 53) * 24 * 30;
+    }
+    else if (value == 78){
         ui->timeSpeedLabel->setText(" +1 year / sec");
-    else
+        ui->openGLWidget->timeSpeed = 24 * 365;
+    }
+    else{
         ui->timeSpeedLabel->setText(" -1 year / sec");
+        ui->openGLWidget->timeSpeed = -24 * 365 ;
+    }
 }
 
 void MainWindow::on_highlightButton_clicked()

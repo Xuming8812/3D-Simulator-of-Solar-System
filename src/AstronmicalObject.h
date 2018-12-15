@@ -134,7 +134,7 @@ public:
 
 	//virtual function for update the image
 	//all subclasses need to override for polymorphism
-	virtual void update(int time);
+    virtual void update(float time);
 
 	//color of the object
 	GLfloat color[4];

@@ -1,6 +1,7 @@
 #include "AstronmicalObject.h"
 #include <cmath>
 #include <vector>
+#define FREQ 100
 
 
 
@@ -31,14 +32,14 @@ AstronmicalObject::AstronmicalObject(std::string label, GLfloat r, GLfloat m, GL
     this->mass = m;
 	this->distance = d;
 
-    this->speedRotation = sRotate;
+    this->speedRotation = (360.0f / FREQ) / sRotate ;
 
     this->isVisible = true;
 	
 	//actually the speed is an angular velocity in degree
 	if (sRevolute > 0)
 	{
-        this->speedRevolution = 360.0f / sRevolute;
+        this->speedRevolution = (360.0f / FREQ) / sRevolute;
 	}
 	else
 	{
@@ -150,7 +151,7 @@ void AstronmicalObject::drawObject()
  * @param time: the timespan
  * @return: void
  */
-void AstronmicalObject::update(int time)
+void AstronmicalObject::update(float time)
 {
 
     //update the angle of rotation and revolution
