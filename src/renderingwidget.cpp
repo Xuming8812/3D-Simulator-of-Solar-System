@@ -122,7 +122,7 @@ void RenderingWidget::paintGL(){
 
     //enable draw shadow
     if (is_draw_shadow)
-        drawShadow(obj_r,obj_x,obj_y);
+//        drawShadow(obj_r,obj_x,obj_y);
     glEnable(GL_DEPTH_TEST);
 
 }

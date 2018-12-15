@@ -231,21 +231,22 @@ void MainWindow::on_confirmButton_clicked()
     GLfloat max_distance = ui->openGLWidget->getSolarSystem()->getObjects()[8]->getDistance();
     GLfloat min_distance = 0.0;
 
-    const QString tx_dist = ui->radiusEdit->text();
+    const QString tx_radius = ui->radiusEdit->text();
     const QString tx_mass = ui->massEdit->text();
-    QRegExp rx("^[\\+-]?([0-9]+\\.?[0-9]*|\\.?[0-9]+)$");
-    if (rx.indexIn(tx_dist) != -1){
-        if (tx_dist.toFloat() > max_distance || tx_dist.toFloat() < min_distance){
+    QRegExp rx_radius("^[\\+-]?([0-9]+\\.?[0-9]*|\\.?[0-9]+)$");
+    QRegExp rx_mass(" ^(-?\d+)\.?\d+(e-|e\+|e|\d+)\d+$");
+    if (rx_radius.indexIn(tx_radius) != -1){
+        if (tx_radius.toFloat() > max_distance || tx_radius.toFloat() < min_distance){
             error_2(min_distance, max_distance);
         }
         else
-            ui->openGLWidget->getCurrentObject()->setRadius(tx_dist.toFloat());
+            ui->openGLWidget->getCurrentObject()->setRadius(tx_radius.toFloat());
     }
     else{
         error_1();
     }
 
-    if (rx.indexIn(tx_mass) != -1){
+    if (rx_mass.indexIn(tx_mass) ||  rx_radius.indexIn(tx_mass)){
         ui->openGLWidget->getCurrentObject()->setMass(ui->massEdit->text().toFloat());
     }
     else{
