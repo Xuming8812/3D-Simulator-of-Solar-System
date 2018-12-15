@@ -14,10 +14,6 @@
 #include <QtOpenGL>
 #include <vector>
 #include <QMouseEvent>
-#include <glm/glm.hpp>
-#include <glm/vec3.hpp>
-#include <glm/mat4x4.hpp>
-#include <glm/gtx/transform.hpp>
 #include "SolarSystem.h"
 #include "AstronmicalObject.h"
 
@@ -25,7 +21,6 @@
 class RenderingWidget : public QGLWidget
 {
     Q_OBJECT
-
 public:
     explicit RenderingWidget(QWidget *parent);
     ~RenderingWidget();
@@ -40,7 +35,8 @@ public:
     void mouseDoubleClickEvent(QMouseEvent* e);
 
     void drawSky();
-//    void outline();
+
+    void drawShadow(GLfloat radius, GLfloat x, GLfloat y);
 
     SolarSystem* getSolarSystem();
     AstronmicalObject* getCurrentObject();
@@ -60,6 +56,8 @@ private:
 
     GLfloat positions[10][2];
 
+    GLfloat obj_x, obj_y, obj_r;
+
     SolarSystem *solarSystem;
     AstronmicalObject *currentObject;
 
@@ -70,6 +68,8 @@ private:
     bool is_adjust_view;
     bool is_fullscreen;
     bool is_matrix_set;
+    bool is_draw_shadow;
+
 signals:
     void currentObjectChanged();
 
@@ -77,6 +77,7 @@ public:
     QTimer timer;
     bool is_highlighting;
     bool is_play;
+    float timeSpeed;
     std::vector<AstronmicalObject> objects_copy;
 
 private slots:

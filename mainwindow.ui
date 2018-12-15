@@ -532,7 +532,7 @@ QGroupBox::title {
             </font>
            </property>
            <property name="text">
-            <string>+1 day / sec</string>
+            <string>+1 hour / sec</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -559,8 +559,11 @@ QGroupBox::title {
            <property name="maximum">
             <number>78</number>
            </property>
+           <property name="singleStep">
+            <number>1</number>
+           </property>
            <property name="value">
-            <number>0</number>
+            <number>1</number>
            </property>
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -570,7 +573,7 @@ QGroupBox::title {
         </layout>
        </widget>
       </item>
-      <item alignment="Qt::AlignHCenter|Qt::AlignTop">
+      <item>
        <widget class="QGroupBox" name="groupBox">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
@@ -617,106 +620,6 @@ QGroupBox::title {
          <bool>true</bool>
         </property>
         <layout class="QFormLayout" name="formLayout_3">
-         <item row="1" column="0">
-          <widget class="QLabel" name="label">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>65</width>
-             <height>16</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>65</width>
-             <height>16</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Radius</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLabel" name="label_3">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>65</width>
-             <height>16</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>65</width>
-             <height>16</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Mass  </string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLabel" name="label_5">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>65</width>
-             <height>16</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>65</width>
-             <height>16</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Rotation</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLabel" name="label_6">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>65</width>
-             <height>16</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>65</width>
-             <height>16</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Revolution</string>
-           </property>
-          </widget>
-         </item>
          <item row="0" column="0">
           <widget class="QLabel" name="label_9">
            <property name="sizePolicy">
@@ -773,17 +676,40 @@ QGroupBox::title {
            </property>
           </widget>
          </item>
-         <item row="5" column="1">
-          <widget class="QPushButton" name="confirmButton">
-           <property name="text">
-            <string>Confirm</string>
+         <item row="1" column="0">
+          <widget class="QLabel" name="radiusLabel">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
-          <widget class="QPushButton" name="resetButton">
+           <property name="minimumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="mouseTracking">
+            <bool>true</bool>
+           </property>
+           <property name="toolTip">
+            <string notr="true" extracomment="kg"/>
+           </property>
+           <property name="toolTipDuration">
+            <number>2000</number>
+           </property>
+           <property name="whatsThis">
+            <string extracomment="kg"/>
+           </property>
            <property name="text">
-            <string>Reset</string>
+            <string>Radius</string>
            </property>
           </widget>
          </item>
@@ -814,8 +740,39 @@ QGroupBox::title {
              <bold>false</bold>
             </font>
            </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background: transparent;  border: 0px ;</string>
+           </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="massLabel">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Mass  </string>
            </property>
           </widget>
          </item>
@@ -846,8 +803,36 @@ QGroupBox::title {
              <bold>false</bold>
             </font>
            </property>
+           <property name="styleSheet">
+            <string notr="true">background: transparent;  border: 0px ;</string>
+           </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="rotLabel">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Rotation</string>
            </property>
           </widget>
          </item>
@@ -872,8 +857,36 @@ QGroupBox::title {
              <bold>false</bold>
             </font>
            </property>
+           <property name="styleSheet">
+            <string notr="true">background: transparent;  border: 0px ;</string>
+           </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="revLabel">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>65</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Revolution</string>
            </property>
           </widget>
          </item>
@@ -904,8 +917,25 @@ QGroupBox::title {
              <bold>false</bold>
             </font>
            </property>
+           <property name="styleSheet">
+            <string notr="true">background: transparent;  border: 0px ;</string>
+           </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="0">
+          <widget class="QPushButton" name="resetButton">
+           <property name="text">
+            <string>Reset</string>
+           </property>
+          </widget>
+         </item>
+         <item row="5" column="1">
+          <widget class="QPushButton" name="confirmButton">
+           <property name="text">
+            <string>Confirm</string>
            </property>
           </widget>
          </item>

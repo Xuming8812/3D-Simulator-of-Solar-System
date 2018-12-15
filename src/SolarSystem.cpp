@@ -5,6 +5,7 @@
 #include <sstream>
 #include <QString>
 #include <QApplication>
+#include <thread>
 
 #define TIMEPAST 1
 
@@ -23,7 +24,7 @@ SolarSystem::SolarSystem()
 	{
 		if (item.type == STAR)
 		{
-            AstronmicalObject* current = new Star(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, nullptr,item.color);
+            AstronmicalObject* current = new Star(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, nullptr);
 			
 			objects.push_back(current);
 		
@@ -41,7 +42,7 @@ SolarSystem::SolarSystem()
 				}
 			}
 
-            AstronmicalObject* current = new Planet(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, objects[index],item.color);
+            AstronmicalObject* current = new Planet(item.name, item.radius, item.mass, item.distance, item.speedRevolution, item.speedRotation, objects[index]);
 			objects.push_back(current);
 		}
 	}
@@ -80,7 +81,7 @@ void SolarSystem::readParameters()
 
     QString appPath = QCoreApplication::applicationDirPath();
     int endInd = appPath.indexOf("build");
-    string curDir = appPath.toStdString().substr(0,endInd) + "SolarSystem/Parameters.txt";
+    string curDir = appPath.toStdString().substr(0,endInd) + "GPU-A/Parameters.txt";
     fin.open(curDir);
 
 	if (!fin)
@@ -301,16 +302,30 @@ void SolarSystem::display()
 }
 
 /**
+ * @name: updateObject
+ * @description: update the objects in the solar system
+ * @return: void
+ */
+void updateObject(AstronmicalObject* item)
+{
+    item->update(TIMEPAST);
+}
+
+/**
  * @name: update
  * @description: update the solar system
  * @return: void
  */
 void SolarSystem::update()
 {
+    vector<thread> threads;
     for (auto item : objects)
 	{
-		item->update(TIMEPAST);
+        threads.push_back(thread(updateObject,item));
 	}
+
+    for_each(threads.begin(),threads.end(),mem_fn(&thread::join));
 
 	this->display();
 }
+

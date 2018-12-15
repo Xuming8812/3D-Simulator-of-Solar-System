@@ -1,5 +1,6 @@
 #include "renderingwidget.h"
 #define PI 3.1415926
+#define FREQ 100
 #include <string>
 /**
  * @brief RenderingWidget::RenderingWidget
@@ -20,7 +21,9 @@ RenderingWidget::RenderingWidget(QWidget *parent):QGLWidget(parent)
     is_fullscreen = false;
     is_highlighting = false;
     is_matrix_set = false;
+    is_draw_shadow =  false;
     is_play = true;
+    timeSpeed = 1.0;
     hAngle = 0.0;
     vAngle = 0.0;
 
@@ -31,7 +34,7 @@ RenderingWidget::RenderingWidget(QWidget *parent):QGLWidget(parent)
     eyeZ = 1.0;
     connect(&timer, SIGNAL(timeout()), this, SLOT(updateGL()));
     connect(&timer, SIGNAL(timeout()), this, SLOT(updatePosition()));
-    timer.start(16);
+    timer.start(1000/FREQ);
 
     rTri = 0;                 // Revolution angle
     rQuad = 0;                // Rotate angle
@@ -115,7 +118,13 @@ void RenderingWidget::paintGL(){
     glEnable(GL_DEPTH_TEST);
 
     // Rotate the sky background
-    rTri += 0.1;
+    rTri += 0.05;
+
+    //enable draw shadow
+    if (is_draw_shadow)
+//        drawShadow(obj_r,obj_x,obj_y);
+    glEnable(GL_DEPTH_TEST);
+
 }
 
 /**
@@ -150,7 +159,7 @@ void RenderingWidget::drawSky(){
     glRotatef(rTri,1.0,1.0,1.0);
 
     // Create sphere
-    gluSphere(skySphere, sky_radious, 30, 30);
+    gluSphere(skySphere, static_cast<double>(sky_radious), 30, 30);
     gluQuadricOrientation(skySphere, GLU_INSIDE);
 
 
@@ -226,8 +235,9 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
         viewport[2] /= 2;
         viewport[3] /= 2;
     }
+
     winX = lastPos.x();
-    winY = (float)viewport[3] - lastPos.y();
+    winY = viewport[3] - lastPos.y();
     winZ = 0;
 
     // get the world coordinates from the screen coordinates
@@ -238,16 +248,31 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
 
     for (auto it : solarSystem->getObjects()){
         GLfloat dist = it->getDistance();
-        GLfloat theta = it->getAngleRevolution() / 180 * PI;
-        GLfloat radius = it->getRadius();
+        GLfloat theta = it->getAngleRevolution() / 180.0f * static_cast<float>(PI);
+        GLdouble radius = static_cast<double>(it->getRadius());
+        if (dist != 0)
+            dist = 1.2*dist*dist/sqrt((1.2*dist*sin(theta))*(1.2*dist*sin(theta))+(dist*cos(theta))*(dist*cos(theta)));
         GLfloat x = dist * cos(theta);
         GLfloat y = dist * sin(theta) * cos(vAngle);
-        if (qPow(x-worldX,2) + qPow(y-worldY,2) <= radius * radius){
+
+        if (qPow(static_cast<double>(x)-worldX,2) + qPow(static_cast<double>(y)-worldY,2) <= (radius+0.2) * (radius+0.2)){
+
             currentObject = it;
+            is_draw_shadow = true;
+            if (it->getName()  ==  "Sun"){
+                obj_x = -qSqrt(qPow(1.2,2) - qPow(1,2));
+                obj_y = y;
+                obj_r = radius;
+            }
+            else{
+                obj_x = x;
+                obj_y = y;
+                obj_r = radius;
+            }
+            updateGL();
             emit currentObjectChanged();
             break;
         }
-
     }
 }
 
@@ -260,20 +285,20 @@ void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
 
     if (is_adjust_view){
         curPos = e->pos();
-        float dH = atan((curPos.x() - lastPos.x()) / (5 * eye_distance));
-        float dV = atan((curPos.y() - lastPos.y()) / (5 * eye_distance));
+        float dH = static_cast<float>(atan((curPos.x() - lastPos.x()) / (5 * eye_distance)));
+        float dV = static_cast<float>(atan((curPos.y() - lastPos.y()) / (5 * eye_distance)));
 
         hAngle -= dH;
-        if (vAngle + dV > PI / 2)
-            vAngle = PI / 2;
-        else if (vAngle + dV < -PI / 2)
-            vAngle = -PI / 2;
+        if (vAngle + dV > static_cast<float>(PI)/ 2)
+            vAngle = static_cast<float>(PI) / 2;
+        else if (vAngle + dV < -static_cast<float>(PI) / 2)
+            vAngle = -static_cast<float>(PI) / 2;
         else
             vAngle += dV;
 
-        eyeX = cos(vAngle) * sin(hAngle);
-        eyeY = sin(vAngle);
-        eyeZ = cos(vAngle) * cos(hAngle);
+        eyeX = cos(static_cast<double>(vAngle)) * sin(static_cast<double>(hAngle));
+        eyeY = sin(static_cast<double>(vAngle));
+        eyeZ = cos(static_cast<double>(vAngle)) * cos(static_cast<double>(hAngle));
         lastPos = curPos;
     }
 }
@@ -284,18 +309,19 @@ void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
  * @param e
  */
 void RenderingWidget::mouseReleaseEvent(QMouseEvent *e){
+
     is_adjust_view = false;
 }
 
 void RenderingWidget::mouseDoubleClickEvent(QMouseEvent *e){
-    is_fullscreen = !is_fullscreen;
-
-    if (is_fullscreen){
-        setWindowFlags(Qt::Widget);
-        showFullScreen();
-    }
+    if (vAngle != 0)
+        vAngle = 0;
     else
-        this->showNormal();
+        vAngle = -PI / 2;
+    hAngle = 0.0;
+    eyeX = cos(static_cast<double>(vAngle)) * sin(static_cast<double>(hAngle));
+    eyeY = sin(static_cast<double>(vAngle));
+    eyeZ = cos(static_cast<double>(vAngle)) * cos(static_cast<double>(hAngle));
 }
 
 /**
@@ -316,8 +342,26 @@ AstronmicalObject* RenderingWidget::getCurrentObject(){
 
 void RenderingWidget::updatePosition(){
     for (auto it : solarSystem->getObjects()){
-        it->update(1);
+        it->update(timeSpeed/24);
     }
 }
 
+void RenderingWidget::drawShadow(GLfloat radius, GLfloat x, GLfloat y){
+    glPushMatrix();
+    glColor3f(1,1,1);
+    glLineWidth(5);
+//    GLdouble eye_posX = eye_distance * eyeX;
+//    GLdouble eye_posY = eye_distance * eyeY;
+//    GLdouble eye_posZ = eye_distance * eyeZ;
+//    gluLookAt(eye_posX,eye_posY,eye_posZ,0,0,0,0,1,0);
+//    glRotatef(1,eye_posX,eye_posY,eye_posZ);
+    glBegin(GL_LINE_LOOP);
+    for (int i=0; i<100; i++){
+        glVertex2f(x+radius*cos(2*PI/100*i),y+radius*sin(2*PI/100*i));
+    }
+    glEnd();
+}
 
+void dragObject(){
+
+}

@@ -15,6 +15,10 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(timer,SIGNAL(timeout()),this,SLOT(updateDateTime()));
     connect(ui->openGLWidget,SIGNAL(currentObjectChanged()),this,SLOT(updateData()));
     timer->start(1000);
+    ui->radiusLabel->setToolTip("unit: mile");
+    ui->massLabel->setToolTip("unit: kg");
+    ui->rotLabel->setToolTip("unit: mile");
+    ui->revLabel->setToolTip("unit: mile");
 }
 
 MainWindow::~MainWindow()
@@ -67,8 +71,11 @@ void MainWindow::updateData(){
     ui->dataName->setText(QString::fromStdString(ui->openGLWidget->getCurrentObject()->getName()));
     ui->radiusEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getRadius()));
     ui->massEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getMass()));
-    ui->revolutionEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getSpeedRevolution()));
-    ui->rotationEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getSpeedRotation()));
+    ui->rotationEdit->setText(QString::number(3.6/ui->openGLWidget->getCurrentObject()->getSpeedRotation()));
+    if (ui->openGLWidget->getCurrentObject()->getName() == "Sun")
+        ui->revolutionEdit->setText("0");
+    else
+        ui->revolutionEdit->setText(QString::number(3.6/ui->openGLWidget->getCurrentObject()->getSpeedRevolution()));
 
 }
 
@@ -140,40 +147,68 @@ void MainWindow::on_timeSpeedSlider_sliderMoved(int position)
 {
     if (position == 0)
         ui->timeSpeedLabel->setText("Stop");
-    else if (position > -24 && position < 24 )
+    else if (position > -24 && position < 24 ){
         ui->timeSpeedLabel->setText(QString::number(position) + " hour / sec");
-    else if (position >= 24 && position < 54)
+        ui->openGLWidget->timeSpeed = position;
+    }
+    else if (position >= 24 && position < 54){
         ui->timeSpeedLabel->setText(QString::number(position - 23) + " day / sec");
-    else if (position > -54 && position <= -24)
+        ui->openGLWidget->timeSpeed = (position - 23) * 24;
+    }
+    else if (position > -54 && position <= -24){
         ui->timeSpeedLabel->setText(QString::number(position + 23) + " day / sec");
-    else if (position >= 54 && position < 78)
+        ui->openGLWidget->timeSpeed = (position + 23) * 24;
+    }
+    else if (position >= 54 && position < 78){
         ui->timeSpeedLabel->setText(QString::number((position - 54)/2.0) + " month / sec");
-    else if (position > -78 && position <= -54)
+        ui->openGLWidget->timeSpeed = (position - 53) * 24 * 30;
+    }
+    else if (position > -78 && position <= -54){
         ui->timeSpeedLabel->setText(QString::number((position + 54)/2.0) + " month / sec");
-    else if (position == 78)
+        ui->openGLWidget->timeSpeed = (position + 53) * 24 * 30;
+    }
+    else if (position == 78){
         ui->timeSpeedLabel->setText(" +1 year / sec");
-    else
+        ui->openGLWidget->timeSpeed = 24 * 365;
+    }
+    else{
         ui->timeSpeedLabel->setText(" -1 year / sec");
+        ui->openGLWidget->timeSpeed = -24 * 365 ;
+    }
 }
 
 void MainWindow::on_timeSpeedSlider_valueChanged(int value)
 {
     if (value == 0)
         ui->timeSpeedLabel->setText("Stop");
-    else if (value > -24 && value < 24 )
+    else if (value > -24 && value < 24 ){
         ui->timeSpeedLabel->setText(QString::number(value) + " hour / sec");
-    else if (value >= 24 && value < 54)
+        ui->openGLWidget->timeSpeed = value;
+    }
+    else if (value >= 24 && value < 54){
         ui->timeSpeedLabel->setText(QString::number(value - 23) + " day / sec");
-    else if (value > -54 && value <= -24)
+        ui->openGLWidget->timeSpeed = (value - 23) * 24;
+    }
+    else if (value > -54 && value <= -24){
         ui->timeSpeedLabel->setText(QString::number(value + 23) + " day / sec");
-    else if (value >= 54 && value < 78)
+        ui->openGLWidget->timeSpeed = (value + 23) * 24;
+    }
+    else if (value >= 54 && value < 78){
         ui->timeSpeedLabel->setText(QString::number((value - 54)/2.0) + " month / sec");
-    else if (value > -78 && value <= -54)
+        ui->openGLWidget->timeSpeed = (value - 53) * 24 * 30;
+    }
+    else if (value > -78 && value <= -54){
         ui->timeSpeedLabel->setText(QString::number((value + 54)/2.0) + " month / sec");
-    else if (value == 78)
+        ui->openGLWidget->timeSpeed = (value + 53) * 24 * 30;
+    }
+    else if (value == 78){
         ui->timeSpeedLabel->setText(" +1 year / sec");
-    else
+        ui->openGLWidget->timeSpeed = 24 * 365;
+    }
+    else{
         ui->timeSpeedLabel->setText(" -1 year / sec");
+        ui->openGLWidget->timeSpeed = -24 * 365 ;
+    }
 }
 
 void MainWindow::on_highlightButton_clicked()
@@ -184,26 +219,41 @@ void MainWindow::on_highlightButton_clicked()
             if (it->getName() == ui->openGLWidget->getCurrentObject()->getName())
                 continue;
             it->setVisibility(false);
-//            it->draw();
         }
     }
     else{
         for (auto it : ui->openGLWidget->getSolarSystem()->getObjects()){
             it->setVisibility(true);
-//            it->draw();
         }
     }
 }
 
-
-
 void MainWindow::on_confirmButton_clicked()
 {
-//    qDebug() << ui->dataRadius->text().toFloat
 
-//    qDebug() << ui->radiusEdit->text();
-    ui->openGLWidget->getCurrentObject()->setRadius(ui->radiusEdit->text().toFloat());
-    ui->openGLWidget->getCurrentObject()->setMass(ui->massEdit->text().toFloat());
+    GLfloat max_distance = ui->openGLWidget->getSolarSystem()->getObjects()[8]->getDistance();
+    GLfloat min_distance = 0.0;
+
+    const QString tx_dist = ui->radiusEdit->text();
+    const QString tx_mass = ui->massEdit->text();
+    QRegExp rx("^[\\+-]?([0-9]+\\.?[0-9]*|\\.?[0-9]+)$");
+    if (rx.indexIn(tx_dist) != -1){
+        if (tx_dist.toFloat() > max_distance || tx_dist.toFloat() < min_distance){
+            error_2(min_distance, max_distance);
+        }
+        else
+            ui->openGLWidget->getCurrentObject()->setRadius(tx_dist.toFloat());
+    }
+    else{
+        error_1();
+    }
+
+//    if (rx.indexIn(tx_mass) != -1){
+//        ui->openGLWidget->getCurrentObject()->setMass(ui->massEdit->text().toFloat());
+//    }
+//    else{
+//        error_1();
+//    }
 }
 
 void MainWindow::on_resetButton_clicked()
@@ -234,4 +284,24 @@ void MainWindow::on_rotationEdit_returnPressed()
 void MainWindow::on_revolutionEdit_returnPressed()
 {
     on_confirmButton_clicked();
+}
+
+void MainWindow::error_1(){
+    QMessageBox msgBox;
+    msgBox.setWindowTitle(tr("input error"));
+    msgBox.setFixedSize(QSize(300,100));
+    msgBox.setText(tr("Input must be real numbers!"));
+    msgBox.setInformativeText(tr("please re-enter your parameters"));
+    msgBox.exec();
+}
+
+
+
+void MainWindow::error_2(float min, float max){
+    QMessageBox msgBox;
+    msgBox.setWindowTitle(tr("range error"));
+    msgBox.setFixedSize(QSize(300,100));
+    msgBox.setText("input for radius must between " + QString::number(min) + " and " + QString::number(max));
+    msgBox.setInformativeText(tr("please re-enter your parameters"));
+    msgBox.exec();
 }

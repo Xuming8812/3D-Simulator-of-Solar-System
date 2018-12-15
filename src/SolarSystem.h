@@ -71,9 +71,7 @@ private:
 		GLfloat speedRevolution;
 		GLfloat speedRotation;
 		GLfloat radius;
-
-    GLfloat mass;
-
+        GLfloat mass;
 		GLfloat distance;
 		std::string parentName;
 		GLfloat color[4];
