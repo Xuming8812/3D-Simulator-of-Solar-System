@@ -67,8 +67,8 @@ void MainWindow::updateData(){
     ui->dataName->setText(QString::fromStdString(ui->openGLWidget->getCurrentObject()->getName()));
     ui->radiusEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getRadius()));
     ui->massEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getMass()));
-    ui->revolutionEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getSpeedRevolution()));
-    ui->rotationEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getSpeedRotation()));
+    ui->revolutionEdit->setText(QString::number(360.0/ui->openGLWidget->getCurrentObject()->getSpeedRevolution()));
+    ui->rotationEdit->setText(QString::number(360.0/ui->openGLWidget->getCurrentObject()->getSpeedRotation()));
 
 }
 
@@ -199,18 +199,78 @@ void MainWindow::on_highlightButton_clicked()
 
 void MainWindow::on_confirmButton_clicked()
 {
-//    qDebug() << ui->dataRadius->text().toFloat
 
-//    qDebug() << ui->radiusEdit->text();
-    ui->openGLWidget->getCurrentObject()->setRadius(ui->radiusEdit->text().toFloat());
-    ui->openGLWidget->getCurrentObject()->setMass(ui->massEdit->text().toFloat());
+    GLfloat max_distance = ui->openGLWidget->getSolarSystem()->getObjects()[8]->getDistance();
+    GLfloat min_distance = 0.0;
+
+    const QString tx_dist = ui->radiusEdit->text();
+    const QString tx_mass = ui->massEdit->text();
+    QRegExp rx("^[\\+-]?([0-9]+\\.?[0-9]*|\\.?[0-9]+)$");
+    if (rx.indexIn(tx_dist) != -1){
+        if (tx_dist.toFloat() > max_distance || tx_dist.toFloat() < min_distance){
+            error_2(min_distance, max_distance);
+        }
+        else
+            ui->openGLWidget->getCurrentObject()->setRadius(tx_dist.toFloat());
+    }
+    else{
+        error_1();
+    }
+
+    if (rx.indexIn(tx_mass) != -1){
+        ui->openGLWidget->getCurrentObject()->setMass(ui->massEdit->text().toFloat());
+    }
+    else{
+        error_1();
+    }
 }
 
 void MainWindow::on_resetButton_clicked()
 {
     int i = 0;
     for (auto it : ui->openGLWidget->objects_copy){
-        ui->openGLWidget->getSolarSystem()->getObjects()[i]->setRadius(it->getRadius());
+        ui->openGLWidget->getSolarSystem()->getObjects()[i]->setRadius(it.getRadius());
         i++;
     }
+    updateData();
+}
+
+void MainWindow::on_radiusEdit_returnPressed()
+{
+    on_confirmButton_clicked();
+}
+
+void MainWindow::on_massEdit_returnPressed()
+{
+    on_confirmButton_clicked();
+}
+
+void MainWindow::on_rotationEdit_returnPressed()
+{
+    on_confirmButton_clicked();
+}
+
+void MainWindow::on_revolutionEdit_returnPressed()
+{
+    on_confirmButton_clicked();
+}
+
+void MainWindow::error_1(){
+    QMessageBox msgBox;
+    msgBox.setWindowTitle(tr("input error"));
+    msgBox.setFixedSize(QSize(300,100));
+    msgBox.setText(tr("Input must be real numbers!"));
+    msgBox.setInformativeText(tr("please re-enter your parameters"));
+    msgBox.exec();
+}
+
+
+
+void MainWindow::error_2(float min, float max){
+    QMessageBox msgBox;
+    msgBox.setWindowTitle(tr("range error"));
+    msgBox.setFixedSize(QSize(300,100));
+    msgBox.setText("input for radius must between " + QString::number(min) + " and " + QString::number(max));
+    msgBox.setInformativeText(tr("please re-enter your parameters"));
+    msgBox.exec();
 }

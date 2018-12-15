@@ -49,6 +49,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 mac: LIBS += -framework GLUT
 else:unix|win32: LIBS += -lGLUT
 
-INCLUDEPATH += /usr/local/Cellar/glm/0.9.9.3/include/
 RESOURCES += \
     qsrc.qrc

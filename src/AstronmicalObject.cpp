@@ -1,5 +1,3 @@
-
-
 #include "AstronmicalObject.h"
 #include <cmath>
 #include <vector>
@@ -8,6 +6,7 @@
 
 #define SLICES 50
 #define STACKS 50
+#define ratio 1.2
 
 #define NUM_ELEMENT 1000
 
@@ -32,10 +31,9 @@ AstronmicalObject::AstronmicalObject(std::string label, GLfloat r, GLfloat m, GL
     this->mass = m;
 	this->distance = d;
 
-	this->speedRotation = sRotate;
+    this->speedRotation = sRotate;
 
     this->isVisible = true;
-
 	
 	//actually the speed is an angular velocity in degree
 	if (sRevolute > 0)
@@ -84,7 +82,7 @@ void AstronmicalObject::drawObject()
             angle-=num*360;
             angle = angle*PI/180;
 
-            dis = 1.5*dis*dis/sqrt((1.5*dis*sin(angle))*(1.5f*dis*sin(angle))+(dis*cos(angle))*(dis*cos(angle)));
+            dis = ratio*dis*dis/sqrt((ratio*dis*sin(angle))*(ratio*dis*sin(angle))+(dis*cos(angle))*(dis*cos(angle)));
 
             glTranslatef(dis, 0.0, 0.0);
 		}
@@ -103,11 +101,10 @@ void AstronmicalObject::drawObject()
         else {
             for (int i{ 0 }; i < NUM_ELEMENT; i++)
             {
-                glVertex2f(distance *1.5f* static_cast<float>(cos(2.0 * PI*i / NUM_ELEMENT)), distance*static_cast<float>(sin(2.0 * PI*i / NUM_ELEMENT)));
+
+                glVertex2f(distance *ratio* static_cast<float>(cos(2.0 * PI*i / NUM_ELEMENT)), distance*static_cast<float>(sin(2.0 * PI*i / NUM_ELEMENT)));
             }
         }
-
-
 
         glEnd();
 
@@ -120,8 +117,9 @@ void AstronmicalObject::drawObject()
         }
         else if(parent == nullptr)
         {
+            GLfloat c = sqrt(pow(ratio,2) - pow(1,2));
             glRotatef(angleRevolution, 0, 0, 1);
-            glTranslatef(distance, 0.0, 0.0);
+            glTranslatef(-c, 0.0, 0.0);
             glRotatef(angleRotation, 0, 0, 1);
         }
         else {
@@ -133,43 +131,32 @@ void AstronmicalObject::drawObject()
             angle-=num*360;
             angle = angle*PI/180;
 
-            dis = 1.5*dis*dis/sqrt((1.5*dis*sin(angle))*(1.5*dis*sin(angle))+(dis*cos(angle))*(dis*cos(angle)));
+            dis = ratio*dis*dis/sqrt((ratio*dis*sin(angle))*(ratio*dis*sin(angle))+(dis*cos(angle))*(dis*cos(angle)));
             glTranslatef(dis, 0.0, 0.0);
             glRotatef(angleRotation, 0, 0, 1);
-
         }
 
-
-
-
-//		glColor3f(color[0], color[1], color[2]);
         gluSphere(mySphere, static_cast<double>(radius), SLICES, STACKS);
         gluQuadricNormals(mySphere, GL_SMOOTH);
         gluQuadricTexture(mySphere, GL_TRUE);
-//		glutSolidSphere(radius, SLICES, STACKS);
-
-
 	}
 
-	glPopMatrix();
+    glPopMatrix();
 }
-
 /**
  * @name: update
  * @description: update the position of the object
  * @param time: the timespan
  * @return: void
-
  */
 void AstronmicalObject::update(int time)
 {
-	
-	//update the angle of rotation and revolution
 
-    angleRevolution += time * speedRevolution / 3.0f;
-    angleRotation += time * speedRotation / 3.0f;
+    //update the angle of rotation and revolution
+    angleRevolution += time * speedRevolution;
+    angleRotation += time * speedRotation;
+
 }
-
 
 
 /**
@@ -185,23 +172,19 @@ void AstronmicalObject::update(int time)
  * @return: void
  */
 Planet::Planet(std::string label, GLfloat r, GLfloat m, GLfloat d, GLfloat sRevolute, GLfloat sRotate, AstronmicalObject* par)
-    :AstronmicalObject(label, r, m, d, sRevolute, sRotate, par){};
-
+    :AstronmicalObject(label, r, m, d, sRevolute, sRotate, par)
+{
+//    setColor(rgbColor);
+}
 
 /**
  * @name: drawPlanet
  * @description: Draw the planet based on the graphic parameters
  * @return: void
  */
-
-/**
- * @brief Planet::~Planet
- */
-//Planet::~Planet(){}
-
 void Planet::drawPlanet()
 {
-	// for test
+    // for test
     GLfloat ambient[4]{ 0.5, 0.5, 0.5, 1.0 };
     GLfloat diffuse[4]{ 0.5, 0.5, 0.5, 1.0 };
     GLfloat specular[4]{ 1.0, 1.0, 1.0, 1.0 };
@@ -245,30 +228,29 @@ Star::~Star(){}
  */
 void Star::addLightSource()
 {
-	// for test
-
+    // for test
     GLfloat position0[] = { 2.0, 0.0, 0.0, 1.0 };
     GLfloat ambient[] = { 1.0, 1.0, 1.0, 1.0 };
     GLfloat diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
-	GLfloat specular[] = { 1.0, 1.0, 1.0, 1.0 };
+    GLfloat specular[] = { 1.0, 1.0, 1.0, 1.0 };
 
     glLightfv(GL_LIGHT0, GL_POSITION, position0);
-	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
 
     GLfloat position1[] = { 0.0,2.0, .0, 1.0 };
     GLfloat position2[] = { -2.0, 0.0, .0, 1.0 };
     GLfloat position3[] = { 0.0, -2.0, .0, 1.0 };
-    //GLfloat position4[] = { 0.0, 3.0, .0, 1.0 };
-    //GLfloat position5[] = { 0.0, 3.0, .0, 1.0 };
-    //GLfloat position6[] = { 0.0, 3.0, .0, 1.0 };
-    //GLfloat position7[] = { 0.0, 3.0, .0, 1.0 };
+    GLfloat position4[] = { 0.0, 3.0, .0, 1.0 };
+    GLfloat position5[] = { 0.0, 3.0, .0, 1.0 };
+    GLfloat position6[] = { 0.0, 3.0, .0, 1.0 };
+    GLfloat position7[] = { 0.0, 3.0, .0, 1.0 };
+
     glLightfv(GL_LIGHT1, GL_POSITION, position1);
     glLightfv(GL_LIGHT1, GL_AMBIENT, ambient);
     glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuse);
     glLightfv(GL_LIGHT1, GL_SPECULAR, specular);
-
     glLightfv(GL_LIGHT2, GL_POSITION, position2);
     glLightfv(GL_LIGHT2, GL_AMBIENT, ambient);
     glLightfv(GL_LIGHT2, GL_DIFFUSE, diffuse);
@@ -277,10 +259,6 @@ void Star::addLightSource()
     glLightfv(GL_LIGHT3, GL_AMBIENT, ambient);
     glLightfv(GL_LIGHT3, GL_DIFFUSE, diffuse);
     glLightfv(GL_LIGHT3, GL_SPECULAR, specular);
-//    glLightfv(GL_LIGHT4, GL_POSITION, position4);
-//    glLightfv(GL_LIGHT4, GL_AMBIENT, ambient);
-//    glLightfv(GL_LIGHT4, GL_DIFFUSE, diffuse);
-//    glLightfv(GL_LIGHT4, GL_SPECULAR, specular);
-
-
 }
+
+
