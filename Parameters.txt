@@ -1,4 +1,3 @@
-
 Num = 10
 [Object1]
 name = "Sun"

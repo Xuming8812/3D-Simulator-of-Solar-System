@@ -314,3 +314,4 @@ void SolarSystem::update()
 
 	this->display();
 }
+

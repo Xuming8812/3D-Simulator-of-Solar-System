@@ -221,3 +221,5 @@ void Star::addLightSource()
     glLightfv(GL_LIGHT3, GL_DIFFUSE, diffuse);
     glLightfv(GL_LIGHT3, GL_SPECULAR, specular);
 }
+
+
