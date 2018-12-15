@@ -80,7 +80,7 @@ void SolarSystem::readParameters()
 
     QString appPath = QCoreApplication::applicationDirPath();
     int endInd = appPath.indexOf("build");
-    string curDir = appPath.toStdString().substr(0,endInd) + "SolarSystem/Parameters.txt";
+    string curDir = appPath.toStdString().substr(0,endInd) + "GPU-A/Parameters.txt";
     fin.open(curDir);
 
 	if (!fin)
