@@ -30,7 +30,7 @@ AstronmicalObject::AstronmicalObject(std::string label, GLfloat r, GLfloat m, GL
     this->mass = m;
 	this->distance = d;
 
-	this->speedRotation = sRotate;
+    this->speedRotation = sRotate;
 
     this->isVisible = true;
 
@@ -82,7 +82,7 @@ void AstronmicalObject::drawObject()
             angle-=num*360;
             angle = angle*PI/180;
 
-            dis = 1.5*dis*dis/sqrt((1.5*dis*sin(angle))*(1.5f*dis*sin(angle))+(dis*cos(angle))*(dis*cos(angle)));
+            dis = 1.3*dis*dis/sqrt((1.3*dis*sin(angle))*(1.3f*dis*sin(angle))+(dis*cos(angle))*(dis*cos(angle)));
 
             glTranslatef(dis, 0.0, 0.0);
 		}
@@ -101,7 +101,7 @@ void AstronmicalObject::drawObject()
         else {
             for (int i{ 0 }; i < NUM_ELEMENT; i++)
             {
-                glVertex2f(distance *1.5f* static_cast<float>(cos(2.0 * PI*i / NUM_ELEMENT)), distance*static_cast<float>(sin(2.0 * PI*i / NUM_ELEMENT)));
+                glVertex2f(distance *1.3* static_cast<float>(cos(2.0 * PI*i / NUM_ELEMENT)), distance*static_cast<float>(sin(2.0 * PI*i / NUM_ELEMENT)));
             }
         }
 
@@ -129,7 +129,7 @@ void AstronmicalObject::drawObject()
             angle-=num*360;
             angle = angle*PI/180;
 
-            dis = 1.5*dis*dis/sqrt((1.5*dis*sin(angle))*(1.5*dis*sin(angle))+(dis*cos(angle))*(dis*cos(angle)));
+            dis = 1.3*dis*dis/sqrt((1.3*dis*sin(angle))*(1.3*dis*sin(angle))+(dis*cos(angle))*(dis*cos(angle)));
             glTranslatef(dis, 0.0, 0.0);
             glRotatef(angleRotation, 0, 0, 1);
         }
@@ -151,8 +151,8 @@ void AstronmicalObject::update(int time)
 {
 
     //update the angle of rotation and revolution
-    angleRevolution += time * speedRevolution / 3.0;
-    angleRotation += time * speedRotation / 3.0;
+    angleRevolution += time * speedRevolution;
+    angleRotation += time * speedRotation;
 
 }
 

@@ -67,8 +67,8 @@ void MainWindow::updateData(){
     ui->dataName->setText(QString::fromStdString(ui->openGLWidget->getCurrentObject()->getName()));
     ui->radiusEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getRadius()));
     ui->massEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getMass()));
-    ui->revolutionEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getSpeedRevolution()));
-    ui->rotationEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getSpeedRotation()));
+    ui->revolutionEdit->setText(QString::number(360.0/ui->openGLWidget->getCurrentObject()->getSpeedRevolution()));
+    ui->rotationEdit->setText(QString::number(360.0/ui->openGLWidget->getCurrentObject()->getSpeedRotation()));
 
 }
 

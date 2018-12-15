@@ -570,7 +570,7 @@ QGroupBox::title {
         </layout>
        </widget>
       </item>
-      <item alignment="Qt::AlignHCenter|Qt::AlignTop">
+      <item>
        <widget class="QGroupBox" name="groupBox">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Minimum" vsizetype="Minimum">

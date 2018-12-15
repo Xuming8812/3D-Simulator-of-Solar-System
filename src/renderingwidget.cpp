@@ -242,6 +242,8 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
         GLfloat dist = it->getDistance();
         GLfloat theta = it->getAngleRevolution() / 180.0f * static_cast<float>(PI);
         GLdouble radius = static_cast<double>(it->getRadius());
+        if (dist != 0)
+            dist = 1.3*dist*dist/sqrt((1.3*dist*sin(theta))*(1.3*dist*sin(theta))+(dist*cos(theta))*(dist*cos(theta)));
         GLfloat x = dist * cos(theta);
         GLfloat y = dist * sin(theta) * cos(vAngle);
         if (qPow(static_cast<double>(x)-worldX,2) + qPow(static_cast<double>(y)-worldY,2) <= radius * radius){
