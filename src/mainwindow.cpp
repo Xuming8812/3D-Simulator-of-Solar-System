@@ -1,6 +1,10 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+/**
+ * @brief MainWindow::MainWindow
+ * @param parent
+ */
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -21,11 +25,17 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->revLabel->setToolTip("unit: mile");
 }
 
+/**
+ * @brief MainWindow::~MainWindow
+ */
 MainWindow::~MainWindow()
 {
     delete ui;
 }
 
+/**
+ * @brief MainWindow::InitDataTime
+ */
 void MainWindow::InitDataTime(){
     dateTime = new QDateTime(QDateTime::currentDateTime());
 
@@ -46,8 +56,10 @@ void MainWindow::InitDataTime(){
     ui->year->setText(QString::number(year, 10));
 }
 
+/**
+ * @brief MainWindow::updateDateTime
+ */
 void MainWindow::updateDateTime(){
-
     dateTime = new QDateTime(dateTime->addSecs(1));
     QTime time = dateTime->time();
     hour = time.hour();
@@ -67,7 +79,16 @@ void MainWindow::updateDateTime(){
 
 }
 
+/**
+ * @brief MainWindow::updateData
+ * update the data of objects
+ */
 void MainWindow::updateData(){
+    if (ui->openGLWidget->getCurrentObject()->getName() == "Sun")
+        ui->revolutionEdit->setReadOnly(true);
+    else
+        ui->revolutionEdit->setReadOnly(false);
+
     ui->dataName->setText(QString::fromStdString(ui->openGLWidget->getCurrentObject()->getName()));
     ui->radiusEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getRadius()));
     ui->massEdit->setText(QString::number(ui->openGLWidget->getCurrentObject()->getMass()));
@@ -76,9 +97,12 @@ void MainWindow::updateData(){
         ui->revolutionEdit->setText("0");
     else
         ui->revolutionEdit->setText(QString::number(3.6/ui->openGLWidget->getCurrentObject()->getSpeedRevolution()));
-
 }
 
+/**
+ * @brief MainWindow::on_startButton_clicked
+ * to start or stop the simulation
+ */
 void MainWindow::on_startButton_clicked()
 {
     if (!ui->openGLWidget->is_play){
@@ -95,24 +119,40 @@ void MainWindow::on_startButton_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::on_hour_valueChanged
+ * @param arg1: input to set hour
+ */
 void MainWindow::on_hour_valueChanged(int arg1)
 {
     hour = arg1;
     dateTime->setTime(QTime(hour,minute,second));
 }
 
+/**
+ * @brief MainWindow::on_minute_valueChanged
+ * @param arg1: input to set minute
+ */
 void MainWindow::on_minute_valueChanged(int arg1)
 {
     minute = arg1;
     dateTime->setTime(QTime(hour,minute,second));
 }
 
+/**
+ * @brief MainWindow::on_second_valueChanged
+ * @param arg1: input to set second
+ */
 void MainWindow::on_second_valueChanged(int arg1)
 {
     second = arg1;
     dateTime->setTime(QTime(hour,minute,second));
 }
 
+/**
+ * @brief MainWindow::on_year_textChanged
+ * @param arg1: input to set year
+ */
 void MainWindow::on_year_textChanged(const QString &arg1)
 {
     year = arg1.toInt();
@@ -120,6 +160,10 @@ void MainWindow::on_year_textChanged(const QString &arg1)
     on_month_currentTextChanged(QString::number(month));
 }
 
+/**
+ * @brief MainWindow::on_month_currentTextChanged
+ * @param arg1: input to set month
+ */
 void MainWindow::on_month_currentTextChanged(const QString &arg1)
 {
     month = arg1.toInt();
@@ -142,7 +186,10 @@ void MainWindow::on_day_currentTextChanged(const QString &arg1)
 }
 
 
-
+/**
+ * @brief MainWindow::on_timeSpeedSlider_sliderMoved
+ * @param position: input to set time speed
+ */
 void MainWindow::on_timeSpeedSlider_sliderMoved(int position)
 {
     if (position == 0)
@@ -177,6 +224,10 @@ void MainWindow::on_timeSpeedSlider_sliderMoved(int position)
     }
 }
 
+/**
+ * @brief MainWindow::on_timeSpeedSlider_valueChanged
+ * @param value: input to set time speed
+ */
 void MainWindow::on_timeSpeedSlider_valueChanged(int value)
 {
     if (value == 0)
@@ -211,6 +262,10 @@ void MainWindow::on_timeSpeedSlider_valueChanged(int value)
     }
 }
 
+/**
+ * @brief MainWindow::on_highlightButton_clicked
+ * highlight a selected object and hide the others
+ */
 void MainWindow::on_highlightButton_clicked()
 {
     ui->openGLWidget->is_highlighting = !ui->openGLWidget->is_highlighting;
@@ -228,6 +283,10 @@ void MainWindow::on_highlightButton_clicked()
     }
 }
 
+/**
+ * @brief MainWindow::on_confirmButton_clicked
+ * confirm to change parameters
+ */
 void MainWindow::on_confirmButton_clicked()
 {
 
@@ -238,7 +297,7 @@ void MainWindow::on_confirmButton_clicked()
     const QString tx_mass = ui->massEdit->text();
     const QString tx_rot = ui->rotationEdit->text();
     const QString tx_rev = ui->revolutionEdit->text();
-    QRegExp rx("[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?");
+    QRegExp rx("^([-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?)$");
     if (rx.indexIn(tx_rad) != -1){
         if (tx_rad.toFloat() > max_distance || tx_rad.toFloat() < min_distance){
             error_2(min_distance, max_distance);
@@ -256,39 +315,80 @@ void MainWindow::on_confirmButton_clicked()
     else{
         error_1();
     }
+
+    if (rx.indexIn(tx_rot) != -1){
+        ui->openGLWidget->getCurrentObject()->setSpeedRotation(3.6/tx_rot.toFloat());
+    }
+    else{
+        error_1();
+    }
+
+    if (rx.indexIn(tx_rev) != -1){
+        if (ui->openGLWidget->getCurrentObject()->getName() != "Sun")
+            ui->openGLWidget->getCurrentObject()->setSpeedRevolution(3.6/tx_rev.toFloat());
+    }
+    else{
+        error_1();
+    }
 }
 
+/**
+ * @brief MainWindow::on_resetButton_clicked
+ * confirm to reset parameters
+ */
 void MainWindow::on_resetButton_clicked()
 {
     int i = 0;
     for (auto it : ui->openGLWidget->objects_copy){
         ui->openGLWidget->getSolarSystem()->getObjects()[i]->setRadius(it.getRadius());
         ui->openGLWidget->getSolarSystem()->getObjects()[i]->setMass(it.getMass());
+        ui->openGLWidget->getSolarSystem()->getObjects()[i]->setSpeedRotation(it.getSpeedRotation());
+        ui->openGLWidget->getSolarSystem()->getObjects()[i]->setSpeedRevolution(it.getSpeedRevolution());
         i++;
     }
     updateData();
 }
 
+/**
+ * @brief MainWindow::on_radiusEdit_returnPressed
+ * confirm radius changed
+ */
 void MainWindow::on_radiusEdit_returnPressed()
 {
     on_confirmButton_clicked();
 }
 
+/**
+ * @brief MainWindow::on_massEdit_returnPressed
+ * confirm mass changed
+ */
 void MainWindow::on_massEdit_returnPressed()
 {
     on_confirmButton_clicked();
 }
 
+/**
+ * @brief MainWindow::on_rotationEdit_returnPressed
+ * confirm rotation speed changed
+ */
 void MainWindow::on_rotationEdit_returnPressed()
 {
     on_confirmButton_clicked();
 }
 
+/**
+ * @brief MainWindow::on_revolutionEdit_returnPressed
+ * confirm revolution speed changed
+ */
 void MainWindow::on_revolutionEdit_returnPressed()
 {
     on_confirmButton_clicked();
 }
 
+/**
+ * @brief MainWindow::error_1
+ * message box for invalid input
+ */
 void MainWindow::error_1(){
     QMessageBox msgBox;
     msgBox.setWindowTitle(tr("input error"));
@@ -298,8 +398,12 @@ void MainWindow::error_1(){
     msgBox.exec();
 }
 
-
-
+/**
+ * @brief MainWindow::error_2
+ * message box for range error
+ * @param min: minimum value to accept
+ * @param max: maximum value to accept
+ */
 void MainWindow::error_2(float min, float max){
     QMessageBox msgBox;
     msgBox.setWindowTitle(tr("range error"));
