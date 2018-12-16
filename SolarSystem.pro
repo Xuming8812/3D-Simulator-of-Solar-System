@@ -49,5 +49,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 mac: LIBS += -framework GLUT
 else:unix|win32: LIBS += -lGLUT
 
+LIBS += -pthread
+
 RESOURCES += \
     qsrc.qrc

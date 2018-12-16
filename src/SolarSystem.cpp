@@ -13,7 +13,7 @@ using namespace std;
 
 /**
  * @name: SolarSystem
- * @description: constructor the class SolarSystem
+ * @description: constructor of class SolarSystem
  * @return: void
  */
 SolarSystem::SolarSystem()
@@ -322,8 +322,6 @@ void SolarSystem::update()
     for (auto item : objects)
 	{
         threads.push_back(thread(updateObject,item));
-
-        //item->update(TIMEPAST);
 	}
 
     for_each(threads.begin(),threads.end(),mem_fn(&thread::join));
