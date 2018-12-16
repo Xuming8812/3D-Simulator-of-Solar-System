@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <thread>
 
 /**
  * @brief MainWindow::MainWindow
@@ -322,10 +323,14 @@ void MainWindow::on_confirmButton_clicked()
     else{
         error_1();
     }
-
     if (rx.indexIn(tx_rev) != -1){
-        if (ui->openGLWidget->getCurrentObject()->getName() != "Sun")
+        if (ui->openGLWidget->getCurrentObject()->getName() != "Sun"){
+//            smoothChanges(ui->openGLWidget->getCurrentObject()->getSpeedRevolution(),3.6/tx_rev.toFloat());
             ui->openGLWidget->getCurrentObject()->setSpeedRevolution(3.6/tx_rev.toFloat());
+            std::vector<std::thread> threads;
+            threads.push_back(std::thread(&MainWindow::smoothChanges,this,ui->openGLWidget->getCurrentObject()->getSpeedRevolution(),3.6/tx_rev.toFloat()));
+            for_each(threads.begin(),threads.end(),mem_fn(&std::thread::join));
+        }
     }
     else{
         error_1();
@@ -411,4 +416,16 @@ void MainWindow::error_2(float min, float max){
     msgBox.setText("input for radius must between " + QString::number(min) + " and " + QString::number(max));
     msgBox.setInformativeText(tr("please re-enter your parameters"));
     msgBox.exec();
+}
+
+void MainWindow::smoothChanges(float start,float end){
+    float step = 0.00001;
+    int nums = (end - start) / step;
+    float d1 = ui->openGLWidget->getCurrentObject()->getDistance();
+    float d2;
+    for (int i = 0; i < nums; i++){
+        d2 = d1 * qPow(start + (i * step), 2) / qPow(start,2);
+        ui->openGLWidget->getCurrentObject()->setDistance(5);
+    }
+    qDebug() << d1 << "       " << d2;
 }

@@ -117,6 +117,8 @@ void RenderingWidget::paintGL(){
             renderText(3, 3, 0, "HI");
     glPopMatrix();
 
+
+
     // Draw the objects with textures
     int i = 1;
     for (auto it : solarSystem->getObjects()){
@@ -135,7 +137,6 @@ void RenderingWidget::paintGL(){
     if (is_draw_shadow)
 //        drawShadow(obj_r,obj_x,obj_y);
     glEnable(GL_DEPTH_TEST);
-
 }
 
 /**
@@ -207,7 +208,6 @@ void RenderingWidget::loadGLTextures(QString filename, int id){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }
-
 
 /**
  * @brief RenderingWidget::wheelEvent
@@ -417,9 +417,10 @@ AstronmicalObject* RenderingWidget::getCurrentObject(){
  * update the position of objects
  */
 void RenderingWidget::updatePosition(){
-    for (auto it : solarSystem->getObjects()){
-        it->update(timeSpeed/24);
-    }
+    std::vector<std::thread> threads;
+    for (auto it : solarSystem->getObjects())
+        threads.push_back(std::thread(&AstronmicalObject::update,it,timeSpeed/24));
+    for_each(threads.begin(),threads.end(),mem_fn(&std::thread::join));
 }
 
 void RenderingWidget::drawShadow(GLfloat radius, GLfloat x, GLfloat y){
