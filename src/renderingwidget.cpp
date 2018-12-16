@@ -111,6 +111,11 @@ void RenderingWidget::paintGL(){
     // Dray the sky background
     drawSky();
 
+    glPushMatrix();
+            glColor3f(1, 0, 0);
+            renderText(3, 3, 0, "HI");
+    glPopMatrix();
+
     // Draw the objects with textures
     int i = 1;
     for (auto it : solarSystem->getObjects()){
