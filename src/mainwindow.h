@@ -62,7 +62,9 @@ private slots:
 
     void error_2(float min, float max);
 
+    void on_timeGroupBox_clicked(bool checked);
 
+    void stopSimulation();
 
 private:
     Ui::MainWindow *ui;

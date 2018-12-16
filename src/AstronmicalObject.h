@@ -63,6 +63,11 @@ public:
         return angleRevolution;
     }
 
+    //access data member function for angleRotation of the astronmical object to its parent object
+    GLfloat getAngleRotation() const
+    {
+        return angleRotation;
+    }
 
 	//access data member function for color of the astronmical object
 	GLfloat* getColor() const
@@ -108,10 +113,10 @@ public:
 	void setDistance(GLfloat input)
 	{
 		// the distance shouldn`t be too small
-//		if (input > this->radius)
-//		{
+        if (input > this->radius)
+        {
 			distance = input;
-//		}
+        }
 	}
 
     //access data member function for speedRotation of the astronmical object to its parent object
@@ -126,6 +131,18 @@ public:
     {
         if (input > 0)
             speedRevolution = input;
+    }
+
+    //access data member function for angleRotation of the astronmical object to its parent object
+    void setAngleRotation(GLfloat input)
+    {
+            angleRotation = input;
+    }
+
+    //access data member function for angleRevolution of the astronmical object to its parent object
+    void setAngleRevolution(GLfloat input)
+    {
+            angleRevolution = input;
     }
 
 	//access data member function for color of the astronmical object
