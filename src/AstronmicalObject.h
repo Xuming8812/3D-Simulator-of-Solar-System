@@ -108,10 +108,10 @@ public:
 	void setDistance(GLfloat input)
 	{
 		// the distance shouldn`t be too small
-		if (input > this->radius)
-		{
+//		if (input > this->radius)
+//		{
 			distance = input;
-		}
+//		}
 	}
 
     //access data member function for speedRotation of the astronmical object to its parent object

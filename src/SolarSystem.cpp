@@ -5,9 +5,6 @@
 #include <sstream>
 #include <QString>
 #include <QApplication>
-#include <thread>
-
-#define TIMEPAST 1
 
 using namespace std;
 
@@ -255,77 +252,3 @@ GLfloat SolarSystem::getFloatParameter(string input)
 	return static_cast<GLfloat>(temp);
 
 }
-
-
-/**
- * @name: keyboard
- * @description: callback function of keyboard input
- * @param key: the key pressed
- * @param x: parameter
- * @param y: parameter
- * @return: void
- */
-void SolarSystem::keyboard(unsigned char key, int x, int y)
-{
-
-}
-
-
-/**
- * @name: display
- * @description: show the solar system
- * @return: void
- */
-void SolarSystem::display()
-{
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glClearColor(.7f, .7f, .7f, .1f);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(75.0f, 1.0f, 1.0f, 40000000);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-
-	gluLookAt(eyeX, eyeY, eyeZ, centerX, centerY, centerZ, upX, upY, upZ);
-
-	glEnable(GL_LIGHT0);
-	glEnable(GL_LIGHTING);
-	glEnable(GL_DEPTH_TEST);
-
-    for (auto item : objects)
-    {
-        item->draw();
-    }
-
-
-	glutSwapBuffers();
-}
-
-/**
- * @name: updateObject
- * @description: update the objects in the solar system
- * @return: void
- */
-void updateObject(AstronmicalObject* item)
-{
-    item->update(TIMEPAST);
-}
-
-/**
- * @name: update
- * @description: update the solar system
- * @return: void
- */
-void SolarSystem::update()
-{
-    vector<thread> threads;
-    for (auto item : objects)
-	{
-        threads.push_back(thread(updateObject,item));
-	}
-
-    for_each(threads.begin(),threads.end(),mem_fn(&thread::join));
-
-	this->display();
-}
-

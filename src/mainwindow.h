@@ -18,16 +18,13 @@ public:
     ~MainWindow();
 
     void InitDataTime();
+    void smoothChanges(float start,float end);
 
 
 private slots:
     void updateDateTime();
 
     void updateData();
-
-//    void on_zoomInButton_clicked();
-
-//    void on_zoomOutButton_clicked();
 
     void on_startButton_clicked();
 

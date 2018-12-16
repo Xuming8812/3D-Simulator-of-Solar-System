@@ -16,17 +16,7 @@ public:
 	//constructor
 	SolarSystem();
 	//destructor
-	~SolarSystem();
-
-
-
-
-	//display the whole solar system
-	void display();
-	//update the whole solar system
-	void update();
-	//respond to the whole solar system
-	void keyboard(unsigned char key, int x, int y);
+    ~SolarSystem();
 
 	void readParameters();
 
