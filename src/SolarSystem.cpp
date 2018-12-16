@@ -13,7 +13,7 @@ using namespace std;
 
 /**
  * @name: SolarSystem
- * @description: constructor the class SolarSystem
+ * @description: constructor of class SolarSystem
  * @return: void
  */
 SolarSystem::SolarSystem()
