@@ -1,7 +1,8 @@
 #include "renderingwidget.h"
-#define PI 3.1415926
-#define FREQ 100
 #include <string>
+#define PI 3.1415926
+#define FREQ 100    // frequency of timer
+
 /**
  * @brief RenderingWidget::RenderingWidget
  * @param parent
@@ -40,6 +41,10 @@ RenderingWidget::RenderingWidget(QWidget *parent):QGLWidget(parent)
     rQuad = 0;                // Rotate angle
 }
 
+/**
+ * @brief RenderingWidget::~RenderingWidget
+ * destructor of RenderingWidget
+ */
 RenderingWidget::~RenderingWidget(){
     delete solarSystem;
 }
@@ -144,6 +149,7 @@ void RenderingWidget::resizeGL(int width, int height){
 
 /**
  * @brief RenderingWidget::drawSky
+ * draw sky background
  */
 void RenderingWidget::drawSky(){
     glPushMatrix();
@@ -199,7 +205,7 @@ void RenderingWidget::loadGLTextures(QString filename, int id){
 
 /**
  * @brief RenderingWidget::wheelEvent
- *        Zoom In/Out
+ * zoom in/out with mouse wheel
  * @param e
  */
 void RenderingWidget::wheelEvent(QWheelEvent *e)
@@ -212,7 +218,7 @@ void RenderingWidget::wheelEvent(QWheelEvent *e)
 
 /**
  * @brief RenderingWidget::mousePressEvent
- *        Record the position of mouse and begin adjusting the view
+ * record the position of mouse and begin adjusting the view
  * @param e
  */
 void RenderingWidget::mousePressEvent(QMouseEvent *e){
@@ -245,7 +251,7 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
     worldX *= 10 * eye_distance;
     worldY *= 10 * eye_distance;
 
-
+    // iterate through the all the objects to check which one is selected
     for (auto it : solarSystem->getObjects()){
         GLfloat dist = it->getDistance();
         GLfloat theta = it->getAngleRevolution() / 180.0f * static_cast<float>(PI);
@@ -255,8 +261,8 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
         GLfloat x = dist * cos(theta);
         GLfloat y = dist * sin(theta) * cos(vAngle);
 
+        // check whether mouse position is inside the object
         if (qPow(static_cast<double>(x)-worldX,2) + qPow(static_cast<double>(y)-worldY,2) <= (radius+0.2) * (radius+0.2)){
-
             currentObject = it;
             is_draw_shadow = true;
             if (it->getName()  ==  "Sun"){
@@ -278,7 +284,7 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
 
 /**
  * @brief RenderingWidget::mouseMoveEvent
- *        Adjusting the view
+ * adjusting the view
  * @param e
  */
 void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
@@ -305,7 +311,7 @@ void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
 
 /**
  * @brief RenderingWidget::mouseReleaseEvent
- *        Stop adjusting the view
+ * stop adjusting the view
  * @param e
  */
 void RenderingWidget::mouseReleaseEvent(QMouseEvent *e){
@@ -313,6 +319,11 @@ void RenderingWidget::mouseReleaseEvent(QMouseEvent *e){
     is_adjust_view = false;
 }
 
+/**
+ * @brief RenderingWidget::mouseDoubleClickEvent
+ * to reset the view quickly with double click
+ * @param e
+ */
 void RenderingWidget::mouseDoubleClickEvent(QMouseEvent *e){
     if (vAngle != 0)
         vAngle = 0;
@@ -326,7 +337,7 @@ void RenderingWidget::mouseDoubleClickEvent(QMouseEvent *e){
 
 /**
  * @brief RenderingWidget::getSolarSystem
- * @return
+ * @return member variable solarSystem
  */
 SolarSystem* RenderingWidget::getSolarSystem(){
     return solarSystem;
@@ -334,12 +345,16 @@ SolarSystem* RenderingWidget::getSolarSystem(){
 
 /**
  * @brief RenderingWidget::getCurrentObject
- * @return
+ * @return current selected object
  */
 AstronmicalObject* RenderingWidget::getCurrentObject(){
     return currentObject;
 }
 
+/**
+ * @brief RenderingWidget::updatePosition
+ * update the position of objects
+ */
 void RenderingWidget::updatePosition(){
     for (auto it : solarSystem->getObjects()){
         it->update(timeSpeed/24);
@@ -350,11 +365,6 @@ void RenderingWidget::drawShadow(GLfloat radius, GLfloat x, GLfloat y){
     glPushMatrix();
     glColor3f(1,1,1);
     glLineWidth(5);
-//    GLdouble eye_posX = eye_distance * eyeX;
-//    GLdouble eye_posY = eye_distance * eyeY;
-//    GLdouble eye_posZ = eye_distance * eyeZ;
-//    gluLookAt(eye_posX,eye_posY,eye_posZ,0,0,0,0,1,0);
-//    glRotatef(1,eye_posX,eye_posY,eye_posZ);
     glBegin(GL_LINE_LOOP);
     for (int i=0; i<100; i++){
         glVertex2f(x+radius*cos(2*PI/100*i),y+radius*sin(2*PI/100*i));

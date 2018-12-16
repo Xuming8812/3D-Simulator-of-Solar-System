@@ -113,6 +113,21 @@ public:
 			distance = input;
 		}
 	}
+
+    //access data member function for speedRotation of the astronmical object to its parent object
+    void setSpeedRotation(GLfloat input)
+    {
+        if (input > 0)
+            speedRotation = input;
+    }
+
+    //access data member function for speedRevolution of the astronmical object to its parent object
+    void setSpeedRevolution(GLfloat input)
+    {
+        if (input > 0)
+            speedRevolution = input;
+    }
+
 	//access data member function for color of the astronmical object
 	void setColor(GLfloat input[4])
 	{		
