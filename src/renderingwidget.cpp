@@ -1,3 +1,6 @@
+
+
+
 #include "renderingwidget.h"
 #include <string>
 #define PI 3.1415926
@@ -111,13 +114,6 @@ void RenderingWidget::paintGL(){
 
     // Dray the sky background
     drawSky();
-
-    glPushMatrix();
-            glColor3f(1, 0, 0);
-            renderText(3, 3, 0, "HI");
-    glPopMatrix();
-
-
 
     // Draw the objects with textures
     int i = 1;
@@ -298,7 +294,7 @@ void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
         lastPos = curPos;
         updateGL();
     }
-    else if (is_draw_shadow == true) {
+    else if (is_draw_shadow) {
         curPos = e->pos();
         GLfloat dx = curPos.x() - lastPos.x();
         GLfloat dy = curPos.y() - lastPos.y();
@@ -364,7 +360,7 @@ void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
         }
         updateGL();
         updatePosition();
-
+        emit stopSimulation();
         lastTime  = curTime;
         lastPos = curPos;
     }
