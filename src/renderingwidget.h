@@ -38,7 +38,7 @@ public:
 
     void drawShadow(GLfloat radius, GLfloat x, GLfloat y);
 
-    void dragObject();
+    void project(QPoint);
 
     SolarSystem* getSolarSystem();
     AstronmicalObject* getCurrentObject();
@@ -53,15 +53,20 @@ private:
     GLdouble eye_goal[3];
     GLuint texture[10];
 
-    QPoint lastPos, curPos;
+    QPoint lastPos, curPos, startPos;
     GLfloat hAngle, vAngle;
 
     GLfloat positions[10][2];
 
     GLfloat obj_x, obj_y, obj_r;
+    GLdouble worldX, worldY, worldZ;
 
     SolarSystem *solarSystem;
     AstronmicalObject *currentObject;
+
+    QDateTime *dateTime;
+    int lastTime, curTime;
+    QString dir;
 
     GLint viewport[4]; //var to hold the viewport info
     GLdouble modelview[16]; //var to hold the modelview info

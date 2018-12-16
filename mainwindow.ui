@@ -19,6 +19,9 @@
   <property name="windowTitle">
    <string>Solar System</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QGridLayout" name="gridLayout">
     <property name="leftMargin">
@@ -501,7 +504,7 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>166</width>
+          <width>160</width>
           <height>83</height>
          </size>
         </property>
@@ -583,13 +586,13 @@ QGroupBox::title {
         </property>
         <property name="minimumSize">
          <size>
-          <width>158</width>
+          <width>159</width>
           <height>148</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>158</width>
+          <width>159</width>
           <height>148</height>
          </size>
         </property>
