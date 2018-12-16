@@ -311,7 +311,6 @@ void MainWindow::on_confirmButton_clicked()
 
     if (rx.indexIn(tx_mass) != -1){
         ui->openGLWidget->getCurrentObject()->setMass(ui->massEdit->text().toFloat());
-
     }
     else{
         error_1();

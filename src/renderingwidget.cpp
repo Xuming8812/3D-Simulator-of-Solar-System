@@ -10,6 +10,7 @@
 RenderingWidget::RenderingWidget(QWidget *parent):QGLWidget(parent)
 {
     solarSystem = new SolarSystem();
+    dateTime = new QDateTime(QDateTime::currentDateTime());
 
     // Make a copy of obejects in solarsystem
     for (auto it : solarSystem->getObjects()){
@@ -230,33 +231,11 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
     if (e->button() == Qt::LeftButton){
         is_adjust_view = true;
         lastPos = e->pos();
+        startPos = e->pos();
     }
 
-    // mouse position in screen coordinates
-    GLfloat winX, winY, winZ;
-    // mouse position in world coordinates
-    GLdouble worldX, worldY, worldZ;
+    project(lastPos);
 
-    // store the matrice for unprojection
-    if (!is_matrix_set) {
-        is_matrix_set = true;
-        glGetDoublev( GL_MODELVIEW_MATRIX, modelview); //get the modelview info
-        glGetDoublev( GL_PROJECTION_MATRIX, projection); //get the projection matrix info
-        glGetIntegerv( GL_VIEWPORT, viewport); //get the viewport info
-        viewport[2] /= 2;
-        viewport[3] /= 2;
-    }
-
-    winX = lastPos.x();
-    winY = viewport[3] - lastPos.y();
-    winZ = 0;
-
-    // get the world coordinates from the screen coordinates
-    gluUnProject( winX, winY, winZ, modelview, projection, viewport, &worldX, &worldY, &worldZ);
-    worldX *= 10 * eye_distance;
-    worldY *= 10 * eye_distance;
-
-    // iterate through the all the objects to check which one is selected
     for (auto it : solarSystem->getObjects()){
         GLfloat dist = it->getDistance();
         GLfloat theta = it->getAngleRevolution() / 180.0f * static_cast<float>(PI);
@@ -270,6 +249,9 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
         if (qPow(static_cast<double>(x)-worldX,2) + qPow(static_cast<double>(y)-worldY,2) <= (radius+0.2) * (radius+0.2)){
             currentObject = it;
             is_draw_shadow = true;
+            timer.stop();
+            *dateTime = QDateTime::currentDateTime();
+            lastTime = dateTime->time().msec();
             if (it->getName()  ==  "Sun"){
                 obj_x = -qSqrt(qPow(1.2,2) - qPow(1,2));
                 obj_y = y;
@@ -284,6 +266,9 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
             emit currentObjectChanged();
             break;
         }
+        else{
+            is_draw_shadow = false;
+        }
     }
 }
 
@@ -294,7 +279,7 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
  */
 void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
 
-    if (is_adjust_view){
+    if (is_adjust_view && !is_draw_shadow){
         curPos = e->pos();
         float dH = static_cast<float>(atan((curPos.x() - lastPos.x()) / (5 * eye_distance)));
         float dV = static_cast<float>(atan((curPos.y() - lastPos.y()) / (5 * eye_distance)));
@@ -311,7 +296,79 @@ void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
         eyeY = sin(static_cast<double>(vAngle));
         eyeZ = cos(static_cast<double>(vAngle)) * cos(static_cast<double>(hAngle));
         lastPos = curPos;
+        updateGL();
     }
+    else if (is_draw_shadow == true) {
+        curPos = e->pos();
+        GLfloat dx = curPos.x() - lastPos.x();
+        GLfloat dy = curPos.y() - lastPos.y();
+        GLfloat dis_interval = qSqrt(qPow(dx,2) + qPow(dy,2));
+        *dateTime = QDateTime::currentDateTime();
+        curTime = dateTime->time().msec();
+        GLfloat time_interval = curTime - lastTime;
+
+        GLfloat direction = (lastPos.x() - startPos.x()) * (curPos.y() - startPos.y()) - (lastPos.y() - startPos.y()) *  (curPos.x() - startPos.x());
+        if (direction < 0){
+           dir = "counterclockwise";
+        }
+        else if (direction > 0) {
+           dir = "clockwise";
+        }
+
+        if (currentObject->getName() == "Mercury" && dir == "counterclockwise")
+            timeSpeed =  1000*dis_interval/time_interval;
+        else if (currentObject->getName() == "Mercury" && dir == "clockwise") {
+            timeSpeed =  -1000*dis_interval/time_interval;
+        }
+
+        if (currentObject->getName() == "Venus" && dir == "counterclockwise")
+            timeSpeed =  225/88*1000*dis_interval/time_interval;
+        else if (currentObject->getName() == "Venus" && dir == "clockwise") {
+            timeSpeed =  -225/88*1000*dis_interval/time_interval;
+        }
+
+        if (currentObject->getName() == "Earth" && dir == "counterclockwise")
+            timeSpeed =  365/88*1000*dis_interval/time_interval;
+        else if (currentObject->getName() == "Earth" && dir == "clockwise") {
+            timeSpeed =  -365/88*1000*dis_interval/time_interval;
+        }
+
+        if (currentObject->getName() == "Mars" && dir == "counterclockwise")
+            timeSpeed =  687/88*1000*dis_interval/time_interval;
+        else if (currentObject->getName() == "Mars" && dir == "clockwise") {
+            timeSpeed =  -687/88*1000*dis_interval/time_interval;
+        }
+
+        if (currentObject->getName() == "Jupiter" && dir == "counterclockwise")
+            timeSpeed =  4380/88*1000*dis_interval/time_interval;
+        else if (currentObject->getName() == "Jupiter" && dir == "clockwise") {
+            timeSpeed =  -4380/88*1000*dis_interval/time_interval;
+        }
+
+        if (currentObject->getName() == "Saturn" && dir == "counterclockwise")
+            timeSpeed =  10585/88*1000*dis_interval/time_interval;
+        else if (currentObject->getName() == "Saturn" && dir == "clockwise") {
+            timeSpeed =  -10585/88*1000*dis_interval/time_interval;
+        }
+
+        if (currentObject->getName() == "Uranus" && dir == "counterclockwise")
+            timeSpeed =  30660/88*1000*dis_interval/time_interval;
+        else if (currentObject->getName() == "Uranus" && dir == "clockwise") {
+            timeSpeed =  -30660/88*1000*dis_interval/time_interval;
+        }
+
+        if (currentObject->getName() == "Neptune" && dir == "counterclockwise")
+            timeSpeed =  60225/88*1000*dis_interval/time_interval;
+        else if (currentObject->getName() == "Neptune" && dir == "clockwise") {
+            timeSpeed =  -60225/88*1000*dis_interval/time_interval;
+        }
+        updateGL();
+        updatePosition();
+
+        lastTime  = curTime;
+        lastPos = curPos;
+    }
+
 }
 
 /**
@@ -320,7 +377,6 @@ void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
  * @param e
  */
 void RenderingWidget::mouseReleaseEvent(QMouseEvent *e){
-
     is_adjust_view = false;
 }
 
@@ -377,6 +433,31 @@ void RenderingWidget::drawShadow(GLfloat radius, GLfloat x, GLfloat y){
     glEnd();
 }
 
-void dragObject(){
+/**
+ * @brief RenderingWidget::project
+ * project mouse position into world coordinates
+ * @param p
+ */
+void RenderingWidget::project(QPoint p){
+    // mouse position in screen coordinates
+    GLfloat winX, winY, winZ;
 
+    // store the matrice for unprojection
+    if (!is_matrix_set) {
+        is_matrix_set = true;
+        glGetDoublev( GL_MODELVIEW_MATRIX, modelview); //get the modelview matrix
+        glGetDoublev( GL_PROJECTION_MATRIX, projection); //get the projection matrix matrix
+        glGetIntegerv( GL_VIEWPORT, viewport); //get the viewport matrix
+        viewport[2] /= 2;
+        viewport[3] /= 2;
+    }
+
+    winX = p.x();
+    winY = viewport[3] - p.y();
+    winZ = 0;
+
+    // get the world coordinates from the screen coordinates
+    gluUnProject( winX, winY, winZ, modelview, projection, viewport, &worldX, &worldY, &worldZ);
+    worldX *= 10 * eye_distance;
+    worldY *= 10 * eye_distance;
 }
