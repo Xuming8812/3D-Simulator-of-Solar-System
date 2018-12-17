@@ -60,11 +60,11 @@ SolarSystem::SolarSystem()
  */
 SolarSystem::~SolarSystem()
 {
-	for(auto item : objects)
-	{
-		AstronmicalObject* temp = item;
-		delete temp;
-	}
+//	for(auto item : objects)
+//	{
+////		AstronmicalObject* temp = item;
+//        delete item;
+//	}
 }
 
 /**
@@ -123,9 +123,9 @@ void SolarSystem::readParameters()
 		//get parent name
 		getline(fin, line);
 		current.parentName = getStringParameter(line);
-		//get color
-		getline(fin, line);
-		
+        //get color
+        getline(fin, line);
+
         GLfloat* temp= getArrayParameter(line);
         for (int i = 0; i < 4; i++)
         {
@@ -181,7 +181,7 @@ GLfloat* SolarSystem::getArrayParameter(string input)
 
 	int start = input.find_first_of('=');
 
-	GLfloat result[4];
+    GLfloat *result = new GLfloat[4];
 
 	stringstream ss;
 
