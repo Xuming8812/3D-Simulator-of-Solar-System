@@ -1,5 +1,5 @@
 # GPU-A v1.0
-This is the repository for final project of group GPU-A.
+This is the repository for final project of group GPU-A. The best environment to run is MACOS.
 
 ## Design Philosophy
 Our work is to develop a cross-platform 3D solar system model which simulates how the solar system operates, such as the trajectory of the planets. The work will employ Qt to implement GUI, C++ AMP for GPU acceleration, and multithreading computation will also be used to increase calculation speed. The
@@ -20,16 +20,17 @@ main objectives of the implementation are as follows.
 ```
 git clone git@github.com:ENGN2912B-2018/GPU-A.git
 ```
-2. Load module qt/5.10.1 and freeglut/3.0.0 on CCV
+2. To compile on CCV, load module qt/5.10.1 and freeglut/3.0.0, else please skip this step
 ```
 moudle load qt/5.10.1
 moudle freeglut/3.0.0
 ```
 3. Generate MakeFile and Compile
+Note: the ```build``` should be in the same directory with ```GPU-A```
 ```
 mkdir build
 cd build
-qmake ../SolarSystem.pro
+qmake ../GPU-A/SolarSystem.pro
 make
 ```
 4. Run the executable
