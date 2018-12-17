@@ -59,9 +59,11 @@ The Solar System model is a 3D simulation of the Solar System and night sky in r
 - OpenGL 4.1
 - freeglut 3.0.0
 ### Functional Block Diagrams
+![image](https://github.com/ENGN2912B-2018/GPU-A/blob/master/figures/Architecture.PNG)
 ### Data Flow Diagrams
+![image](https://github.com/ENGN2912B-2018/GPU-A/blob/master/figures/FlowChart.PNG)
 ### UML Diagrams showing Object Definition/Inheritance
-
+![image](https://github.com/ENGN2912B-2018/GPU-A/blob/master/figures/UML.PNG)
 ## Interface Descriptions
 ### Graphical Interface
 The graphical interface consists of two parts. The left one is the widget for displaying solar system, and the right one is for user manipulation.
