@@ -41,7 +41,17 @@ Geng Yang   geng_yang@brown.edu
 
 ## Introduction
 ### Project Overview
+The Solar System model is a 3D simulation of the Solar System and night sky in real-time. All parameters and calculations are based on real data published by NASA. Users can find key information, position and time data for each planets. Our model is a great tool to help children and astronomy enthusiast know deeply to the real Solar System.
 ### Goals and Objectives
+- Adjust view and zoom in/out.
+- Adjust time speed to fast forward/rewind.
+- Select particular planet and display its characteristics.
+- Highlight a selected planet and hide the others.
+- Users can adjust parameters(radius,mass etc) of selected objects.
+- The selected planet can be dragged along its orbit.
+- Select particular time to see status of planets. 
+- Update status using concurrency.
+- Exception handdling.
 
 ## Software Architectural Design (as appropriate)
 ### Required External Libraries
@@ -52,7 +62,7 @@ Geng Yang   geng_yang@brown.edu
 ### Data Flow Diagrams
 ### UML Diagrams showing Object Definition/Inheritance
 
-## Interface Descriptions (as appropriate)
+## Interface Descriptions
 ### Graphical Interface
 The graphical interface consists of two parts. The left one is the widget for displaying solar system, and the right one is for user manipulation.
 ![image](https://github.com/ENGN2912B-2018/GPU-A/blob/Geng/images/GUI.png)
@@ -69,6 +79,9 @@ void RenderingWidget::updatePosition(){
 }
 ``` 
 ### Exception Handling
+A dialog is generated with warning information when inputs or file path are invalid. 
+- Users are allowed to modidy basic parameters. New parameters should be positive numbers(within a range), or dialog would show error information and suggest users to re-enter.
+- The file path of object information should be valid, or dialog would prompt the error path.
 
 ## Testing and Evaluation
 The operating system and software compiler/library version(s) tested are as follows.
@@ -101,21 +114,21 @@ open SolarSystem.app
 
 ## Conclusions
 ### Major Accomplishments
-- Reasonable and logical class hierarchy design
-- An reasonable and concise GUI
-- Interaction using mouse
+- Reasonable and logical class hierarchy design.
+- An reasonable and concise GUI.
+- Interaction using mouse.
   - Zoom in/out with mouse wheel.
-  - Double click to switch the view horizontally and vertically
+  - Double click to switch the view horizontally and vertically.
   - Click on background, adjust view with left button.
-  - Click on abstronomical object, drag it along trajectory with left button.
+  - Click on abstronomical object, drag it along orbit with left button.
 - 3D display of the system.
 - Highlight the selected astronomical object with introduction and hide the others.
-- Customize date and time to switch to corresponding status
-- Customize time speed to fast foward/rewind the simulation
+- Customize date and time to switch to corresponding status.
+- Customize time speed to fast foward/rewind the simulation.
 - Customize parameter of selected astronomical object and verify the input.
 ### Results of effort
 
-Most objectives have been achieved as proposed. There still exists a challenge unresolved, the simulation of changes brought by customized parameters. For example, when the revolution 
+Most objectives have been achieved as proposed. There still exists a challenge unresolved, the simulation of changes brought by customized parameters. 
 
 ## Future Work
 The software has provided APIs for customizing parameters of astronomical objects, which aims to simulate the real scene in solar system when when the property of objects changes suddenly.
