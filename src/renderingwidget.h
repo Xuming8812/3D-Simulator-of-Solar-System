@@ -37,8 +37,6 @@ public:
 
     void drawSky();
 
-    void drawShadow(GLfloat radius, GLfloat x, GLfloat y);
-
     void project(QPoint);
 
     void introduction(QString filename);
