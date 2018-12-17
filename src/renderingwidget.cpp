@@ -138,8 +138,6 @@ void RenderingWidget::paintGL(){
     // Rotate the sky background
     rTri += 0.05;
 
-    //enable draw shadow
-
     glEnable(GL_DEPTH_TEST);
 }
 
