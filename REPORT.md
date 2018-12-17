@@ -45,7 +45,7 @@ The Solar System model is a 3D simulation of the Solar System and night sky in r
 ### Goals and Objectives
 - Adjust view and zoom in/out.
 - Adjust time speed to fast forward/rewind.
-- Select particular planet and display its characteristics.
+- Select particular planet and display its characteristics.
 - Highlight a selected planet and hide the others.
 - Users can adjust parameters(radius,mass etc) of selected objects.
 - The selected planet can be dragged along its orbit.
