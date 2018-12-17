@@ -11,6 +11,7 @@ Geng Yang   geng_yang@brown.edu
 ------
 ## CONTENTS
 
+
   - [Introduction](#introduction)
     - [Project Overview](#project-overview)
     - [Goals and Objectives](#goals-and-objectives)
@@ -32,12 +33,10 @@ Geng Yang   geng_yang@brown.edu
   - [Conclusions](#conclusions)
     - [Major Accomplishments](#major-accomplishments)
     - [Results of the software development effort](#results-of-the-software-development-effort)
-    - [Were you successful in meeting all goals and objectives? What didn't work? What would take more time?](#were-you-successful-in-meeting-all-goals-and-objectives-what-didnt-work-what-would-take-more-time)
   - [Future Work](#future-work)
     - [Description of potential future software expansions and software features](#description-of-potential-future-software-expansions-and-software-features)
   - [Author Contributions](#author-contributions)
     - [Description of each authors' contributions to software development](#description-of-each-authors-contributions-to-software-development)
-
 
 ## Introduction
 ### Project Overview
@@ -45,6 +44,8 @@ Geng Yang   geng_yang@brown.edu
 
 ## Software Architectural Design (as appropriate)
 ### Required External Libraries
+- Qt 5.10.1
+- freeglut 3.0.0
 ### Functional Block Diagrams
 ### Data Flow Diagrams
 ### UML Diagrams showing Object Definition/Inheritance
@@ -77,7 +78,8 @@ Geng Yang   geng_yang@brown.edu
 - Customize time speed to fast foward/rewind the simulation
 - Customize parameter of selected astronomical object and verify the input.
 ### Results of the software development effort
-### Were you successful in meeting all goals and objectives?  What didn't work?  What would take more time?
+
+Most objectives have been achieved as proposed. There still exists a challenge unresolved, the simulation of changes brought by customized parameters. For example, when the revolution 
 
 ## Future Work
 The software has provided APIs for customizing parameters of astronomical objects, which aims to simulate the real scene in solar system when when the property of objects changes suddenly.
