@@ -238,8 +238,10 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
         startPos = e->pos();
     }
 
+    // project the mouse position to world coordinate
     project(lastPos);
 
+    // iterate through the objects to find which one is selected
     for (auto it : solarSystem->getObjects()){
         GLfloat dist = it->getDistance();
         GLfloat theta = it->getAngleRevolution() / 180.0f * static_cast<float>(PI);
@@ -284,6 +286,7 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
  */
 void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
 
+    // adjust view
     if (is_adjust_view && !is_draw_shadow){
         curPos = e->pos();
         float dH = static_cast<float>(atan((curPos.x() - lastPos.x()) / (5 * eye_distance)));
@@ -303,6 +306,7 @@ void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
         lastPos = curPos;
         updateGL();
     }
+    //drag a selected object along the trajectory
     else if (is_draw_shadow) {
         curPos = e->pos();
         GLfloat dx = curPos.x() - lastPos.x();
@@ -320,7 +324,7 @@ void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
         else if (direction > 0) {
            dir = "clockwise";
         }
-
+        // check which object is selected and the direction to drag
         if (currentObject->getName() == "Mercury" && dir == "counterclockwise")
             timeSpeed =  2000*dis_interval/time_interval;
         else if (currentObject->getName() == "Mercury" && dir == "clockwise") {
@@ -429,17 +433,6 @@ void RenderingWidget::updatePosition(){
     for_each(threads.begin(),threads.end(),mem_fn(&std::thread::join));
 }
 
-void RenderingWidget::drawShadow(GLfloat radius, GLfloat x, GLfloat y){
-    glPushMatrix();
-    glColor3f(1,1,1);
-    glLineWidth(5);
-    glBegin(GL_LINE_LOOP);
-    for (int i=0; i<100; i++){
-        glVertex2f(x+radius*cos(2*PI/100*i),y+radius*sin(2*PI/100*i));
-    }
-    glEnd();
-}
-
 /**
  * @brief RenderingWidget::project
  * project mouse position into world coordinates
@@ -449,7 +442,7 @@ void RenderingWidget::project(QPoint p){
     // mouse position in screen coordinates
     GLfloat winX, winY, winZ;
 
-    // store the matrice for unprojection
+    // store the matrice for projection
     if (!is_matrix_set) {
         is_matrix_set = true;
         glGetDoublev( GL_MODELVIEW_MATRIX, modelview); //get the modelview matrix
@@ -459,6 +452,7 @@ void RenderingWidget::project(QPoint p){
         viewport[3] /= 2;
     }
 
+    // mouse position
     winX = p.x();
     winY = viewport[3] - p.y();
     winZ = 0;
