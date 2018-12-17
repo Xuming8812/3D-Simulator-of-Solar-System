@@ -1,3 +1,6 @@
+
+
+
 #include "renderingwidget.h"
 #include <string>
 #define PI 3.1415926
@@ -99,7 +102,7 @@ void RenderingWidget::paintGL(){
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);          // Clear screen and depth buffer
     glLoadIdentity();
-    glColor4f(1,1,1,0.5);
+
 
     // Compute the position of camera
     GLdouble eye_posX = eye_distance * eyeX;
@@ -112,12 +115,14 @@ void RenderingWidget::paintGL(){
     // Dray the sky background
     drawSky();
 
-    glPushMatrix();
-            glColor3f(1, 0, 0);
-            renderText(3, 3, 0, "HI");
-    glPopMatrix();
-
-
+    if (is_highlighting){
+        glPushMatrix();
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glColor4f(1,0.8,0,0.5);
+        introduction(QString::fromStdString(":wiki/" + currentObject->getName() + ".txt"));
+        glPopMatrix();
+    }
 
     // Draw the objects with textures
     int i = 1;
@@ -134,8 +139,7 @@ void RenderingWidget::paintGL(){
     rTri += 0.05;
 
     //enable draw shadow
-    if (is_draw_shadow)
-//        drawShadow(obj_r,obj_x,obj_y);
+
     glEnable(GL_DEPTH_TEST);
 }
 
@@ -250,6 +254,7 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
             currentObject = it;
             is_draw_shadow = true;
             timer.stop();
+            emit stopSimulation();
             *dateTime = QDateTime::currentDateTime();
             lastTime = dateTime->time().msec();
             if (it->getName()  ==  "Sun"){
@@ -298,7 +303,7 @@ void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
         lastPos = curPos;
         updateGL();
     }
-    else if (is_draw_shadow == true) {
+    else if (is_draw_shadow) {
         curPos = e->pos();
         GLfloat dx = curPos.x() - lastPos.x();
         GLfloat dy = curPos.y() - lastPos.y();
@@ -308,6 +313,7 @@ void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
         GLfloat time_interval = curTime - lastTime;
 
         GLfloat direction = (lastPos.x() - startPos.x()) * (curPos.y() - startPos.y()) - (lastPos.y() - startPos.y()) *  (curPos.x() - startPos.x());
+        direction *= 100;
         if (direction < 0){
            dir = "counterclockwise";
         }
@@ -316,55 +322,55 @@ void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
         }
 
         if (currentObject->getName() == "Mercury" && dir == "counterclockwise")
-            timeSpeed =  1000*dis_interval/time_interval;
+            timeSpeed =  2000*dis_interval/time_interval;
         else if (currentObject->getName() == "Mercury" && dir == "clockwise") {
-            timeSpeed =  -1000*dis_interval/time_interval;
+            timeSpeed =  -2000*dis_interval/time_interval;
         }
 
         if (currentObject->getName() == "Venus" && dir == "counterclockwise")
-            timeSpeed =  225/88*1000*dis_interval/time_interval;
+            timeSpeed =  225/88*2000*dis_interval/time_interval;
         else if (currentObject->getName() == "Venus" && dir == "clockwise") {
-            timeSpeed =  -225/88*1000*dis_interval/time_interval;
+            timeSpeed =  -225/88*2000*dis_interval/time_interval;
         }
 
         if (currentObject->getName() == "Earth" && dir == "counterclockwise")
-            timeSpeed =  365/88*1000*dis_interval/time_interval;
+            timeSpeed =  365/88*2000*dis_interval/time_interval;
         else if (currentObject->getName() == "Earth" && dir == "clockwise") {
-            timeSpeed =  -365/88*1000*dis_interval/time_interval;
+            timeSpeed =  -365/88*2000*dis_interval/time_interval;
         }
 
         if (currentObject->getName() == "Mars" && dir == "counterclockwise")
-            timeSpeed =  687/88*1000*dis_interval/time_interval;
+            timeSpeed =  687/88*2000*dis_interval/time_interval;
         else if (currentObject->getName() == "Mars" && dir == "clockwise") {
-            timeSpeed =  -687/88*1000*dis_interval/time_interval;
+            timeSpeed =  -687/88*2000*dis_interval/time_interval;
         }
 
         if (currentObject->getName() == "Jupiter" && dir == "counterclockwise")
-            timeSpeed =  4380/88*1000*dis_interval/time_interval;
+            timeSpeed =  4380/88*2000*dis_interval/time_interval;
         else if (currentObject->getName() == "Jupiter" && dir == "clockwise") {
-            timeSpeed =  -4380/88*1000*dis_interval/time_interval;
+            timeSpeed =  -4380/88*2000*dis_interval/time_interval;
         }
 
         if (currentObject->getName() == "Saturn" && dir == "counterclockwise")
-            timeSpeed =  10585/88*1000*dis_interval/time_interval;
+            timeSpeed =  10585/88*2000*dis_interval/time_interval;
         else if (currentObject->getName() == "Saturn" && dir == "clockwise") {
-            timeSpeed =  -10585/88*1000*dis_interval/time_interval;
+            timeSpeed =  -10585/88*2000*dis_interval/time_interval;
         }
 
         if (currentObject->getName() == "Uranus" && dir == "counterclockwise")
-            timeSpeed =  30660/88*1000*dis_interval/time_interval;
+            timeSpeed =  30660/88*2000*dis_interval/time_interval;
         else if (currentObject->getName() == "Uranus" && dir == "clockwise") {
-            timeSpeed =  -30660/88*1000*dis_interval/time_interval;
+            timeSpeed =  -30660/88*2000*dis_interval/time_interval;
         }
 
         if (currentObject->getName() == "Neptune" && dir == "counterclockwise")
-            timeSpeed =  60225/88*1000*dis_interval/time_interval;
+            timeSpeed =  60225/88*2000*dis_interval/time_interval;
         else if (currentObject->getName() == "Neptune" && dir == "clockwise") {
-            timeSpeed =  -60225/88*1000*dis_interval/time_interval;
+            timeSpeed =  -60225/88*2000*dis_interval/time_interval;
         }
         updateGL();
         updatePosition();
-
+        emit stopSimulation();
         lastTime  = curTime;
         lastPos = curPos;
     }
@@ -462,3 +468,26 @@ void RenderingWidget::project(QPoint p){
     worldX *= 10 * eye_distance;
     worldY *= 10 * eye_distance;
 }
+
+
+/**
+ * @brief RenderingWidget::introduction
+ * add wiki for current object when highlighting
+ * @param filename
+ */
+void RenderingWidget::introduction(QString filename){
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QMessageBox::information(0, "error", file.errorString());
+    }
+    QTextStream tx(&file);
+    int i = 0;
+    while (!tx.atEnd()) {
+        QString line = tx.readLine();
+        QFont serifFont("Times", 24);
+        renderText(-15, 10 - i, eye_distance-30, line, serifFont);
+        i++;
+    }
+}
+
+

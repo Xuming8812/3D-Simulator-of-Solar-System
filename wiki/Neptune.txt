@@ -1,0 +1,24 @@
+Neptune(planet)
+
+ENCYCLOPEDIA
+Equatorial Diameter     49 528 KM
+Mass                    1.02E26 KG
+Gal.center Distance     4 497 M KM
+Rotation Period         16 H 6 M
+Galactic Orbit Period   165 years
+Surface Gravity         11.2 m/s^2
+Surface Temperature     -200 C
+
+DISCOVERY
+First planet discovered based on 
+mathematical prediction.
+
+
+ATMOSPHERE
+Gaseous hydrogen, helium, methane.
+
+MANTLE
+Water, ammonia, methane ices.
+
+CORE
+Silicate / iron-nickel rock.

@@ -1,0 +1,23 @@
+Jupiter(planet)
+
+ENCYCLOPEDIA
+Equatorial Diameter     142 984 KM
+Mass                    1.9E27 KG
+Gal.center Distance     780 M KM
+Rotation Period         9 H 55 M
+Galactic Orbit Period   11.9 years
+Surface Gravity         25 m/s^2
+Surface Temperature     -120 C
+
+DISCOVERY
+Largest planet in Solar System.
+First planet discovered by modern telescope.
+
+ATMOSPHERE
+Molecular hydrogen, helium.
+
+MANTLE
+Liquid-metallic hydrogen and helium.
+
+CORE
+Dense solid rock.

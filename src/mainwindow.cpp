@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <thread>
+#define PI 3.1415926
 
 /**
  * @brief MainWindow::MainWindow
@@ -19,7 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     InitDataTime();
     connect(timer,SIGNAL(timeout()),this,SLOT(updateDateTime()));
     connect(ui->openGLWidget,SIGNAL(currentObjectChanged()),this,SLOT(updateData()));
-    timer->start(1000);
+    connect(ui->openGLWidget,SIGNAL(stopSimulation()),this,SLOT(stopSimulation()));
+    timer->start(10);
     ui->radiusLabel->setToolTip("unit: mile");
     ui->massLabel->setToolTip("unit: kg");
     ui->rotLabel->setToolTip("unit: mile");
@@ -61,7 +63,8 @@ void MainWindow::InitDataTime(){
  * @brief MainWindow::updateDateTime
  */
 void MainWindow::updateDateTime(){
-    dateTime = new QDateTime(dateTime->addSecs(1));
+
+    dateTime = new QDateTime(dateTime->addSecs(ui->openGLWidget->timeSpeed*36));
     QTime time = dateTime->time();
     hour = time.hour();
     minute = time.minute();
@@ -110,14 +113,18 @@ void MainWindow::on_startButton_clicked()
         ui->openGLWidget->is_play = true;
         QIcon icon(":icon/pause.png");
         ui->startButton->setIcon(icon);
-        ui->openGLWidget->timer.start(16);
+        ui->openGLWidget->timer.start(10);
+        timer->start(10);
     }
     else {
         ui->openGLWidget->is_play = false;
         QIcon icon(":icon/play.png");
         ui->startButton->setIcon(icon);
         ui->openGLWidget->timer.stop();
+        timer->stop();
     }
+
+    on_timeSpeedSlider_valueChanged(ui->timeSpeedSlider->value());
 }
 
 /**
@@ -126,6 +133,20 @@ void MainWindow::on_startButton_clicked()
  */
 void MainWindow::on_hour_valueChanged(int arg1)
 {
+    if (ui->timeGroupBox->isChecked()){
+        int delta = arg1 - hour;
+        for (auto it : ui->openGLWidget->getSolarSystem()->getObjects()){
+            float rot = it->getAngleRotation();
+            float rev = it->getAngleRevolution();
+            float s_rot = it->getSpeedRotation();
+            float s_rev = it->getSpeedRevolution();
+            rot += 360 * delta / 24 / (3.6 / s_rot);
+            rev += 360 * delta / 24 / (3.6 / s_rev);
+            it->setAngleRotation(rot);
+            it->setAngleRevolution(rev);
+            ui->openGLWidget->updateGL();
+        }
+    }
     hour = arg1;
     dateTime->setTime(QTime(hour,minute,second));
 }
@@ -156,6 +177,21 @@ void MainWindow::on_second_valueChanged(int arg1)
  */
 void MainWindow::on_year_textChanged(const QString &arg1)
 {
+    if (ui->timeGroupBox->isChecked()){
+        int delta = arg1.toInt() - year;
+        for (auto it : ui->openGLWidget->getSolarSystem()->getObjects()){
+            float rot = it->getAngleRotation();
+            float rev = it->getAngleRevolution();
+            float s_rot = it->getSpeedRotation();
+            float s_rev = it->getSpeedRevolution();
+            rot += 360 * delta * 365 / (3.6 / s_rot);
+            rev += 360 * delta * 365 / (3.6 / s_rev);
+            it->setAngleRotation(rot);
+            it->setAngleRevolution(rev);
+            ui->openGLWidget->updateGL();
+        }
+    }
+
     year = arg1.toInt();
     dateTime->setDate(QDate(year,month,day));
     on_month_currentTextChanged(QString::number(month));
@@ -167,6 +203,20 @@ void MainWindow::on_year_textChanged(const QString &arg1)
  */
 void MainWindow::on_month_currentTextChanged(const QString &arg1)
 {
+    if (ui->timeGroupBox->isChecked()){
+        int delta = arg1.toInt() - month;
+        for (auto it : ui->openGLWidget->getSolarSystem()->getObjects()){
+            float rot = it->getAngleRotation();
+            float rev = it->getAngleRevolution();
+            float s_rot = it->getSpeedRotation();
+            float s_rev = it->getSpeedRevolution();
+            rot += 360 * delta * 30 / (3.6 / s_rot);
+            rev += 360 * delta * 30 / (3.6 / s_rev);
+            it->setAngleRotation(rot);
+            it->setAngleRevolution(rev);
+            ui->openGLWidget->updateGL();
+        }
+    }
     month = arg1.toInt();
     dateTime->setDate(QDate(year,month,day));
 
@@ -182,6 +232,20 @@ void MainWindow::on_month_currentTextChanged(const QString &arg1)
 
 void MainWindow::on_day_currentTextChanged(const QString &arg1)
 {
+    if (ui->timeGroupBox->isChecked()){
+        int delta = arg1.toInt() - day;
+        for (auto it : ui->openGLWidget->getSolarSystem()->getObjects()){
+            float rot = it->getAngleRotation();
+            float rev = it->getAngleRevolution();
+            float s_rot = it->getSpeedRotation();
+            float s_rev = it->getSpeedRevolution();
+            rot += 360 * delta / (3.6 / s_rot);
+            rev += 360 * delta / (3.6 / s_rev);
+            it->setAngleRotation(rot);
+            it->setAngleRevolution(rev);
+            ui->openGLWidget->updateGL();
+        }
+    }
     day = arg1.toInt();
     dateTime->setDate(QDate(year,month,day));
 }
@@ -221,7 +285,7 @@ void MainWindow::on_timeSpeedSlider_sliderMoved(int position)
     }
     else{
         ui->timeSpeedLabel->setText(" -1 year / sec");
-        ui->openGLWidget->timeSpeed = -24 * 365 ;
+        ui->openGLWidget->timeSpeed = -24 * 365;
     }
 }
 
@@ -282,6 +346,7 @@ void MainWindow::on_highlightButton_clicked()
             it->setVisibility(true);
         }
     }
+    ui->openGLWidget->updateGL();
 }
 
 /**
@@ -428,4 +493,18 @@ void MainWindow::smoothChanges(float start,float end){
         ui->openGLWidget->getCurrentObject()->setDistance(5);
     }
     qDebug() << d1 << "       " << d2;
+}
+
+void MainWindow::on_timeGroupBox_clicked(bool checked)
+{
+    if (checked) timer->stop();
+    else timer->start(10);
+}
+
+void MainWindow::stopSimulation(){
+    timer->stop();
+    updateDateTime();
+    ui->openGLWidget->is_play = false;
+    QIcon icon(":icon/play.png");
+    ui->startButton->setIcon(icon);
 }

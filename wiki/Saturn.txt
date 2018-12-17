@@ -1,0 +1,24 @@
+Saturn(planet)
+
+ENCYCLOPEDIA
+Equatorial Diameter     120 536 KM
+Mass                    5.7E26 KG
+Gal.center Distance     1429 M KM
+Rotation Period         10 H 39 M
+Galactic Orbit Period   29 years
+Surface Gravity         10.4 m/s^2
+Surface Temperature     -125 C
+
+STRUCTURE
+Similar to Jupiter with lower density.
+The most oblate planet in Solar System.
+
+RING
+Saturn has the largest ring system in Solar System.
+Composed of water ice crystals and small amount of rock.
+
+MOONS
+At least 150 moons and moonlets
+
+OBSERVATION
+Appears to be a bright, yellowish point of light in the sky.
