@@ -1,0 +1,23 @@
+Uranus(planet)
+
+ENCYCLOPEDIA
+Equatorial Diameter     51 118 KM
+Mass                    8.7E25 KG
+Gal.center Distance     2 872 M KM
+Rotation Period         17 H 14 H
+Galactic Orbit Period   84 years
+Surface Gravity         8.7 m/s^2
+Surface Temperature     -210 C
+
+DISCOVERY
+First planet discovered by modern telescope.
+
+
+ATMOSPHERE
+Gaseous hydrogen, helium, methane.
+
+MANTLE
+Water, ammonia, methane ices.
+
+CORE
+Silicate / iron-nickel rock.

@@ -1,0 +1,19 @@
+MERCURY(planet)
+
+ENCYCLOPEDIA
+Equatorial Diameter     4879 km
+Mass                    3.3E23 kg
+Gal.center Distance     60 M km
+Rotation Period         59 days
+Solar Orbit Period      88 days
+Surface Gravity         3.7 m/s^2
+Surface Temperature     167 C
+Tempreture - Day        473 C
+Tempreture - Night      -183 C
+
+STRUCTURE
+Mare-like plains and heavy cratering
+Cool and contracted core and mantle
+
+CORE
+large, iron-rich core

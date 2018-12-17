@@ -1,0 +1,26 @@
+Earth(Planet)
+
+ENCYCLOPEDIA
+Equatorial Diameter     12756 km
+Mass                    6E24 kg
+Mean Dist.From Sun      150 M km
+Rotation Period         23 H 56 M
+Solar Orbit Period      1 year
+Surface Gravity         9.8 m/s^2
+Surface Temperature     15 C
+
+SURFACE
+71% by salt water oceans
+30% by seven continental landmasses
+
+AXIAL TILT
+Titiled on its axis by 23.4 degree
+
+MAG.FIELD
+Molten outer core and surrounding barrier generate magnetic field
+
+MANTLE
+84% Rocky shell with rigid uppermost region
+
+OUTER CORE
+Tempreture difference can drive convection current 

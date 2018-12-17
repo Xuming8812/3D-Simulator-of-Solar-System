@@ -1,0 +1,17 @@
+Venus
+
+ENCYCLOPEDIA
+Equatorial Diameter     12104 km
+Mass                    4.9E24 kg
+Mean Dist.From Sun      108 M km
+Rotation Period         243 Days
+Solar Orbit Period      225 days
+Surface Gravity         8.9 m/s^2
+Surface Temperature     462 C
+
+ATOMOSPHERE
+Thick cloudss of sulfuric acid and dust
+Atmosphere pressure is 92 times greater than on Earth
+
+OBSERVATION
+One of the brightest objects

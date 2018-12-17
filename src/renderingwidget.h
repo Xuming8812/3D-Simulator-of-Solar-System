@@ -14,6 +14,7 @@
 #include <QtOpenGL>
 #include <vector>
 #include <QMouseEvent>
+#include <QTextStream>
 #include "SolarSystem.h"
 #include "AstronmicalObject.h"
 
@@ -39,6 +40,8 @@ public:
     void drawShadow(GLfloat radius, GLfloat x, GLfloat y);
 
     void project(QPoint);
+
+    void introduction(QString filename);
 
     SolarSystem* getSolarSystem();
     AstronmicalObject* getCurrentObject();

@@ -118,6 +118,7 @@ void MainWindow::on_startButton_clicked()
         ui->startButton->setIcon(icon);
         ui->openGLWidget->timer.stop();
     }
+    ui->openGLWidget->updateGL();
 }
 
 /**
@@ -282,6 +283,7 @@ void MainWindow::on_highlightButton_clicked()
             it->setVisibility(true);
         }
     }
+    ui->openGLWidget->updateGL();
 }
 
 /**

@@ -16,5 +16,14 @@
         <file>icon/play.png</file>
         <file>images/stars.jpg</file>
         <file>images/moon.jpg</file>
+        <file>wiki/Earth.txt</file>
+        <file>wiki/Jupiter.txt</file>
+        <file>wiki/Mars.txt</file>
+        <file>wiki/Mercury.txt</file>
+        <file>wiki/Neptune.txt</file>
+        <file>wiki/Saturn.txt</file>
+        <file>wiki/Sun.txt</file>
+        <file>wiki/Uranus.txt</file>
+        <file>wiki/Venus.txt</file>
     </qresource>
 </RCC>

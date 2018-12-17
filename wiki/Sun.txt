@@ -1,0 +1,21 @@
+Sun(Star)
+
+ENCYCLOPEDIA
+Equatorial Diameter     1.39 M KM
+Mass                    1.99E30 KG
+Mean Dist.From Sun      246 168 000 000 M km
+Rotation Period         25 days
+Solar Orbit Period      22 M year
+Surface Gravity         274 m/s^2
+Surface Temperature     5505 C
+
+COMPOSITION
+75% hydrogen
+22% helium
+1.69% carbon, iron, neon, oxygen.
+
+DISTANCE
+To Earth is about 149.6 M KM.
+
+GALAXY
+Brighter than about 85% stars in Milky Way Galaxy.

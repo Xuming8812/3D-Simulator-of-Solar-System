@@ -1,0 +1,21 @@
+Mars
+
+ENCYCLOPEDIA
+Equatorial Diameter     6792 km
+Mass                    6.4E23 kg
+Mean Dist.From Sun      229 M km
+Rotation Period         1.03 day
+Solar Orbit Period      1.88 year
+Surface Gravity         3.7 m/s^2
+Surface Temperature     -63 C
+Tempreture - Summer     17 C
+Tempreture - Winter     -140 C
+
+SURFACE
+Dramatic landscape with towering volcanoes and canyon system
+
+WATER
+Evidence indicates the existence of the underground water
+
+MOONS
+Two small satellites, Phobos and Deimos.

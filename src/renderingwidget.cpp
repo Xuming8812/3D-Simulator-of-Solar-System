@@ -99,7 +99,7 @@ void RenderingWidget::paintGL(){
 
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);          // Clear screen and depth buffer
     glLoadIdentity();
-    glColor4f(1,1,1,0.5);
+
 
     // Compute the position of camera
     GLdouble eye_posX = eye_distance * eyeX;
@@ -112,11 +112,14 @@ void RenderingWidget::paintGL(){
     // Dray the sky background
     drawSky();
 
-    glPushMatrix();
-            glColor3f(1, 0, 0);
-            renderText(3, 3, 0, "HI");
-    glPopMatrix();
-
+    if (is_highlighting){
+        glPushMatrix();
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glColor4f(1,0.8,0,0.5);
+        introduction(QString::fromStdString(":wiki/" + currentObject->getName() + ".txt"));
+        glPopMatrix();
+    }
 
 
     // Draw the objects with textures
@@ -134,8 +137,7 @@ void RenderingWidget::paintGL(){
     rTri += 0.05;
 
     //enable draw shadow
-    if (is_draw_shadow)
-//        drawShadow(obj_r,obj_x,obj_y);
+
     glEnable(GL_DEPTH_TEST);
 }
 
@@ -462,3 +464,26 @@ void RenderingWidget::project(QPoint p){
     worldX *= 10 * eye_distance;
     worldY *= 10 * eye_distance;
 }
+
+
+/**
+ * @brief RenderingWidget::introduction
+ * add wiki for current object when highlighting
+ * @param filename
+ */
+void RenderingWidget::introduction(QString filename){
+    QFile file(filename);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QMessageBox::information(0, "error", file.errorString());
+    }
+    QTextStream tx(&file);
+    int i = 0;
+    while (!tx.atEnd()) {
+        QString line = tx.readLine();
+        QFont serifFont("Times", 24);
+        renderText(-15, 10 - i, eye_distance-30, line, serifFont);
+        i++;
+    }
+}
+
+
