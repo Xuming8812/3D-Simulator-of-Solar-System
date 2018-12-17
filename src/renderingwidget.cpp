@@ -312,8 +312,7 @@ void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
         curTime = dateTime->time().msec();
         GLfloat time_interval = curTime - lastTime;
 
-        GLfloat direction = (lastPos.x() - startPos.x()) * (curPos.y() - startPos.y()) - (lastPos.y() - startPos.y()) *  (curPos.x() - startPos.x());
-        direction *= 100;
+        GLfloat direction = 100*(lastPos.x() - startPos.x()) * 100*(curPos.y() - startPos.y()) - 100*(lastPos.y() - startPos.y()) *  100*(curPos.x() - startPos.x());
         if (direction < 0){
            dir = "counterclockwise";
         }
