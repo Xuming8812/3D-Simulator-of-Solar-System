@@ -52,6 +52,7 @@ Geng Yang   geng_yang@brown.edu
 
 ## Interface Descriptions (as appropriate)
 ### Graphical Interface
+![image](https://github.com/ENGN2912B-2018/GPU-A/blob/Geng/images/GUI.png)
 ### Data Visualization
 ### Communications Protocols
 ### Threading and Concurrency
