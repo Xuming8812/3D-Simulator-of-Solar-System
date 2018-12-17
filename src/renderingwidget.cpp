@@ -312,6 +312,7 @@ void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
         GLfloat time_interval = curTime - lastTime;
 
         GLfloat direction = (lastPos.x() - startPos.x()) * (curPos.y() - startPos.y()) - (lastPos.y() - startPos.y()) *  (curPos.x() - startPos.x());
+        direction *= 100;
         if (direction < 0){
            dir = "counterclockwise";
         }
@@ -320,51 +321,51 @@ void RenderingWidget::mouseMoveEvent(QMouseEvent *e){
         }
 
         if (currentObject->getName() == "Mercury" && dir == "counterclockwise")
-            timeSpeed =  1000*dis_interval/time_interval;
+            timeSpeed =  2000*dis_interval/time_interval;
         else if (currentObject->getName() == "Mercury" && dir == "clockwise") {
-            timeSpeed =  -1000*dis_interval/time_interval;
+            timeSpeed =  -2000*dis_interval/time_interval;
         }
 
         if (currentObject->getName() == "Venus" && dir == "counterclockwise")
-            timeSpeed =  225/88*1000*dis_interval/time_interval;
+            timeSpeed =  225/88*2000*dis_interval/time_interval;
         else if (currentObject->getName() == "Venus" && dir == "clockwise") {
-            timeSpeed =  -225/88*1000*dis_interval/time_interval;
+            timeSpeed =  -225/88*2000*dis_interval/time_interval;
         }
 
         if (currentObject->getName() == "Earth" && dir == "counterclockwise")
-            timeSpeed =  365/88*1000*dis_interval/time_interval;
+            timeSpeed =  365/88*2000*dis_interval/time_interval;
         else if (currentObject->getName() == "Earth" && dir == "clockwise") {
-            timeSpeed =  -365/88*1000*dis_interval/time_interval;
+            timeSpeed =  -365/88*2000*dis_interval/time_interval;
         }
 
         if (currentObject->getName() == "Mars" && dir == "counterclockwise")
-            timeSpeed =  687/88*1000*dis_interval/time_interval;
+            timeSpeed =  687/88*2000*dis_interval/time_interval;
         else if (currentObject->getName() == "Mars" && dir == "clockwise") {
-            timeSpeed =  -687/88*1000*dis_interval/time_interval;
+            timeSpeed =  -687/88*2000*dis_interval/time_interval;
         }
 
         if (currentObject->getName() == "Jupiter" && dir == "counterclockwise")
-            timeSpeed =  4380/88*1000*dis_interval/time_interval;
+            timeSpeed =  4380/88*2000*dis_interval/time_interval;
         else if (currentObject->getName() == "Jupiter" && dir == "clockwise") {
-            timeSpeed =  -4380/88*1000*dis_interval/time_interval;
+            timeSpeed =  -4380/88*2000*dis_interval/time_interval;
         }
 
         if (currentObject->getName() == "Saturn" && dir == "counterclockwise")
-            timeSpeed =  10585/88*1000*dis_interval/time_interval;
+            timeSpeed =  10585/88*2000*dis_interval/time_interval;
         else if (currentObject->getName() == "Saturn" && dir == "clockwise") {
-            timeSpeed =  -10585/88*1000*dis_interval/time_interval;
+            timeSpeed =  -10585/88*2000*dis_interval/time_interval;
         }
 
         if (currentObject->getName() == "Uranus" && dir == "counterclockwise")
-            timeSpeed =  30660/88*1000*dis_interval/time_interval;
+            timeSpeed =  30660/88*2000*dis_interval/time_interval;
         else if (currentObject->getName() == "Uranus" && dir == "clockwise") {
-            timeSpeed =  -30660/88*1000*dis_interval/time_interval;
+            timeSpeed =  -30660/88*2000*dis_interval/time_interval;
         }
 
         if (currentObject->getName() == "Neptune" && dir == "counterclockwise")
-            timeSpeed =  60225/88*1000*dis_interval/time_interval;
+            timeSpeed =  60225/88*2000*dis_interval/time_interval;
         else if (currentObject->getName() == "Neptune" && dir == "clockwise") {
-            timeSpeed =  -60225/88*1000*dis_interval/time_interval;
+            timeSpeed =  -60225/88*2000*dis_interval/time_interval;
         }
         updateGL();
         updatePosition();
