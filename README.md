@@ -1,4 +1,4 @@
-# GPU-A
+# GPU-A v1.0
 This is the repository for final project of group GPU-A.
 
 ## Design Philosophy
