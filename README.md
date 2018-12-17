@@ -26,6 +26,7 @@ moudle load qt/5.10.1
 moudle freeglut/3.0.0
 ```
 3. Generate MakeFile and Compile
+
 Note: the ```build``` should be in the same directory with ```GPU-A```
 ```
 mkdir build
