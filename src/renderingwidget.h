@@ -82,6 +82,7 @@ private:
 
 signals:
     void currentObjectChanged();
+    void stopSimulation();
 
 public:
     QTimer timer;

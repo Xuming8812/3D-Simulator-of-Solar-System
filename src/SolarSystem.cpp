@@ -250,5 +250,4 @@ GLfloat SolarSystem::getFloatParameter(string input)
 	float temp = stof(input.substr(start + 2));
 
 	return static_cast<GLfloat>(temp);
-
 }
