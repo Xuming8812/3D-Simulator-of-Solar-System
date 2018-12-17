@@ -1068,7 +1068,7 @@ QGroupBox::title {
   </widget>
   <action name="actionData">
    <property name="text">
-    <string>Data</string>
+    <string>Copyright</string>
    </property>
   </action>
  </widget>

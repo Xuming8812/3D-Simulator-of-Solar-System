@@ -254,6 +254,7 @@ void RenderingWidget::mousePressEvent(QMouseEvent *e){
             currentObject = it;
             is_draw_shadow = true;
             timer.stop();
+            emit stopSimulation();
             *dateTime = QDateTime::currentDateTime();
             lastTime = dateTime->time().msec();
             if (it->getName()  ==  "Sun"){
