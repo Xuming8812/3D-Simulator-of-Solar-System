@@ -64,11 +64,29 @@ Geng Yang   geng_yang@brown.edu
 
 ## Conclusions
 ### Major Accomplishments
+- Reasonable and logical class hierarchy design
+- An reasonable and concise GUI
+- Interaction using mouse
+  - Zoom in/out with mouse wheel.
+  - Double click to switch the view horizontally and vertically
+  - Click on background, adjust view with left button.
+  - Click on abstronomical object, drag it along trajectory with left button.
+- 3D display of the system.
+- Highlight the selected astronomical object with introduction and hide the others.
+- Customize date and time to switch to corresponding status
+- Customize time speed to fast foward/rewind the simulation
+- Customize parameter of selected astronomical object and verify the input.
 ### Results of the software development effort
 ### Were you successful in meeting all goals and objectives?  What didn't work?  What would take more time?
 
 ## Future Work
-### Description of potential future software expansions and software features
+The software has provided APIs for customizing parameters of astronomical objects, which aims to simulate the real scene in solar system when when the property of objects changes suddenly.
 
 ## Author Contributions
-### Description of each authors' contributions to software development
+
+Ming Xu designed class hierarchy and completed computing the status of astronomical objects.
+
+Geng Yang designed the GUI, completed basic interactions and 3D display.
+
+Xingchen Ming was responsible for parameter configuration, exception handling and interaction between user and astronomical objects.
+
