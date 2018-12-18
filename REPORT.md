@@ -38,7 +38,7 @@ Geng Yang   geng_yang@brown.edu
     - [Results of effort](#results-of-effort)
   - [Future Work](#future-work)
   - [Author Contributions](#author-contributions)
-
+<!-- TOC -->
 ## Introduction
 ### Project Overview
 ### Goals and Objectives
@@ -103,15 +103,15 @@ open SolarSystem.app
 ### Major Accomplishments
 - Reasonable and logical class hierarchy design
 - An reasonable and concise GUI
+- 3D display of the system.
 - Interaction using mouse
   - Zoom in/out with mouse wheel.
   - Double click to switch the view horizontally and vertically
   - Click on background, adjust view with left button.
-  - Click on abstronomical object, drag it along trajectory with left button.
-- 3D display of the system.
+  - Click on astronomical object, drag it along trajectory with left button.
 - Highlight the selected astronomical object with introduction and hide the others.
 - Customize date and time to switch to corresponding status
-- Customize time speed to fast foward/rewind the simulation
+- Customize time speed to fast forward/rewind the simulation
 - Customize parameter of selected astronomical object and verify the input.
 ### Results of effort
 
