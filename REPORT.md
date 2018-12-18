@@ -151,6 +151,6 @@ The software has provided APIs for customizing parameters of astronomical object
 
 Ming Xu designed class hierarchy and completed computing the status of astronomical objects.
 
-Geng Yang designed the GUI, completed basic interactions and 3D display.
+Geng Yang designed the GUI, completed basic interactions (e.g. adjust view, set date and timespeed) and 3D display.
 
 Xingchen Ming was responsible for parameter configuration, exception handling and interaction between user and astronomical objects.
