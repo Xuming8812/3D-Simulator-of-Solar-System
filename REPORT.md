@@ -14,8 +14,6 @@ Geng Yang   geng_yang@brown.edu
 
 ## CONTENTS
 
-<!-- TOC -->
-
   - [Introduction](#introduction)
     - [Project Overview](#project-overview)
     - [Goals and Objectives](#goals-and-objectives)
@@ -36,7 +34,7 @@ Geng Yang   geng_yang@brown.edu
     - [Results of effort](#results-of-effort)
   - [Future Work](#future-work)
   - [Author Contributions](#author-contributions)
-<!-- TOC -->
+
 ## Introduction
 ### Project Overview
 The Solar System model is a 3D simulation of the Solar System and night sky in real-time. All parameters and calculations are based on real data published by NASA. Users can find key information, position and time data for each planets. Our model is a great tool to help children and astronomy enthusiast know deeply to the real Solar System.
@@ -91,6 +89,21 @@ The operating system and software compiler/library version(s) tested are as foll
 - freeglut version: 3.0.0
 
 ### Functional testing
+- Functions
+  -  Click **Start/Pause** button to start/stop simulation.
+  -  Select an object and click **Highlight** button, only selected object and its characteristics shown on screen.
+  - Check **Time** box to stop and change date and time, the status of object would change accordingly.
+  - Adjust **Time Speed** slider, planets’ revolution and rotation speed would be accelerated or slowed down. Positive  time speed would yield counterclockwise revolution while negative time speed would yield clockwise revolution.
+  - Check **Data** box, modify selected object’s parameters and press confirm botton or return, object’s attribute would be modified simultaneously.(Object’s size would change with radius changed etc).  Invalid inputs would yield a warning and wouldn’t be accepted. Reset button help reset object’s attribute.
+
+- Intereactions
+    - Perspective changes when scroll mouse wheel or press left button and move mouse.
+    - Perspective rotates 90 degrees with double click.
+    - Time stops when click one of the objects, and **Data** box shows basic information of the selected object.
+    - Object moves counterclockwise or clockwise by dragging it directly, other objects moves correspondingly, and time changes based on objects’ position.
+
+
+
 
 ### Instructions for compiling and running
 1. Clone the repository
