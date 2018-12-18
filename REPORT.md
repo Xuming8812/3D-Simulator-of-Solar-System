@@ -48,7 +48,7 @@ The Solar System model is a 3D simulation of the Solar System and night sky in r
 - The selected planet can be dragged along its orbit.
 - Select particular time to see status of Solar System. 
 - Update status using concurrency.
-- Exception handdling.
+- Exception handling.
 
 ## Software Architectural Design
 ### Required External Libraries
