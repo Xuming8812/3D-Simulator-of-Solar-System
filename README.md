@@ -79,6 +79,7 @@ void RenderingWidget::updatePosition(){
 - All the files that need parsing are added into Qt resource and can be accessed with relative path in code, which helps avoid invalid absolute paths.
 
 ## Testing and Evaluation
+### Test Environment
 The operating system and software compiler/library version(s) tested are as follows.
 - Operating system: macOS 10.14.1
 - Compiler version: clang-1000.10.44.4
