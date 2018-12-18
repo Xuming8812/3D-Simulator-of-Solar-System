@@ -44,9 +44,9 @@ The Solar System model is a 3D simulation of the Solar System and night sky in r
 - Adjust time speed to fast forward/rewind.
 - Select particular planet and display its characteristics.
 - Highlight a selected planet and hide the others.
-- Users can adjust parameters(radius,mass etc) of selected objects.
+- Customize parameters(radius, mass, etc.) of selected objects.
 - The selected planet can be dragged along its orbit.
-- Select particular time to see status of planets. 
+- Select particular time to see status of Solar System. 
 - Update status using concurrency.
 - Exception handdling.
 
