@@ -19,26 +19,24 @@ Geng Yang   geng_yang@brown.edu
   - [Introduction](#introduction)
     - [Project Overview](#project-overview)
     - [Goals and Objectives](#goals-and-objectives)
-  - [Software Architectural Design (as appropriate)](#software-architectural-design-as-appropriate)
+  - [Software Architectural Design](#software-architectural-design)
     - [Required External Libraries](#required-external-libraries)
     - [Functional Block Diagrams](#functional-block-diagrams)
     - [Data Flow Diagrams](#data-flow-diagrams)
-    - [UML Diagrams showing Object Definition/Inheritance](#uml-diagrams-showing-object-definitioninheritance)
-  - [Interface Descriptions (as appropriate)](#interface-descriptions-as-appropriate)
+    - [UML Diagrams](#uml-diagrams)
+  - [Interface Descriptions](#interface-descriptions)
     - [Graphical Interface](#graphical-interface)
-    - [Data Visualization](#data-visualization)
-    - [Communications Protocols](#communications-protocols)
     - [Threading and Concurrency](#threading-and-concurrency)
     - [Exception Handling](#exception-handling)
   - [Testing and Evaluation](#testing-and-evaluation)
-    - [Description of functional testing to date](#description-of-functional-testing-to-date)
-    - [Instructions for compiling and running the software](#instructions-for-compiling-and-running-the-software)
+    - [Functional testing](#Functional-testing)
+    - [Instructions for compiling and running](#instructions-for-compiling-and-running)
   - [Conclusions](#conclusions)
     - [Major Accomplishments](#major-accomplishments)
     - [Results of effort](#results-of-effort)
   - [Future Work](#future-work)
   - [Author Contributions](#author-contributions)
-
+<!-- TOC -->
 ## Introduction
 ### Project Overview
 The Solar System model is a 3D simulation of the Solar System and night sky in real-time. All parameters and calculations are based on real data published by NASA. Users can find key information, position and time data for each planets. Our model is a great tool to help children and astronomy enthusiast know deeply to the real Solar System.
@@ -53,7 +51,7 @@ The Solar System model is a 3D simulation of the Solar System and night sky in r
 - Update status using concurrency.
 - Exception handdling.
 
-## Software Architectural Design (as appropriate)
+## Software Architectural Design
 ### Required External Libraries
 - Qt 5.10.1
 - OpenGL 4.1
@@ -68,8 +66,6 @@ The Solar System model is a 3D simulation of the Solar System and night sky in r
 ### Graphical Interface
 The graphical interface consists of two parts. The left one is the widget for displaying solar system, and the right one is for user manipulation.
 ![image](https://github.com/ENGN2912B-2018/GPU-A/blob/Geng/images/GUI.png)
-### Data Visualization
-### Communications Protocols
 ### Threading and Concurrency
 C++ 11 threads is employed for concurrency. To update the status of each astronomical object simultaneously and quickly, multithreading is needed and each thread is responsible for updating one object. 
 ```
@@ -81,9 +77,9 @@ void RenderingWidget::updatePosition(){
 }
 ``` 
 ### Exception Handling
-A dialog is generated with warning information when inputs or file path are invalid. 
-- Users are allowed to modidy basic parameters. New parameters should be positive numbers(within a range), or dialog would show error information and suggest users to re-enter.
-- The file path of object information should be valid, or dialog would prompt the error path.
+- Users are allowed to modidy basic parameters. New parameters should be positive numbers within a range and will be examined in the way of regular expression, or a dialog would show error information and suggest users to re-enter.
+![image](https://github.com/ENGN2912B-2018/GPU-A/blob/Geng/images/exception.png)
+- All the files that need parsing are added into Qt resource and can be accessed with relative path in code, which helps avoid invalid absolute paths.
 
 ## Testing and Evaluation
 The operating system and software compiler/library version(s) tested are as follows.
@@ -95,6 +91,7 @@ The operating system and software compiler/library version(s) tested are as foll
 - freeglut version: 3.0.0
 
 ### Description of functional testing to date
+
 ### Instructions for compiling and running the software
 1. Clone the repository
 ```
@@ -116,6 +113,7 @@ open SolarSystem.app
 
 ## Conclusions
 ### Major Accomplishments
+
 - Reasonable and logical class hierarchy design.
 - An reasonable and concise GUI.
 - Interaction using mouse.
@@ -130,7 +128,7 @@ open SolarSystem.app
 - Customize parameter of selected astronomical object and verify the input.
 ### Results of effort
 
-Most objectives have been achieved as proposed. There still exists a challenge unresolved, the simulation of changes brought by customized parameters. 
+Most objectives have been achieved as proposed. There still exists a challenge unresolved, the simulation of changes brought by customized parameters. For example, when the revolution speed of Earth increases greatly, the Earth should run away from Sun with the speed decreasing gradually, and then run towards its original orbit and recover original status.
 
 ## Future Work
 The software has provided APIs for customizing parameters of astronomical objects, which aims to simulate the real scene in solar system when when the property of objects changes suddenly.
