@@ -37,7 +37,7 @@
 
 ## Introduction
 ### Project Overview
-The Solar System model is a 3D simulation of the Solar System and night sky in real-time. All parameters and calculations are based on real data published by NASA. Users can find key information, position and time data for each planets. Our model is a great tool to help children and astronomy enthusiast know deeply to the real Solar System.
+The Solar System is a cross-platform software that has 3D simulation of the Solar System and night sky in real-time. All parameters and calculations are based on real data published by NASA. Users can find key information, position and time data for each planets. Our model is a great tool to help children and astronomy enthusiast know deeply to the real Solar System.
 ### Goals and Objectives
 - Adjust view and zoom in/out.
 - Adjust time speed to fast forward/rewind.
@@ -119,14 +119,14 @@ $ moudle load freeglut/3.0.0
 ```
 3. Generate MakeFile and Compile.
 
-Note: the ```build/``` directory should be in the same directory with ```GPU-A```.
+Note: the ```build/``` directory should be in the same directory with ```GPU-A/```.
 ```
 $ mkdir build
 $ cd build
 $ qmake ../GPU-A/SolarSystem.pro
 $ make
 ```
-4. Run the executable in terminal or open it directly in ```build```
+4. Run the executable in terminal or open it directly in ```build/```
 ```
 open SolarSystem.app
 ```
