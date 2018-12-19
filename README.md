@@ -107,20 +107,26 @@ The operating system and software compiler/library version(s) tested are as foll
 
 
 ### Instructions for compiling and running
-1. Clone the repository
+This software can be built on Linux, macOS and Windows, the instructions are as follows.
+1. Clone the repository.
 ```
 $ git clone git@github.com:ENGN2912B-2018/GPU-A.git
 ```
-2. Generate MakeFile and Compile
+2. If build on CCV, please load the following modules.
+```
+$ moudle load qt/5.10.1
+$ moudle load freeglut/3.0.0
+```
+3. Generate MakeFile and Compile.
 
-Note: the ```build/``` directory should be in the same directory with ```GPU-A```
+Note: the ```build/``` directory should be in the same directory with ```GPU-A```.
 ```
 $ mkdir build
 $ cd build
 $ qmake ../GPU-A/SolarSystem.pro
 $ make
 ```
-3. Run the executable
+4. Run the executable in terminal or open it directly in ```build```
 ```
 open SolarSystem.app
 ```
