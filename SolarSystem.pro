@@ -47,7 +47,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 mac: LIBS += -framework GLUT
-else:unix|win32: LIBS += -lGLUT
+else:unix|win32: LIBS += -lglut -lGLU
 
 LIBS += -pthread
 
