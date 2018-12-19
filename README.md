@@ -150,8 +150,8 @@ Most objectives have been achieved as proposed. There still exists a challenge u
 
 ## Author Contributions
 
-Ming Xu designed class hierarchy and completed computing the status of astronomical objects.
+- Ming Xu designed class hierarchy and completed computing the status of astronomical objects.
 
-Geng Yang designed the GUI, completed basic interactions (e.g. adjust view, set date and timespeed) and 3D display.
+- Geng Yang designed the GUI, completed basic interactions (e.g. adjust view, set date and timespeed) and 3D display.
 
-Xingchen Ming was responsible for parameter configuration, exception handling and interaction between user and astronomical objects.
+- Xingchen Ming was responsible for parameter configuration, exception handling and interaction between user and astronomical objects.
