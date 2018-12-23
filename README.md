@@ -1,6 +1,6 @@
 # DIVE INTO SOLAR SYSTEM
 ## ENGN2912B - Scientific Computing in C++
-### GPU Algorithm Acceleration, Group A
+### GPU Algorithm Acceleration, Group A (*December, 2018*)
 
 
 #### Xingchen Ming   xingchen_ming@brown.edu
